@@ -28,7 +28,7 @@ HyperNeat::~HyperNeat(){
 	vector < double * >().swap(outputs);
 }
 void HyperNeat::HJsonDeserialize(string hyperneat_info){
-	char *str;
+	char * str;
 	strcpy(str, hyperneat_info.c_str());
 	const char delimeters[] = "{\"\t\n:,[ ]}";
 	char *pch = strtok(str, delimeters);
@@ -148,7 +148,7 @@ void HyperNeat::EvaluateSubstrateConnections(){
 		for(i = 0; i < n_substrates-1; i++){
 			for(int j = 0; j < (substrates[i].GetLayerNodesNumber())[0]; j++)
 				substrates[i].EvaluateSpatialNode(0,j);					
-			for(int j = 0; j < connections[i].size(); j++)
+			for(int j = 0; j < (int)connections[i].size(); j++)
 				connections[i][j].Evaluate();
 		}
 		for(int j = 0; j < (substrates[i].GetLayerNodesNumber())[0]; j++)
@@ -159,7 +159,7 @@ void HyperNeat::EvaluateSubstrateConnections(){
 		for(i = 0; i < substrates[0].GetLayersNumber()-1; i++){
 			for(int j = 0; j < n_layer_nodes[i]; j++)
 				substrates[0].EvaluateSpatialNode(i,j);
-			for(int j = 0; j < connections[i].size(); j++)
+			for(int j = 0; j < (int)connections[i].size(); j++)
 				connections[i][j].Evaluate();
 		}
 		for(int j = 0; j < n_layer_nodes[i]; j++)

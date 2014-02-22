@@ -10,6 +10,9 @@ SpatialNode::SpatialNode(int node_type, int layer_id, vector < double > coordena
 	this->coordenates = coordenates;
 	n_inputs = 0;
 }
+SpatialNode::SpatialNode(){
+	
+}
 SpatialNode::~SpatialNode(){
 	vector < double >().swap(coordenates);
 	vector < double * >().swap(inputs);

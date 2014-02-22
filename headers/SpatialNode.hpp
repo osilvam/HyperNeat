@@ -18,6 +18,7 @@ namespace ANN_USM{
 	public:
 
 		SpatialNode(int node_type, int layer_id, vector < double > coordenates);
+		SpatialNode();
 		~SpatialNode();
 		void SetInputToInputNode(double * input);//Assign input to input type node
 		void SetOutputToOutputNode(double * output);//Assign output to output type node

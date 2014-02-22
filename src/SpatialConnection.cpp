@@ -23,7 +23,7 @@ SpatialConnection::SpatialConnection(SpatialNode input_node, SpatialNode output_
 SpatialConnection::~SpatialConnection(){
 
 }
-void SpatialConnection::SpatialConnection::Evaluate(){
+void SpatialConnection::Evaluate(){
 	*output = (*input)*weight;
 }
 vector < double > SpatialConnection::GetInputCoordenates(){
