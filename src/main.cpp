@@ -65,7 +65,15 @@ int main(int argc, char *argv[]){
 		inputs.push_back(input);
 		outputs.push_back(output);		
 	}
+	cout << "INICIO HYPERNEAT" << endl;
 	HyperNeat hyperneat (inputs, outputs, jsonstring);
+	//hyperneat.PrintInputs();
+	for(int i = 0; i < 9; i++)
+		cout << i << " " << *outputs[i] << endl;
+		//*inputs[i] = 0.5;
+	//hyperneat.PrintInputs();
+
+
 	free(input);
 	free(output);
 	vector<double*>().swap(inputs);

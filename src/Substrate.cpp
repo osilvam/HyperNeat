@@ -14,7 +14,7 @@ Substrate::~Substrate(){
 	vector < vector < vector < double > > >().swap(nodes_coordenate);
 	vector < double * >().swap(inputs);
 	vector < double * >().swap(outputs);
-	vector < vector < SpatialNode > >().swap(nodes);
+	vector < vector < SpatialNode * > >().swap(nodes);
 }
 void Substrate::SJsonDeserialize(char * substrate_info){
 	//char *str;
@@ -84,16 +84,18 @@ void Substrate::SJsonDeserialize(char * substrate_info){
 	CreateNodes();
 }
 void Substrate::CreateNodes(){	
-	vector < vector < SpatialNode > > aux2;
+	vector < vector < SpatialNode * > > aux2;
+	int id = 0;
 	for(int i = 0; i < n_layers; i++){
-		vector < SpatialNode > aux1;
+		vector < SpatialNode * > aux1;
 		for(int j = 0; j < n_layer_nodes[i]; j++){
-			aux1.push_back(SpatialNode(nodes_info[i][j][0], nodes_info[i][j][2], nodes_coordenate[i][j]));
+			aux1.push_back(new SpatialNode(id, nodes_info[i][j][0], nodes_info[i][j][2], nodes_coordenate[i][j]));
+			id++;
 			if(nodes_info[i][j][0] == 0)
-				aux1[j].SetInputToInputNode(inputs[nodes_info[i][j][1]]);
+				aux1[j]->SetInputToInputNode(inputs[nodes_info[i][j][1]]);
 			else
 				if (nodes_info[i][j][0] == 2){
-					aux1[j].SetOutputToOutputNode(outputs[nodes_info[i][j][1]]);
+					aux1[j]->SetOutputToOutputNode(outputs[nodes_info[i][j][1]]);
 				}
 		}
 		aux2.push_back(aux1);
@@ -109,11 +111,17 @@ int Substrate::GetLayersNumber(){
 vector < int > Substrate::GetLayerNodesNumber(){
 	return n_layer_nodes;
 }
-SpatialNode Substrate::GetSpatialNode(int layer_num, int layer_node_num){
+SpatialNode * Substrate::GetSpatialNode(int layer_num, int layer_node_num){
 	return nodes[layer_num][layer_node_num];
 }
 void Substrate::EvaluateSpatialNode(int layer_num, int layer_node_num){
-	nodes[layer_num][layer_node_num].OutputCalcule();
+	nodes[layer_num][layer_node_num]->OutputCalcule();
+}
+void Substrate::ClearSpatialNodeInputs(int layer_num, int layer_node_num){
+	nodes[layer_num][layer_node_num]->ClearInputs();
+}
+double Substrate::GetSpatialNodeOutput(int layer_num, int layer_node_num){
+	return nodes[layer_num][layer_node_num]->GetOuput();
 }
 
 #endif

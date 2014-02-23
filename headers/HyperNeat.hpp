@@ -31,6 +31,7 @@ namespace ANN_USM{
 		void HJsonDeserialize(string hyperneat_info);//Extract all HyperNeat information of char pointer
 		void CreateSubstrateConnections();//Create all substrate connections according to cppn-neat result
 		void EvaluateSubstrateConnections();//Allows to obtain the final HyperNeat outputs
+		void PrintInputs();//TEMPORAL
 	};
 }
 #endif

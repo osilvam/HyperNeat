@@ -14,10 +14,10 @@ HyperNeat::HyperNeat(vector < double * > inputs, vector < double * > outputs, st
 	//cout << "INICIO HYPERNEAT"<< endl;
 	HJsonDeserialize(hyperneat_info);
 	cout << "TERMINO DESERIALIZE"<< endl;
-	/*CreateSubstrateConnections();
+	CreateSubstrateConnections();
 	cout << "TERMINO CREATE" << endl;
 	EvaluateSubstrateConnections();
-	cout << "TERMINO EVALUATE" << endl;*/
+	cout << "TERMINO EVALUATE" << endl;
 }
 HyperNeat::~HyperNeat(){
 	vector < CPPNInputs >().swap(AditionalCPPNInputs);
@@ -28,13 +28,11 @@ HyperNeat::~HyperNeat(){
 	vector < double * >().swap(outputs);
 }
 void HyperNeat::HJsonDeserialize(string hyperneat_info){
-	char * str;
+	char str[(int)hyperneat_info.size()];
 	strcpy(str, hyperneat_info.c_str());
 	const char delimeters[] = "{\"\t\n:,[ ]}";
 	char *pch = strtok(str, delimeters);
-	//int count = 0;
 	while(pch != NULL){
-		//count++;
 		if (!strcmp(pch,(char *)"Substrates")){
 			for(int i = 0; i < n_substrates; i++){				
 				pch = strtok(NULL, delimeters);
@@ -91,15 +89,15 @@ void HyperNeat::CreateSubstrateConnections(){
 			for(int j = 0; j < (substrates[i].GetLayerNodesNumber())[0]; j++){
 				for(int k = 0; k < (substrates[i+1].GetLayerNodesNumber())[0]; k++){
 					vector < double > cppn_inputs;
-					vector < double > c1 = (substrates[i].GetSpatialNode(0,j)).GetCoordenates();
-					vector < double > c2 = (substrates[i+1].GetSpatialNode(0,k)).GetCoordenates();
+					vector < double > c1 = (substrates[i].GetSpatialNode(0,j))->GetCoordenates();
+					vector < double > c2 = (substrates[i+1].GetSpatialNode(0,k))->GetCoordenates();
 					cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
 					cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
 					vector < double > aux (cppn_inputs);
 					for(int c = 0; c < n_AditionalCPPNInputs; c++)
 						cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(aux));
 					//AGREGAR EL CALCULO DE EL PESO!!!!!PASANDOLE cppn_inputs
-					double weight = 0;
+					double weight = 0.6;
 					if(weight > connection_threshold){
 						aux1.push_back(SpatialConnection(substrates[i].GetSpatialNode(0,j), substrates[i+1].GetSpatialNode(0,k), weight));						}
 						n_connections++;
@@ -115,15 +113,15 @@ void HyperNeat::CreateSubstrateConnections(){
 			vector <  SpatialConnection > aux1;
 			for(int j = 0; j < n_layer_nodes[i]; j++){
 				for(int k = 0; k < n_layer_nodes[i+1]; k++){vector < double > cppn_inputs;
-					vector < double > c1 = (substrates[0].GetSpatialNode(i,j)).GetCoordenates();
-					vector < double > c2 = (substrates[0].GetSpatialNode(i+1,k)).GetCoordenates();
+					vector < double > c1 = (substrates[0].GetSpatialNode(i,j))->GetCoordenates();
+					vector < double > c2 = (substrates[0].GetSpatialNode(i+1,k))->GetCoordenates();
 					cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
 					cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
 					vector < double > aux (cppn_inputs);
 					for(int c = 0; c < n_AditionalCPPNInputs; c++)
 						cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(aux));					
 					//AGREGAR EL CALCULO DE EL PESO!!!!!PASANDOLE cppn_inputs
-					double weight = 0;
+					double weight = 1;
 					if(weight > connection_threshold){		
 						aux1.push_back(SpatialConnection(substrates[0].GetSpatialNode(i,j), substrates[0].GetSpatialNode(i+1,k), weight));					}
 						n_connections++;
@@ -147,7 +145,9 @@ void HyperNeat::EvaluateSubstrateConnections(){
 		int i;
 		for(i = 0; i < n_substrates-1; i++){
 			for(int j = 0; j < (substrates[i].GetLayerNodesNumber())[0]; j++)
-				substrates[i].EvaluateSpatialNode(0,j);					
+				substrates[i].EvaluateSpatialNode(0,j);		
+			for(int j = 0; j < (substrates[i+1].GetLayerNodesNumber())[0]; j++)
+				substrates[i+1].ClearSpatialNodeInputs(0,j);				
 			for(int j = 0; j < (int)connections[i].size(); j++)
 				connections[i][j].Evaluate();
 		}
@@ -157,8 +157,12 @@ void HyperNeat::EvaluateSubstrateConnections(){
 		vector < int > n_layer_nodes (substrates[0].GetLayerNodesNumber());
 		int i;	
 		for(i = 0; i < substrates[0].GetLayersNumber()-1; i++){
-			for(int j = 0; j < n_layer_nodes[i]; j++)
+			for(int j = 0; j < n_layer_nodes[i]; j++){
 				substrates[0].EvaluateSpatialNode(i,j);
+				//cout << j << " " << substrates[0].GetSpatialNodeOutput(i,j) << endl;
+			}
+			for(int j = 0; j < n_layer_nodes[i+1]; j++)
+				substrates[0].ClearSpatialNodeInputs(i+1,j);
 			for(int j = 0; j < (int)connections[i].size(); j++)
 				connections[i][j].Evaluate();
 		}
@@ -166,5 +170,9 @@ void HyperNeat::EvaluateSubstrateConnections(){
 			substrates[0].EvaluateSpatialNode(i,j);
 	}
 
+}
+void HyperNeat::PrintInputs(){
+	for(int i = 0; i < (int)inputs.size(); i++)
+		cout << i << " " << *inputs[i] << endl;
 }
 #endif
