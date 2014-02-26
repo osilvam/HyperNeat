@@ -31,7 +31,6 @@ namespace ANN_USM{
 		void CreateSubstrateConnections();//Create all substrate connections according to cppn-neat result
 		void EvaluateSubstrateConnections();//Allows to obtain the final HyperNeat outputs
 		void EvaluateConnections(int layer_num);
-		void PrintInputs();//TEMPORAL
 	};
 }
 #endif

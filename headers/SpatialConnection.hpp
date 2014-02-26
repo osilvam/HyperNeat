@@ -13,7 +13,7 @@ namespace ANN_USM{
 		SpatialNode * output_node;//output node
 		double weight;//weight of the connection
 		double * input;//pointer from input connection
-		//double * output;//pointer to output connection
+		double * output;//pointer to output connection
 
 	public:	
 

@@ -64,41 +64,36 @@ void HyperNeat::CreateSubstrateConnections(){
 		return;
 	}
 	n_connections = 0;
-	if (substrate->GetLayoutNumber() > 1){
+	if(substrate->GetLayoutNumber() > 1){
 		for(int i = 0; i < substrate->GetLayoutNumber()-1; i++){
-			vector < int > n_layer_nodesS = substrate->GetLayerNodesNumber(i);
-			vector < int > n_layer_nodesT = substrate->GetLayerNodesNumber(i+1);
 			vector < SpatialConnection > aux;
-			for(int j = 0; j < substrate->GetLayersNumber(i); j++){
-				for(int k = 0; k < n_layer_nodesS[j]; k++){
-					for(int r = 0; r < substrate->GetLayersNumber(i+1); r++){
-						for(int s = 0; s < n_layer_nodesT[r]; s++){
-							vector < double > cppn_inputs;
-							vector < double > c1 = (substrate->GetSpatialNode(i,j,k))->GetCoordenates();
-							vector < double > c2 = (substrate->GetSpatialNode(i+1,r,s))->GetCoordenates();
-							cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
-							cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
-							vector < double > input_aux (cppn_inputs);
-							for(int c = 0; c < n_AditionalCPPNInputs; c++)
-								cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
-							//AGREGAR CALCULO WEIGHT
-							double weight = 1;
-							if(weight > connection_threshold){
-								aux.push_back(SpatialConnection(substrate->GetSpatialNode(i,j,k),substrate->GetSpatialNode(i+1,r,s),weight));
-								n_connections++;
-							}
-						}
+			substrate->ClearSpatialNodeInputs(i+1,0);
+			for(int j = 0; j < substrate->GetLayerNodesNumber(i,0); j++){
+				for(int k = 0; k < substrate->GetLayerNodesNumber(i+1,0); j++){
+					vector < double > cppn_inputs;
+					vector < double > c1 = (substrate->GetSpatialNode(i,0,j))->GetCoordenates();
+					vector < double > c2 = (substrate->GetSpatialNode(i+1,0,k))->GetCoordenates();
+					cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
+					cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
+					vector < double > input_aux (cppn_inputs);
+					for(int c = 0; c < n_AditionalCPPNInputs; c++)
+						cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
+					//AGREGAR CALCULO WEIGHT
+					double weight = 1;
+					if(weight > connection_threshold){
+						aux.push_back(SpatialConnection(substrate->GetSpatialNode(i,0,j),substrate->GetSpatialNode(i+1,0,k),weight));
+						n_connections++;
 					}
 				}
 			}
 			connections.push_back(aux);
 		}
-	}else{		
-		vector < int > n_layer_nodes = substrate->GetLayerNodesNumber(0);
-		for(int i = 0; i < substrate->GetLayersNumber(0)-1; i++){			
+	}else{
+		for(int i = 0; i < substrate->GetLayersNumber(0)-1; i++){
 			vector < SpatialConnection > aux;
-			for(int j = 0; j < n_layer_nodes[i]; j++){
-				for(int k = 0; k < n_layer_nodes[i+1]; k++){
+			substrate->ClearSpatialNodeInputs(0,i+1);
+			for(int j = 0; j < substrate->GetLayerNodesNumber(0,i); j++){
+				for(int k = 0; k < substrate->GetLayerNodesNumber(0,i+1); k++){
 					vector < double > cppn_inputs;
 					vector < double > c1 = (substrate->GetSpatialNode(0,i,j))->GetCoordenates();
 					vector < double > c2 = (substrate->GetSpatialNode(0,i+1,k))->GetCoordenates();
@@ -131,27 +126,20 @@ void HyperNeat::EvaluateSubstrateConnections(){
 	int i;
 	if(substrate->GetLayoutNumber() > 1){
 		for(i = 0; i < substrate->GetLayoutNumber()-1; i++){
-			substrate->ClearSpatialNodeInputs(i+1);
-			substrate->EvaluateSpatialNode(i);
+			substrate->EvaluateSpatialNode(i,0);
 			EvaluateConnections(i);
 		}
-		substrate->EvaluateSpatialNode(i);
+		substrate->EvaluateSpatialNode(i,0);
 	}else{		
 		for(i = 0; i < substrate->GetLayersNumber(0)-1;i++){
-			substrate->ClearSpatialNodeInputs(0,i+1);
 			substrate->EvaluateSpatialNode(0,i);
 			EvaluateConnections(i);			
 		}
-		//substrate->EvaluateSpatialNode(0,i);
 		substrate->EvaluateSpatialNode(0,i);
 	}
-
 }
 void HyperNeat::EvaluateConnections(int layer_num){
 	for(int i = 0; i < (int)connections[layer_num].size(); i++)
 		connections[layer_num][i].Evaluate();
-}
-void HyperNeat::PrintInputs(){
-	substrate->PrintInputs();
 }
 #endif

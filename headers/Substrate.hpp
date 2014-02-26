@@ -20,7 +20,7 @@ namespace ANN_USM{
 		vector < vector < vector < vector < double > > > > nodes_coordenate;//nodes coordenates for each node of each layer of each layout
 		vector < double * > inputs;//vector of inputs substrate
 		vector < double * > outputs;//vector of outputs substrate
-		vector < vector < vector < SpatialNode * > > > nodes;//vector of nodes in each layer of each layout in the substrate
+		vector < vector < SpatialNode * > > nodes;//vector of nodes in each layer of each layout in the substrate
 		
 	public:
 		Substrate(vector < double * > inputs, vector < double * > outputs);
@@ -31,15 +31,12 @@ namespace ANN_USM{
 		int GetLayoutNumber();
 		int GetCoordenateType(int layout_num);//Return the substrate coordenate type
 		int GetLayersNumber(int layout_num);//Return the substrate layer number
-		vector < int > GetLayerNodesNumber(int layout_num);//Return a vector of nodes number of each layer in the substrate
+		int GetLayerNodesNumber(int layout_num, int layer_num);//Return a vector of nodes number of each layer in the substrate
 		SpatialNode * GetSpatialNode(int layout_num, int layer_num, int layer_node_num);//Return the indicated node
-		void EvaluateSpatialNode(int layout_num);
 		void EvaluateSpatialNode(int layout_num, int layer_num);
-		void ClearSpatialNodeInputs(int layout_num);
 		void ClearSpatialNodeInputs(int layout_num, int layer_num);
 		double GetSpatialNodeOutput(int layout_num, int layer_num, int layer_node_num);
 		double GetSpatialNodeId(int layout_num, int layer_num, int layer_node_num);
-		void PrintInputs();
 		
 	};
 }

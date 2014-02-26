@@ -9,7 +9,7 @@ SpatialConnection::SpatialConnection(SpatialNode * input_node, SpatialNode * out
 		cout << "can not connect to a node of type input" << endl;
 		return;
 	}
-	if (input_node->GetLayerNodeId() > output_node->GetLayerNodeId()){			
+	if (input_node->GetSheetNodeId() > output_node->GetSheetNodeId()){			
 		cout << "can not make a recurrent connection" << endl;
 		return;
 	}
@@ -17,18 +17,15 @@ SpatialConnection::SpatialConnection(SpatialNode * input_node, SpatialNode * out
 	this->output_node = output_node;
 	this->weight = weight;
 	input = new double;
+	output = new double;
 	input = input_node->AddOutputToNode();
-	cout << "SpatialConnection - input_id: " << input_node->GetId() << " Output_puntero_dir: " << input << " Output_puntero_val: " << *input<< endl;
+	output_node->AddInputToNode(output);
 }
 SpatialConnection::~SpatialConnection(){
 
 }
 void SpatialConnection::Evaluate(){
-	cout << "ID_input: " << input_node->GetId() << " ID_output: " << output_node->GetId();
-	//double input = input_node->GetOuput();
-	double input = *this->input;
-	cout << " weight: " << weight << " Input: " << input << " Output: " << input*weight << endl;
-	output_node->AddInputToNode(input*weight);
+	*output = (*this->input)*weight;
 }
 vector < double > SpatialConnection::GetInputCoordenates(){
 	return input_node->GetCoordenates();

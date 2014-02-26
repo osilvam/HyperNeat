@@ -7,8 +7,6 @@ using namespace ANN_USM;
 Substrate::Substrate(vector < double * > inputs, vector < double * > outputs){
 	this->inputs = inputs;
 	this->outputs = outputs;
-	//outputs = this->outputs;
-	cout << "DIRECCIONES - interno: " << outputs[1] << " externo: " << this->outputs[1] << endl;
 }
 Substrate::Substrate(){
 
@@ -21,7 +19,7 @@ Substrate::~Substrate(){
 	vector < vector < vector < vector < double > > > >().swap(nodes_coordenate);
 	vector < double * >().swap(inputs);
 	vector < double * >().swap(outputs);
-	vector < vector < vector < SpatialNode * > > >().swap(nodes);
+	vector < vector < SpatialNode * > >().swap(nodes);
 }
 void Substrate::SJsonDeserialize(char * substrate_info){
 	//char *str;
@@ -103,28 +101,38 @@ void Substrate::SJsonDeserialize(char * substrate_info){
 	}
 	CreateNodes();
 }
-void Substrate::CreateNodes(){	
-	int id = 0;
-	for(int i = 0; i < n_layouts; i++){
-	vector < vector < SpatialNode * > > aux1;
-		for(int j = 0; j < n_layers[i]; j++){
-		vector < SpatialNode * > aux2;
-			for(int k = 0; k < n_layer_nodes[i][j]; k++){
-				aux2.push_back(new SpatialNode(id, nodes_info[i][j][k][0], j, i, nodes_coordenate[i][j][k]));
-				if(nodes_info[i][j][k][0] == 0){
-					aux2[k]->SetInputToInputNode(inputs[nodes_info[i][j][k][1]]);
-				}else
-					if(nodes_info[i][j][k][0] == 2){
-						//aux2[k]->SetOutputToOutputNode(outputs[nodes_info[i][j][k][1]]);
-					}else
-						cout << id << endl;				
+void Substrate::CreateNodes(){
+	int id  = 0;
+	if(n_layouts > 1){
+		for(int i = 0; i < n_layouts; i++){
+			vector < SpatialNode * > aux1; 
+			for(int j = 0; j < n_layer_nodes[i][0]; j++){
+				aux1.push_back(new SpatialNode(id, nodes_info[i][0][j][0], nodes_info[i][0][j][2], nodes_coordenate[i][0][j]));
+				if(nodes_info[i][0][j][0] == 0)
+					aux1[j]->SetInputToInputNode(inputs[nodes_info[i][0][j][1]]);
+				else
+					if(nodes_info[i][0][j][0] == 2)
+						aux1[j]->SetOutputToOutputNode(outputs[nodes_info[i][0][j][1]]);
 				id++;
 			}
-		aux1.push_back(aux2);
+			nodes.push_back(aux1);
 		}
-		nodes.push_back(aux1);
+
+	}else{
+		for(int i = 0; i < n_layers[0]; i++){
+			vector < SpatialNode * > aux1; 
+			for(int j = 0; j < n_layer_nodes[0][j]; j++){
+				aux1.push_back(new SpatialNode(id, nodes_info[0][i][j][0], nodes_info[0][i][j][2], nodes_coordenate[0][i][j]));
+				if(nodes_info[0][i][j][0] == 0)
+					aux1[j]->SetInputToInputNode(inputs[nodes_info[0][i][j][1]]);
+				else
+					if(nodes_info[0][i][j][0] == 2)
+						aux1[j]->SetOutputToOutputNode(outputs[nodes_info[0][i][j][1]]);
+				id++;
+			}
+			nodes.push_back(aux1);
+		}
 	}
-	
 }
 int Substrate::GetLayoutNumber(){
 	return n_layouts;
@@ -135,58 +143,53 @@ int Substrate::GetCoordenateType(int layout_num){
 int Substrate::GetLayersNumber(int layout_num){
 	return n_layers[layout_num];
 }
-vector < int > Substrate::GetLayerNodesNumber(int layout_num){
-	return n_layer_nodes[layout_num];
+int Substrate::GetLayerNodesNumber(int layout_num, int layer_num){
+	return n_layer_nodes[layout_num][layer_num];
 }
 SpatialNode * Substrate::GetSpatialNode(int layout_num, int layer_num, int layer_node_num){
-	return nodes[layout_num][layer_num][layer_node_num];
-}
-void Substrate::EvaluateSpatialNode(int layout_num){
-	cout << "OutputCalcule (2) - ids ( " << endl;
-	for(int i = 0; i < n_layers[layout_num]; i++){
-		for(int j = 0; j < n_layer_nodes[layout_num][i]; j++){
-			nodes[layout_num][i][j]->OutputCalcule();
-			if(nodes_info[layout_num][i][j][0] == 2) *outputs[nodes_info[layout_num][i][j][1]] = nodes[layout_num][i][j]->GetOuput();
-		}
-	}
-	cout << " ) " << endl;
+	if(n_layouts > 1)
+		return nodes[layout_num][layer_node_num];
+	else
+		return nodes[layer_num][layer_node_num];
 }
 void Substrate::EvaluateSpatialNode(int layout_num, int layer_num){
-	cout << "OutputCalcule (1) - ids ( " << endl;
-	for(int j = 0; j < n_layer_nodes[layout_num][layer_num]; j++){
-		nodes[layout_num][layer_num][j]->OutputCalcule();
-		if(nodes_info[layout_num][layer_num][j][0] == 2) *outputs[nodes_info[layout_num][layer_num][j][1]] = nodes[layout_num][layer_num][j]->GetOuput();
-	}
-	cout << " ) " << endl;
-}
-void Substrate::ClearSpatialNodeInputs(int layout_num){
-	cout << "ClearInputs - ids ( ";
-	for(int i = 0; i < n_layers[layout_num]; i++){
-		for(int j = 0; j < n_layer_nodes[layout_num][i]; j++){
-			cout << nodes[layout_num][i][j]->GetId() << " ";
-			nodes[layout_num][i][j]->ClearInputs();
+	cout << "OutputCalcule - ids ( " << endl;
+	if(n_layouts > 1)
+		for(int j = 0; j < n_layer_nodes[layout_num][0]; j++){
+			nodes[layout_num][j]->OutputCalcule();
 		}
-	}
+	else
+		for(int j = 0; j < n_layer_nodes[0][layer_num]; j++){
+			nodes[layer_num][j]->OutputCalcule();
+		}
 	cout << " ) " << endl;
 }
 void Substrate::ClearSpatialNodeInputs(int layout_num, int layer_num){
 	cout << "ClearInputs - ids ( ";
-	for(int j = 0; j < n_layer_nodes[layout_num][layer_num]; j++){
-		cout << nodes[layout_num][layer_num][j]->GetId() << " ";
-		nodes[layout_num][layer_num][j]->ClearInputs();
-	}
+
+	if(n_layouts > 1)
+		for(int j = 0; j < n_layer_nodes[layout_num][0]; j++){
+			cout << nodes[layout_num][j]->GetId() << " ";
+			nodes[layout_num][j]->ClearInputs();
+		}
+	else
+		for(int j = 0; j < n_layer_nodes[0][layer_num]; j++){
+			cout << nodes[layer_num][j]->GetId() << " ";
+			nodes[layer_num][j]->ClearInputs();
+		}
 	cout << " ) " << endl;
 }
 double Substrate::GetSpatialNodeOutput(int layout_num, int layer_num, int layer_node_num){
-	return nodes[layout_num][layer_num][layer_node_num]->GetOuput();
+	if(n_layouts > 1)
+		return nodes[layout_num][layer_node_num]->GetOuput();
+	else
+		return nodes[layer_num][layer_node_num]->GetOuput();
 }
 double Substrate::GetSpatialNodeId(int layout_num, int layer_num, int layer_node_num){
-	return nodes[layout_num][layer_num][layer_node_num]->GetId();
-}
-void Substrate::PrintInputs(){
-	for(int i = 0; i < (int)inputs.size(); i++){
-		cout << i << " " << *inputs[i] << endl;
-	}
+	if(n_layouts > 1)
+		return nodes[layout_num][layer_node_num]->GetId();
+	else
+		return nodes[layer_num][layer_node_num]->GetId();
 }
 
 #endif
