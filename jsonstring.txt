@@ -11,7 +11,7 @@
 				\"coordenate_type\": \"0\",
 				\"n_layers\": \"1\",
 				\"n_layer_nodes\": [\"9\" ],
-				\"nodes_info\":  //type, input/output id, layer id//
+				\"nodes_info\":  //type, input/output id, sheet id//
 				[
 					[
 						[ \"0\", \"0\", \"0\" ],
@@ -44,7 +44,7 @@
 				\"coordenate_type\": \"0\",
 				\"n_layers\": \"1\",
 				\"n_layer_nodes\": [\"9\" ],
-				\"nodes_info\":  //type, input/output id, layer id//
+				\"nodes_info\":  //type, input/output id, sheet id//
 				[				
 					[
 						[ \"1\", \"-1\", \"1\" ],
@@ -77,7 +77,7 @@
 				\"coordenate_type\": \"0\",
 				\"n_layers\": \"1\",
 				\"n_layer_nodes\": [\"9\" ],
-				\"nodes_info\":  //type, input/output id, layer id//
+				\"nodes_info\":  //type, input/output id, sheet id//
 				[
 					[
 						[ \"2\", \"0\", \"2\" ],

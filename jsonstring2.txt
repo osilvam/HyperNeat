@@ -11,7 +11,7 @@
 				\"coordenate_type\": \"0\",
 				\"n_layers\": \"3\",
 				\"n_layer_nodes\": [\"3\", \"3\",\"3\" ],
-				\"nodes_info\":  //type, input/output id, layer id//
+				\"nodes_info\":  //type, input/output id, sheet id//
 				[
 					[
 						[ \"0\", \"0\", \"0\" ],

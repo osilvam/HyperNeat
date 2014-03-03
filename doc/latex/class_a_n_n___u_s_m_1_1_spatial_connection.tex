@@ -1,0 +1,169 @@
+\hypertarget{class_a_n_n___u_s_m_1_1_spatial_connection}{\section{A\-N\-N\-\_\-\-U\-S\-M\-:\-:Spatial\-Connection Class Reference}
+\label{class_a_n_n___u_s_m_1_1_spatial_connection}\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}}
+}
+
+
+The class \hyperlink{class_a_n_n___u_s_m_1_1_spatial_connection}{Spatial\-Connection} is used to create connections among overall nodes in a \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat} \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate}.  
+
+
+
+
+{\ttfamily \#include $<$Spatial\-Connection.\-hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_a_n_n___u_s_m_1_1_spatial_connection_a2043e25434c9f6de7d49f878499b40c9}{Spatial\-Connection} (\hyperlink{class_a_n_n___u_s_m_1_1_spatial_node}{Spatial\-Node} $\ast$input\-\_\-node, \hyperlink{class_a_n_n___u_s_m_1_1_spatial_node}{Spatial\-Node} $\ast$output\-\_\-node, double weight)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_a_n_n___u_s_m_1_1_spatial_connection_a9965054cf2e32331a537ed19f79f9c1b}{$\sim$\-Spatial\-Connection} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_a_n_n___u_s_m_1_1_spatial_connection_a6966fadad1b8fc5c538756bd960f5330}{Evaluate} ()
+\begin{DoxyCompactList}\small\item\em Evalue the spatial connection output. \end{DoxyCompactList}\item 
+vector$<$ double $>$ \hyperlink{class_a_n_n___u_s_m_1_1_spatial_connection_a87292c3fa64b90b2e4ab8f5c76960002}{Get\-Input\-Coordenates} ()
+\begin{DoxyCompactList}\small\item\em Get the input node cordenates. \end{DoxyCompactList}\item 
+vector$<$ double $>$ \hyperlink{class_a_n_n___u_s_m_1_1_spatial_connection_ab8a8bbebac081e28ef8a2a537168cd7b}{Get\-Output\-Coordenates} ()
+\begin{DoxyCompactList}\small\item\em Get the output node coordenates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The class \hyperlink{class_a_n_n___u_s_m_1_1_spatial_connection}{Spatial\-Connection} is used to create connections among overall nodes in a \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat} \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate}. 
+
+Definition at line 17 of file Spatial\-Connection.\-hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_a_n_n___u_s_m_1_1_spatial_connection_a2043e25434c9f6de7d49f878499b40c9}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}!Spatial\-Connection@{Spatial\-Connection}}
+\index{Spatial\-Connection@{Spatial\-Connection}!ANN_USM::SpatialConnection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}}
+\subsubsection[{Spatial\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}Spatial\-Connection\-::\-Spatial\-Connection (
+\begin{DoxyParamCaption}
+\item[{{\bf Spatial\-Node} $\ast$}]{input\-\_\-node, }
+\item[{{\bf Spatial\-Node} $\ast$}]{output\-\_\-node, }
+\item[{double}]{weight}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_spatial_connection_a2043e25434c9f6de7d49f878499b40c9}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\-\_\-node} & Pointer to input node \\
+\hline
+{\em output\-\_\-node} & Pointer to output node \\
+\hline
+{\em weight} & Weight associated to connection \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 7 of file Spatial\-Connection.\-cpp.
+
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_spatial_connection_a2043e25434c9f6de7d49f878499b40c9_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_spatial_connection_a9965054cf2e32331a537ed19f79f9c1b}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}!$\sim$\-Spatial\-Connection@{$\sim$\-Spatial\-Connection}}
+\index{$\sim$\-Spatial\-Connection@{$\sim$\-Spatial\-Connection}!ANN_USM::SpatialConnection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}}
+\subsubsection[{$\sim$\-Spatial\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}Spatial\-Connection\-::$\sim$\-Spatial\-Connection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_spatial_connection_a9965054cf2e32331a537ed19f79f9c1b}
+
+
+Destructor. 
+
+
+
+Definition at line 24 of file Spatial\-Connection.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_a_n_n___u_s_m_1_1_spatial_connection_a6966fadad1b8fc5c538756bd960f5330}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}!Evaluate@{Evaluate}}
+\index{Evaluate@{Evaluate}!ANN_USM::SpatialConnection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}}
+\subsubsection[{Evaluate}]{\setlength{\rightskip}{0pt plus 5cm}void Spatial\-Connection\-::\-Evaluate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_spatial_connection_a6966fadad1b8fc5c538756bd960f5330}
+
+
+Evalue the spatial connection output. 
+
+
+
+Definition at line 27 of file Spatial\-Connection.\-cpp.
+
+\hypertarget{class_a_n_n___u_s_m_1_1_spatial_connection_a87292c3fa64b90b2e4ab8f5c76960002}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}!Get\-Input\-Coordenates@{Get\-Input\-Coordenates}}
+\index{Get\-Input\-Coordenates@{Get\-Input\-Coordenates}!ANN_USM::SpatialConnection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}}
+\subsubsection[{Get\-Input\-Coordenates}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ double $>$ Spatial\-Connection\-::\-Get\-Input\-Coordenates (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_spatial_connection_a87292c3fa64b90b2e4ab8f5c76960002}
+
+
+Get the input node cordenates. 
+
+\begin{DoxyReturn}{Returns}
+Vector of coordenates 
+\end{DoxyReturn}
+
+
+Definition at line 30 of file Spatial\-Connection.\-cpp.
+
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_spatial_connection_a87292c3fa64b90b2e4ab8f5c76960002_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_spatial_connection_ab8a8bbebac081e28ef8a2a537168cd7b}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}!Get\-Output\-Coordenates@{Get\-Output\-Coordenates}}
+\index{Get\-Output\-Coordenates@{Get\-Output\-Coordenates}!ANN_USM::SpatialConnection@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Spatial\-Connection}}
+\subsubsection[{Get\-Output\-Coordenates}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ double $>$ Spatial\-Connection\-::\-Get\-Output\-Coordenates (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_spatial_connection_ab8a8bbebac081e28ef8a2a537168cd7b}
+
+
+Get the output node coordenates. 
+
+\begin{DoxyReturn}{Returns}
+Vector of coordenates 
+\end{DoxyReturn}
+
+
+Definition at line 33 of file Spatial\-Connection.\-cpp.
+
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_spatial_connection_ab8a8bbebac081e28ef8a2a537168cd7b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/oscar/\-Documents/\-Hyper\-Neat/headers/\hyperlink{_spatial_connection_8hpp}{Spatial\-Connection.\-hpp}\item 
+/home/oscar/\-Documents/\-Hyper\-Neat/src/\hyperlink{_spatial_connection_8cpp}{Spatial\-Connection.\-cpp}\end{DoxyCompactItemize}

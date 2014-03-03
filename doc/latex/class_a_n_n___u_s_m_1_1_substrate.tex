@@ -1,0 +1,469 @@
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate}{\section{A\-N\-N\-\_\-\-U\-S\-M\-:\-:Substrate Class Reference}
+\label{class_a_n_n___u_s_m_1_1_substrate}\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+}
+
+
+The class \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate} is used to create \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat} \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate}.  
+
+
+
+
+{\ttfamily \#include $<$Substrate.\-hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_a_n_n___u_s_m_1_1_substrate_a234055fec868a53cf439fa226b1ae335}{Substrate} (vector$<$ double $\ast$ $>$ inputs, vector$<$ double $\ast$ $>$ outputs)
+\begin{DoxyCompactList}\small\item\em Constructor with parameters. \end{DoxyCompactList}\item 
+\hyperlink{class_a_n_n___u_s_m_1_1_substrate_a9610e9ffe4266cf149e761ca852a364f}{Substrate} ()
+\begin{DoxyCompactList}\small\item\em Void Constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_a_n_n___u_s_m_1_1_substrate_a73ad38fceff244a55cfe6ec7ebb46581}{$\sim$\-Substrate} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_a_n_n___u_s_m_1_1_substrate_a5e3ad4577e03d0c4dbb2eef576d0e6a9}{S\-Json\-Deserialize} (char $\ast$substrate\-\_\-info)
+\begin{DoxyCompactList}\small\item\em Extract all \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate} information of char pointer. \end{DoxyCompactList}\item 
+void \hyperlink{class_a_n_n___u_s_m_1_1_substrate_a036f4445805ee1d9abf4259e9501118a}{Create\-Nodes} ()
+\begin{DoxyCompactList}\small\item\em Inicialize overall nodes based of information extract with S\-Json\-Deserialize function. \end{DoxyCompactList}\item 
+int \hyperlink{class_a_n_n___u_s_m_1_1_substrate_a26dee29b17f6d6284969b1697cb69414}{Get\-Layout\-Number} ()
+\begin{DoxyCompactList}\small\item\em Get \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate} layout number. \end{DoxyCompactList}\item 
+int \hyperlink{class_a_n_n___u_s_m_1_1_substrate_a01077c74a10333c880c63e4cf2b148c0}{Get\-Coordenate\-Type} (int layout\-\_\-num)
+\begin{DoxyCompactList}\small\item\em Get layout coordenate type. \end{DoxyCompactList}\item 
+int \hyperlink{class_a_n_n___u_s_m_1_1_substrate_aad34de8fde9ecc3cbb1ebd71548cbc04}{Get\-Layers\-Number} (int layout\-\_\-num)
+\begin{DoxyCompactList}\small\item\em Get layout layer number. \end{DoxyCompactList}\item 
+int \hyperlink{class_a_n_n___u_s_m_1_1_substrate_af66462bbcfa00eda01f62bf72269860e}{Get\-Layer\-Nodes\-Number} (int layout\-\_\-num, int layer\-\_\-num)
+\begin{DoxyCompactList}\small\item\em Get layer node number of specific layout. \end{DoxyCompactList}\item 
+\hyperlink{class_a_n_n___u_s_m_1_1_spatial_node}{Spatial\-Node} $\ast$ \hyperlink{class_a_n_n___u_s_m_1_1_substrate_a44672627ec3b103ced54233a29b26486}{Get\-Spatial\-Node} (int layout\-\_\-num, int layer\-\_\-num, int layer\-\_\-node\-\_\-num)
+\begin{DoxyCompactList}\small\item\em Get spatial node of specific layout and layer. \end{DoxyCompactList}\item 
+void \hyperlink{class_a_n_n___u_s_m_1_1_substrate_a1fc288998e09868f2f8c31e18724106e}{Evaluate\-Spatial\-Node} (int layout\-\_\-num, int layer\-\_\-num)
+\begin{DoxyCompactList}\small\item\em Evaluate spatial node outputs of specific layout and layer. \end{DoxyCompactList}\item 
+void \hyperlink{class_a_n_n___u_s_m_1_1_substrate_a8c3e61424eede374c5755197a777d354}{Clear\-Spatial\-Node\-Inputs} (int layout\-\_\-num, int layer\-\_\-num)
+\begin{DoxyCompactList}\small\item\em Clear input vector of spatial node in specific layout and layer. \end{DoxyCompactList}\item 
+double \hyperlink{class_a_n_n___u_s_m_1_1_substrate_a94b7b35d3fff9488ad23f4f8ceb8243b}{Get\-Spatial\-Node\-Output} (int layout\-\_\-num, int layer\-\_\-num, int layer\-\_\-node\-\_\-num)
+\begin{DoxyCompactList}\small\item\em Get spatial node output of specific layout and layer. \end{DoxyCompactList}\item 
+double \hyperlink{class_a_n_n___u_s_m_1_1_substrate_ab53fac5585cadae2445aec55f84cac43}{Get\-Spatial\-Node\-Id} (int layout\-\_\-num, int layer\-\_\-num, int layer\-\_\-node\-\_\-num)
+\begin{DoxyCompactList}\small\item\em Get spatial node id of specific layout and layer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The class \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate} is used to create \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat} \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate}. 
+
+Definition at line 19 of file Substrate.\-hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a234055fec868a53cf439fa226b1ae335}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Substrate@{Substrate}}
+\index{Substrate@{Substrate}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Substrate}]{\setlength{\rightskip}{0pt plus 5cm}Substrate\-::\-Substrate (
+\begin{DoxyParamCaption}
+\item[{vector$<$ double $\ast$ $>$}]{inputs, }
+\item[{vector$<$ double $\ast$ $>$}]{outputs}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a234055fec868a53cf439fa226b1ae335}
+
+
+Constructor with parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em inputs} & Input vector \\
+\hline
+{\em outputs} & Output vector \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 7 of file Substrate.\-cpp.
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a9610e9ffe4266cf149e761ca852a364f}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Substrate@{Substrate}}
+\index{Substrate@{Substrate}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Substrate}]{\setlength{\rightskip}{0pt plus 5cm}Substrate\-::\-Substrate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a9610e9ffe4266cf149e761ca852a364f}
+
+
+Void Constructor. 
+
+
+
+Definition at line 11 of file Substrate.\-cpp.
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a73ad38fceff244a55cfe6ec7ebb46581}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!$\sim$\-Substrate@{$\sim$\-Substrate}}
+\index{$\sim$\-Substrate@{$\sim$\-Substrate}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{$\sim$\-Substrate}]{\setlength{\rightskip}{0pt plus 5cm}Substrate\-::$\sim$\-Substrate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a73ad38fceff244a55cfe6ec7ebb46581}
+
+
+Destructor. 
+
+
+
+Definition at line 14 of file Substrate.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a8c3e61424eede374c5755197a777d354}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Clear\-Spatial\-Node\-Inputs@{Clear\-Spatial\-Node\-Inputs}}
+\index{Clear\-Spatial\-Node\-Inputs@{Clear\-Spatial\-Node\-Inputs}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Clear\-Spatial\-Node\-Inputs}]{\setlength{\rightskip}{0pt plus 5cm}void Substrate\-::\-Clear\-Spatial\-Node\-Inputs (
+\begin{DoxyParamCaption}
+\item[{int}]{layout\-\_\-num, }
+\item[{int}]{layer\-\_\-num}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a8c3e61424eede374c5755197a777d354}
+
+
+Clear input vector of spatial node in specific layout and layer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layout\-\_\-num} & Layout number \\
+\hline
+{\em layer\-\_\-num} & Layer number \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 167 of file Substrate.\-cpp.
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_substrate_a8c3e61424eede374c5755197a777d354_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a036f4445805ee1d9abf4259e9501118a}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Create\-Nodes@{Create\-Nodes}}
+\index{Create\-Nodes@{Create\-Nodes}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Create\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}void Substrate\-::\-Create\-Nodes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a036f4445805ee1d9abf4259e9501118a}
+
+
+Inicialize overall nodes based of information extract with S\-Json\-Deserialize function. 
+
+
+
+Definition at line 104 of file Substrate.\-cpp.
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_substrate_a036f4445805ee1d9abf4259e9501118a_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a1fc288998e09868f2f8c31e18724106e}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Evaluate\-Spatial\-Node@{Evaluate\-Spatial\-Node}}
+\index{Evaluate\-Spatial\-Node@{Evaluate\-Spatial\-Node}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Evaluate\-Spatial\-Node}]{\setlength{\rightskip}{0pt plus 5cm}void Substrate\-::\-Evaluate\-Spatial\-Node (
+\begin{DoxyParamCaption}
+\item[{int}]{layout\-\_\-num, }
+\item[{int}]{layer\-\_\-num}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a1fc288998e09868f2f8c31e18724106e}
+
+
+Evaluate spatial node outputs of specific layout and layer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layout\-\_\-num} & Layout number \\
+\hline
+{\em layer\-\_\-num} & Layer number \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 155 of file Substrate.\-cpp.
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_substrate_a1fc288998e09868f2f8c31e18724106e_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a01077c74a10333c880c63e4cf2b148c0}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Get\-Coordenate\-Type@{Get\-Coordenate\-Type}}
+\index{Get\-Coordenate\-Type@{Get\-Coordenate\-Type}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Get\-Coordenate\-Type}]{\setlength{\rightskip}{0pt plus 5cm}int Substrate\-::\-Get\-Coordenate\-Type (
+\begin{DoxyParamCaption}
+\item[{int}]{layout\-\_\-num}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a01077c74a10333c880c63e4cf2b148c0}
+
+
+Get layout coordenate type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layout\-\_\-num} & Layout number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate} coordenate type 
+\end{DoxyReturn}
+
+
+Definition at line 140 of file Substrate.\-cpp.
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_af66462bbcfa00eda01f62bf72269860e}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Get\-Layer\-Nodes\-Number@{Get\-Layer\-Nodes\-Number}}
+\index{Get\-Layer\-Nodes\-Number@{Get\-Layer\-Nodes\-Number}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Get\-Layer\-Nodes\-Number}]{\setlength{\rightskip}{0pt plus 5cm}int Substrate\-::\-Get\-Layer\-Nodes\-Number (
+\begin{DoxyParamCaption}
+\item[{int}]{layout\-\_\-num, }
+\item[{int}]{layer\-\_\-num}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_af66462bbcfa00eda01f62bf72269860e}
+
+
+Get layer node number of specific layout. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layout\-\_\-num} & Layout number \\
+\hline
+{\em layer\-\_\-num} & Layer number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of nodes number of each layer in the \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate} 
+\end{DoxyReturn}
+
+
+Definition at line 146 of file Substrate.\-cpp.
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_substrate_af66462bbcfa00eda01f62bf72269860e_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_aad34de8fde9ecc3cbb1ebd71548cbc04}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Get\-Layers\-Number@{Get\-Layers\-Number}}
+\index{Get\-Layers\-Number@{Get\-Layers\-Number}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Get\-Layers\-Number}]{\setlength{\rightskip}{0pt plus 5cm}int Substrate\-::\-Get\-Layers\-Number (
+\begin{DoxyParamCaption}
+\item[{int}]{layout\-\_\-num}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_aad34de8fde9ecc3cbb1ebd71548cbc04}
+
+
+Get layout layer number. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layout\-\_\-num} & Layout number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate} layer number 
+\end{DoxyReturn}
+
+
+Definition at line 143 of file Substrate.\-cpp.
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_substrate_aad34de8fde9ecc3cbb1ebd71548cbc04_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a26dee29b17f6d6284969b1697cb69414}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Get\-Layout\-Number@{Get\-Layout\-Number}}
+\index{Get\-Layout\-Number@{Get\-Layout\-Number}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Get\-Layout\-Number}]{\setlength{\rightskip}{0pt plus 5cm}int Substrate\-::\-Get\-Layout\-Number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a26dee29b17f6d6284969b1697cb69414}
+
+
+Get \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate} layout number. 
+
+
+
+Definition at line 137 of file Substrate.\-cpp.
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_substrate_a26dee29b17f6d6284969b1697cb69414_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a44672627ec3b103ced54233a29b26486}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Get\-Spatial\-Node@{Get\-Spatial\-Node}}
+\index{Get\-Spatial\-Node@{Get\-Spatial\-Node}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Get\-Spatial\-Node}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Spatial\-Node} $\ast$ Substrate\-::\-Get\-Spatial\-Node (
+\begin{DoxyParamCaption}
+\item[{int}]{layout\-\_\-num, }
+\item[{int}]{layer\-\_\-num, }
+\item[{int}]{layer\-\_\-node\-\_\-num}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a44672627ec3b103ced54233a29b26486}
+
+
+Get spatial node of specific layout and layer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layout\-\_\-num} & Layout number \\
+\hline
+{\em layer\-\_\-num} & Layer number \\
+\hline
+{\em layer\-\_\-node\-\_\-num} & Layer node number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Indicated spatial node pointer 
+\end{DoxyReturn}
+
+
+Definition at line 149 of file Substrate.\-cpp.
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_substrate_a44672627ec3b103ced54233a29b26486_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_ab53fac5585cadae2445aec55f84cac43}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Get\-Spatial\-Node\-Id@{Get\-Spatial\-Node\-Id}}
+\index{Get\-Spatial\-Node\-Id@{Get\-Spatial\-Node\-Id}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Get\-Spatial\-Node\-Id}]{\setlength{\rightskip}{0pt plus 5cm}double Substrate\-::\-Get\-Spatial\-Node\-Id (
+\begin{DoxyParamCaption}
+\item[{int}]{layout\-\_\-num, }
+\item[{int}]{layer\-\_\-num, }
+\item[{int}]{layer\-\_\-node\-\_\-num}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_ab53fac5585cadae2445aec55f84cac43}
+
+
+Get spatial node id of specific layout and layer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layout\-\_\-num} & Layoput number \\
+\hline
+{\em layer\-\_\-num} & Layer number \\
+\hline
+{\em layer\-\_\-node\-\_\-num} & Layer node number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Id of specific spatial node 
+\end{DoxyReturn}
+
+
+Definition at line 188 of file Substrate.\-cpp.
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a94b7b35d3fff9488ad23f4f8ceb8243b}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!Get\-Spatial\-Node\-Output@{Get\-Spatial\-Node\-Output}}
+\index{Get\-Spatial\-Node\-Output@{Get\-Spatial\-Node\-Output}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{Get\-Spatial\-Node\-Output}]{\setlength{\rightskip}{0pt plus 5cm}double Substrate\-::\-Get\-Spatial\-Node\-Output (
+\begin{DoxyParamCaption}
+\item[{int}]{layout\-\_\-num, }
+\item[{int}]{layer\-\_\-num, }
+\item[{int}]{layer\-\_\-node\-\_\-num}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a94b7b35d3fff9488ad23f4f8ceb8243b}
+
+
+Get spatial node output of specific layout and layer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layout\-\_\-num} & Layoput number \\
+\hline
+{\em layer\-\_\-num} & Layer number \\
+\hline
+{\em layer\-\_\-node\-\_\-num} & Layer node number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output value of specific spatial node 
+\end{DoxyReturn}
+
+
+Definition at line 182 of file Substrate.\-cpp.
+
+\hypertarget{class_a_n_n___u_s_m_1_1_substrate_a5e3ad4577e03d0c4dbb2eef576d0e6a9}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}!S\-Json\-Deserialize@{S\-Json\-Deserialize}}
+\index{S\-Json\-Deserialize@{S\-Json\-Deserialize}!ANN_USM::Substrate@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Substrate}}
+\subsubsection[{S\-Json\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Substrate\-::\-S\-Json\-Deserialize (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{substrate\-\_\-info}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_substrate_a5e3ad4577e03d0c4dbb2eef576d0e6a9}
+
+
+Extract all \hyperlink{class_a_n_n___u_s_m_1_1_substrate}{Substrate} information of char pointer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em substrate\-\_\-info} & char pointer of json string \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 24 of file Substrate.\-cpp.
+
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{class_a_n_n___u_s_m_1_1_substrate_a5e3ad4577e03d0c4dbb2eef576d0e6a9_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_substrate_a5e3ad4577e03d0c4dbb2eef576d0e6a9_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/oscar/\-Documents/\-Hyper\-Neat/headers/\hyperlink{_substrate_8hpp}{Substrate.\-hpp}\item 
+/home/oscar/\-Documents/\-Hyper\-Neat/src/\hyperlink{_substrate_8cpp}{Substrate.\-cpp}\end{DoxyCompactItemize}

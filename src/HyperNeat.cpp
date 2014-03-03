@@ -138,8 +138,8 @@ void HyperNeat::EvaluateSubstrateConnections(){
 		substrate->EvaluateSpatialNode(0,i);
 	}
 }
-void HyperNeat::EvaluateConnections(int layer_num){
-	for(int i = 0; i < (int)connections[layer_num].size(); i++)
-		connections[layer_num][i].Evaluate();
+void HyperNeat::EvaluateConnections(int sheet_num){
+	for(int i = 0; i < (int)connections[sheet_num].size(); i++)
+		connections[sheet_num][i].Evaluate();
 }
 #endif

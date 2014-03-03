@@ -1,0 +1,245 @@
+\hypertarget{class_a_n_n___u_s_m_1_1_hyper_neat}{\section{A\-N\-N\-\_\-\-U\-S\-M\-:\-:Hyper\-Neat Class Reference}
+\label{class_a_n_n___u_s_m_1_1_hyper_neat}\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}}
+}
+
+
+The class \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat} is used to implement a neuroevolution method called \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat}.  
+
+
+
+
+{\ttfamily \#include $<$Hyper\-Neat.\-hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat_afa5ee92982d0a780e485341722a00286}{Hyper\-Neat} (vector$<$ double $\ast$ $>$ inputs, vector$<$ double $\ast$ $>$ outputs, string hyperneat\-\_\-info)
+\begin{DoxyCompactList}\small\item\em Constructor with parameters. \end{DoxyCompactList}\item 
+\hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat_a1cd44e92cbfd6902977aad68ab7585ed}{$\sim$\-Hyper\-Neat} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat_a67803bb6c5dc5986d9c44877d92587af}{H\-Json\-Deserialize} (string hyperneat\-\_\-info)
+\begin{DoxyCompactList}\small\item\em Extract all \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat} information of json string. \end{DoxyCompactList}\item 
+void \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat_a0eb24949bc741c24f12bd812d519de8c}{Create\-Substrate\-Connections} ()
+\begin{DoxyCompactList}\small\item\em Create all substrate connections according to cppn-\/neat result. \end{DoxyCompactList}\item 
+void \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat_a593bcca0140041a340814b91d29a4a13}{Evaluate\-Substrate\-Connections} ()
+\begin{DoxyCompactList}\small\item\em Allows to obtain the final \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat} outputs. \end{DoxyCompactList}\item 
+void \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat_aa2db8cfc0f567d330c07fbc209ad1bf2}{Evaluate\-Connections} (int sheet\-\_\-num)
+\begin{DoxyCompactList}\small\item\em Evaluate all connections after specific sheet. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The class \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat} is used to implement a neuroevolution method called \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat}. 
+
+Definition at line 22 of file Hyper\-Neat.\-hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_a_n_n___u_s_m_1_1_hyper_neat_afa5ee92982d0a780e485341722a00286}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}!Hyper\-Neat@{Hyper\-Neat}}
+\index{Hyper\-Neat@{Hyper\-Neat}!ANN_USM::HyperNeat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}}
+\subsubsection[{Hyper\-Neat}]{\setlength{\rightskip}{0pt plus 5cm}Hyper\-Neat\-::\-Hyper\-Neat (
+\begin{DoxyParamCaption}
+\item[{vector$<$ double $\ast$ $>$}]{inputs, }
+\item[{vector$<$ double $\ast$ $>$}]{outputs, }
+\item[{string}]{hyperneat\-\_\-info}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_hyper_neat_afa5ee92982d0a780e485341722a00286}
+
+
+Constructor with parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em inputs} & Input vector \\
+\hline
+{\em outputs} & Output vector \\
+\hline
+{\em hyperneat\-\_\-info} & Json string \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 10 of file Hyper\-Neat.\-cpp.
+
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_hyper_neat_afa5ee92982d0a780e485341722a00286_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_hyper_neat_a1cd44e92cbfd6902977aad68ab7585ed}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}!$\sim$\-Hyper\-Neat@{$\sim$\-Hyper\-Neat}}
+\index{$\sim$\-Hyper\-Neat@{$\sim$\-Hyper\-Neat}!ANN_USM::HyperNeat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}}
+\subsubsection[{$\sim$\-Hyper\-Neat}]{\setlength{\rightskip}{0pt plus 5cm}Hyper\-Neat\-::$\sim$\-Hyper\-Neat (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_hyper_neat_a1cd44e92cbfd6902977aad68ab7585ed}
+
+
+Destructor. 
+
+
+
+Definition at line 17 of file Hyper\-Neat.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_a_n_n___u_s_m_1_1_hyper_neat_a0eb24949bc741c24f12bd812d519de8c}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}!Create\-Substrate\-Connections@{Create\-Substrate\-Connections}}
+\index{Create\-Substrate\-Connections@{Create\-Substrate\-Connections}!ANN_USM::HyperNeat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}}
+\subsubsection[{Create\-Substrate\-Connections}]{\setlength{\rightskip}{0pt plus 5cm}void Hyper\-Neat\-::\-Create\-Substrate\-Connections (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_hyper_neat_a0eb24949bc741c24f12bd812d519de8c}
+
+
+Create all substrate connections according to cppn-\/neat result. 
+
+
+
+Definition at line 61 of file Hyper\-Neat.\-cpp.
+
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_hyper_neat_a0eb24949bc741c24f12bd812d519de8c_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{class_a_n_n___u_s_m_1_1_hyper_neat_a0eb24949bc741c24f12bd812d519de8c_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_hyper_neat_aa2db8cfc0f567d330c07fbc209ad1bf2}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}!Evaluate\-Connections@{Evaluate\-Connections}}
+\index{Evaluate\-Connections@{Evaluate\-Connections}!ANN_USM::HyperNeat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}}
+\subsubsection[{Evaluate\-Connections}]{\setlength{\rightskip}{0pt plus 5cm}void Hyper\-Neat\-::\-Evaluate\-Connections (
+\begin{DoxyParamCaption}
+\item[{int}]{sheet\-\_\-num}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_hyper_neat_aa2db8cfc0f567d330c07fbc209ad1bf2}
+
+
+Evaluate all connections after specific sheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sheet\-\_\-num} & Sheet number \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 141 of file Hyper\-Neat.\-cpp.
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_hyper_neat_aa2db8cfc0f567d330c07fbc209ad1bf2_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_hyper_neat_a593bcca0140041a340814b91d29a4a13}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}!Evaluate\-Substrate\-Connections@{Evaluate\-Substrate\-Connections}}
+\index{Evaluate\-Substrate\-Connections@{Evaluate\-Substrate\-Connections}!ANN_USM::HyperNeat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}}
+\subsubsection[{Evaluate\-Substrate\-Connections}]{\setlength{\rightskip}{0pt plus 5cm}void Hyper\-Neat\-::\-Evaluate\-Substrate\-Connections (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_hyper_neat_a593bcca0140041a340814b91d29a4a13}
+
+
+Allows to obtain the final \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat} outputs. 
+
+
+
+Definition at line 117 of file Hyper\-Neat.\-cpp.
+
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_hyper_neat_a593bcca0140041a340814b91d29a4a13_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{class_a_n_n___u_s_m_1_1_hyper_neat_a593bcca0140041a340814b91d29a4a13_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{class_a_n_n___u_s_m_1_1_hyper_neat_a67803bb6c5dc5986d9c44877d92587af}{\index{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}!H\-Json\-Deserialize@{H\-Json\-Deserialize}}
+\index{H\-Json\-Deserialize@{H\-Json\-Deserialize}!ANN_USM::HyperNeat@{A\-N\-N\-\_\-\-U\-S\-M\-::\-Hyper\-Neat}}
+\subsubsection[{H\-Json\-Deserialize}]{\setlength{\rightskip}{0pt plus 5cm}void Hyper\-Neat\-::\-H\-Json\-Deserialize (
+\begin{DoxyParamCaption}
+\item[{string}]{hyperneat\-\_\-info}
+\end{DoxyParamCaption}
+)}}\label{class_a_n_n___u_s_m_1_1_hyper_neat_a67803bb6c5dc5986d9c44877d92587af}
+
+
+Extract all \hyperlink{class_a_n_n___u_s_m_1_1_hyper_neat}{Hyper\-Neat} information of json string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hyperneat\-\_\-info} & json string \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 23 of file Hyper\-Neat.\-cpp.
+
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_hyper_neat_a67803bb6c5dc5986d9c44877d92587af_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_a_n_n___u_s_m_1_1_hyper_neat_a67803bb6c5dc5986d9c44877d92587af_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/oscar/\-Documents/\-Hyper\-Neat/headers/\hyperlink{_hyper_neat_8hpp}{Hyper\-Neat.\-hpp}\item 
+/home/oscar/\-Documents/\-Hyper\-Neat/src/\hyperlink{_hyper_neat_8cpp}{Hyper\-Neat.\-cpp}\end{DoxyCompactItemize}

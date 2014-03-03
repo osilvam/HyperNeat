@@ -1,0 +1,4 @@
+<map id="ANN_USM::HyperNeat::HJsonDeserialize" name="ANN_USM::HyperNeat::HJsonDeserialize">
+<area shape="rect" id="node2" href="$class_a_n_n___u_s_m_1_1_substrate.html#a5e3ad4577e03d0c4dbb2eef576d0e6a9" title="Extract all Substrate information of char pointer. " alt="" coords="213,5,365,46"/>
+<area shape="rect" id="node3" href="$class_a_n_n___u_s_m_1_1_substrate.html#a036f4445805ee1d9abf4259e9501118a" title="Inicialize overall nodes based of information extract with SJsonDeserialize function. " alt="" coords="413,5,565,46"/>
+</map>
