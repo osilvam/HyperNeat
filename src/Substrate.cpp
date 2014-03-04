@@ -6,7 +6,7 @@ using namespace ANN_USM;
 
 Substrate::Substrate(vector < double * > inputs, vector < double * > outputs){
 	this->inputs = inputs;
-	this->outputs = outputs;
+	this->outputs = outputs;	
 }
 Substrate::Substrate(){
 
@@ -177,7 +177,7 @@ void Substrate::ClearSpatialNodeInputs(int layout_num, int layer_num){
 			cout << nodes[layer_num][j]->GetId() << " ";
 			nodes[layer_num][j]->ClearInputs();
 		}
-	cout << " ) " << endl;
+	cout << ") " << endl;
 }
 double Substrate::GetSpatialNodeOutput(int layout_num, int layer_num, int layer_node_num){
 	if(n_layouts > 1)

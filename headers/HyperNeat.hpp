@@ -59,6 +59,19 @@ namespace ANN_USM{
 		 * \param sheet_num Sheet number
 		 */
 		void EvaluateConnections(int sheet_num);
+		/**
+		 * \brief Set CPPN-NEAT fitness of last interation
+		 * \param fitness Fitnnes value to set
+		 */
+		void HyperNeatFitness(double fitness);
+		/**
+		 * \brief Allows evolve cppn_neat
+		 */
+		void HyperNeatEvolve();
+		/**
+		 * \brief Clear all connections on HyperNeat Substrate
+		 */
+		void ClearConnections();
 	};
 }
 #endif

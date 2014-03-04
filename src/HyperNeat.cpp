@@ -9,8 +9,7 @@ using namespace ANN_USM;
 
 HyperNeat::HyperNeat(vector < double * > inputs, vector < double * > outputs, string hyperneat_info){
 	substrate = new Substrate(inputs,outputs);
-	//cppn = new ConnectiveCPPN;	
-	//cout << "INICIO HYPERNEAT"<< endl;
+	//cppn_neat = new ConnectiveCPPN;	
 	HJsonDeserialize(hyperneat_info);
 	cout << "TERMINO DESERIALIZE"<< endl;
 }
@@ -26,6 +25,11 @@ void HyperNeat::HJsonDeserialize(string hyperneat_info){
 	const char delimeters[] = "{\"\t\n:,[ ]}";
 	char *pch = strtok(str, delimeters);
 	while(pch != NULL){
+		/*if (!strcmp(pch,(char *)"CPPN-NEAT")){
+			pch = strtok(NULL, delimeters);
+			cppn_neat->CJsonDeserialize(pch);
+			pch = strtok(NULL, delimeters);
+		}else{}*/
 		if (!strcmp(pch,(char *)"Substrate")){	
 				pch = strtok(NULL, delimeters);
 				substrate->SJsonDeserialize(pch);
@@ -64,6 +68,7 @@ void HyperNeat::CreateSubstrateConnections(){
 		return;
 	}
 	n_connections = 0;
+	ClearConnections();
 	if(substrate->GetLayoutNumber() > 1){
 		for(int i = 0; i < substrate->GetLayoutNumber()-1; i++){
 			vector < SpatialConnection > aux;
@@ -79,6 +84,7 @@ void HyperNeat::CreateSubstrateConnections(){
 					for(int c = 0; c < n_AditionalCPPNInputs; c++)
 						cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
 					//AGREGAR CALCULO WEIGHT
+					//double weight = cppn_neat->CalculeWeight(cppn_inputs);
 					double weight = 1;
 					if(weight > connection_threshold){
 						aux.push_back(SpatialConnection(substrate->GetSpatialNode(i,0,j),substrate->GetSpatialNode(i+1,0,k),weight));
@@ -103,6 +109,7 @@ void HyperNeat::CreateSubstrateConnections(){
 					for(int c = 0; c < n_AditionalCPPNInputs; c++)
 						cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
 					//AGREGAR CALCULO WEIGHT
+					//double weight = cppn_neat->CalculeWeight(cppn_inputs);
 					double weight = 1;
 					if(weight > connection_threshold){
 						aux.push_back(SpatialConnection(substrate->GetSpatialNode(0,i,j),substrate->GetSpatialNode(0,i+1,k),weight));
@@ -142,4 +149,14 @@ void HyperNeat::EvaluateConnections(int sheet_num){
 	for(int i = 0; i < (int)connections[sheet_num].size(); i++)
 		connections[sheet_num][i].Evaluate();
 }
+void HyperNeat::HyperNeatFitness(double fitness){
+	//cppn_neat->SetFitness(fitness);
+}
+void HyperNeat::HyperNeatEvolve(){
+	//cppn_neat->Evolve();
+}
+void HyperNeat::ClearConnections(){
+	vector < vector < SpatialConnection > >().swap(connections);
+}
+
 #endif

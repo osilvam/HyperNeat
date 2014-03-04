@@ -2,6 +2,7 @@
 #include "main.hpp"
 #include <iostream>
 
+
 int main(int argc, char *argv[]){
 	
 	string jsonstring = "{"
@@ -59,52 +60,28 @@ int main(int argc, char *argv[]){
 	"}";
 
 	vector < double * > inputs;
-	double * input1 = new double(0.7);
-	inputs.push_back(input1);
-	double * input2 = new double(0.6);
-	inputs.push_back(input2);
-	double * input3 = new double(0.5);
-	inputs.push_back(input3);
 	vector < double * > outputs;
-	double * output1 = new double(0.3);
-	outputs.push_back(output1);
-	double * output2 = new double(0.2);
-	outputs.push_back(output2);
-	double * output3 = new double(0.1);
-	outputs.push_back(output3);
 
+	for(int i = 0; i < 3; i++){
+		double * input = new double(0.5 + 0.1*i);
+		double * output = new double(0.0);
+		inputs.push_back(input);
+		outputs.push_back(output);
+	}
 
-	cout << "INICIO HYPERNEAT" << endl;
-	HyperNeat hyperneat (inputs, outputs, jsonstring);
+	cout << "EMPEZO EL PROGRAMA -------------------------------" << endl;
 
-	cout << "EMPEZO EL CREATECONNECTIONS" << endl;
-	hyperneat.CreateSubstrateConnections();
-	cout << "TERMINO EL CREATECONNECTIONS" << endl;
-	cout << "EMPEZO EL EVALUATE" << endl;
-	hyperneat.EvaluateSubstrateConnections();
-	cout << "TERMINO EL EVALUATE" << endl;
+	HyperNeat * hyperneat = new HyperNeat(inputs, outputs, jsonstring);
 
-	for(int i = 0; i < (int)outputs.size(); i++)
-		cout << *outputs[i] << endl;
-
-	for(int i = 0; i < (int)inputs.size(); i++)
-		*inputs[i] = *inputs[i] + 0.1;		
-
-	//cout << "EMPEZO EL CREATECONNECTIONS" << endl;
-	//hyperneat.CreateSubstrateConnections();
-	//cout << "TERMINO EL CREATECONNECTIONS" << endl;
-	cout << "EMPEZO EL EVALUATE" << endl;
-	hyperneat.EvaluateSubstrateConnections();
-	cout << "TERMINO EL EVALUATE" << endl;
-
-
-
-	for(int i = 0; i < (int)outputs.size(); i++)
-		cout << *outputs[i] << endl;
-
+	int trains = 2;
+	for(int i = 0; i < trains; i++)
+		Train(hyperneat, inputs, outputs);
+		
 	vector<double*>().swap(inputs);
 	vector<double*>().swap(outputs);
-	cout << "TERMINO EL PROGRAMA" << endl;
+
+	cout << "TERMINO EL PROGRAMA ------------------------------" << endl;
+
 	return 0;
 }
 

@@ -24,8 +24,8 @@ namespace ANN_USM{
 		vector < vector < int > > n_layer_nodes;/**< Nodes number for each layer of each layout */
 		vector < vector < vector < vector < int > > > > nodes_info;/**< Nodes type, input/output id and layer id for each node of each layer of each layout */
 		vector < vector < vector < vector < double > > > > nodes_coordenate;/**< Nodes coordenates for each node of each layer of each layout */
-		vector < double * > inputs;/**< Vector of inputs substrate */
-		vector < double * > outputs;/**< Vector of outputs substrate */
+		vector < double * > inputs;/**< Vector of substrate inputs */
+		vector < double * > outputs;/**< Vector of substrate outputs */
 		vector < vector < SpatialNode * > > nodes;/**< Vector of nodes in each layer of each layout in the substrate */
 		
 	public:

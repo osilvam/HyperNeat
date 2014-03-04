@@ -51,7 +51,7 @@ void SpatialNode::OutputCalcule(){
 		cout << *inputs[i] << " ";
 	}
 	*output = aux;
-	cout <<") | Output_puntero: " << *output << endl;
+	cout <<") | Output_puntero: " << output << endl;
 }
 vector < double > SpatialNode::GetCoordenates(){
 	return coordenates;
@@ -69,6 +69,8 @@ double SpatialNode::GetOuput(){
 	return *output;
 }
 void SpatialNode::ClearInputs(){
+	for(int i = 0; i < (int)inputs.size(); i++)
+		delete inputs[i];
 	inputs.clear();
 	n_inputs = 0;
 }

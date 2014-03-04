@@ -25,7 +25,10 @@ SpatialConnection::~SpatialConnection(){
 
 }
 void SpatialConnection::Evaluate(){
-	*output = (*this->input)*weight;
+	*output = (*input)*weight;
+	//cout << "Input_ID: " << input_node->GetId() << " Output_ID: " << output_node->GetId();
+	//cout << " Weight: " << weight << endl; 
+	//cout << " INPUT: " << input << " OUTPUT: " << output << endl;
 }
 vector < double > SpatialConnection::GetInputCoordenates(){
 	return input_node->GetCoordenates();
