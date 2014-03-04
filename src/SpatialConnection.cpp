@@ -20,10 +20,8 @@ SpatialConnection::SpatialConnection(SpatialNode * input_node, SpatialNode * out
 	output = new double;
 	input = input_node->AddOutputToNode();
 	output_node->AddInputToNode(output);
-
 	cout << "Input_ID: " << input_node->GetId() << " Output_ID: " << output_node->GetId();
 	cout << " Weight: " << weight << endl; 
-
 }
 SpatialConnection::~SpatialConnection(){
 

@@ -1,7 +1,5 @@
-<map id="headers/HyperNeat.hpp" name="headers/HyperNeat.hpp">
-<area shape="rect" id="node2" href="$main_8hpp.html" title="headers/main.hpp" alt="" coords="5,155,131,181"/>
-<area shape="rect" id="node4" href="$_user_functions_8hpp.html" title="headers/UserFunctions.hpp" alt="" coords="106,80,288,107"/>
-<area shape="rect" id="node6" href="$_hyper_neat_8cpp.html" title="src/HyperNeat.cpp" alt="" coords="313,80,444,107"/>
-<area shape="rect" id="node3" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="19,229,116,256"/>
-<area shape="rect" id="node5" href="$_user_functions_8cpp.html" title="src/UserFunctions.cpp" alt="" coords="155,155,308,181"/>
+<map id="/home/oscar/Documents/HyperNeat/headers/HyperNeat.hpp" name="/home/oscar/Documents/HyperNeat/headers/HyperNeat.hpp">
+<area shape="rect" id="node2" href="$main_8hpp.html" title="/home/oscar/Documents\l/HyperNeat/headers/main.hpp" alt="" coords="5,97,200,138"/>
+<area shape="rect" id="node4" href="$_hyper_neat_8cpp.html" title="/home/oscar/Documents\l/HyperNeat/src/HyperNeat.cpp" alt="" coords="225,97,428,138"/>
+<area shape="rect" id="node3" href="$main_8cpp.html" title="/home/oscar/Documents\l/HyperNeat/src/main.cpp" alt="" coords="19,187,187,229"/>
 </map>

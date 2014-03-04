@@ -2,6 +2,7 @@
 #define SPATIALNODE_CPP
 
 #include "SpatialNode.hpp"
+#include "UserFunctions.hpp"
 using namespace ANN_USM;
 
 SpatialNode::SpatialNode(int id, int node_type, int sheet_id, vector < double > coordenates){
@@ -50,6 +51,7 @@ void SpatialNode::OutputCalcule(){
 		aux += *inputs[i];
 		cout << *inputs[i] << " ";
 	}
+	//*output = aux;
 	*output = OutputNodeFunction(aux);
 	cout <<") | Output_puntero: " << *output << endl;
 }

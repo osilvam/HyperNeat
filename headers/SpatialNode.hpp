@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <iostream>
-#include "UserFunctions.hpp"
+
 using namespace std;
 /**
  * \namespace ANN_USM

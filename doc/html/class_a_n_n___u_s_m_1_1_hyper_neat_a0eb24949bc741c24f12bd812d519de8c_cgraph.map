@@ -1,8 +1,7 @@
 <map id="ANN_USM::HyperNeat::CreateSubstrateConnections" name="ANN_USM::HyperNeat::CreateSubstrateConnections">
 <area shape="rect" id="node2" href="$class_a_n_n___u_s_m_1_1_substrate.html#a26dee29b17f6d6284969b1697cb69414" title="Get Substrate layout number. " alt="" coords="261,5,413,46"/>
-<area shape="rect" id="node3" href="$class_a_n_n___u_s_m_1_1_hyper_neat.html#a28a2a85b010e23091799e88990994162" title="Clear all connections on HyperNeat Substrate. " alt="" coords="258,70,417,111"/>
-<area shape="rect" id="node4" href="$class_a_n_n___u_s_m_1_1_substrate.html#a8c3e61424eede374c5755197a777d354" title="Clear input vector of spatial node in specific layout and layer. " alt="" coords="253,135,421,177"/>
-<area shape="rect" id="node5" href="$class_a_n_n___u_s_m_1_1_substrate.html#af66462bbcfa00eda01f62bf72269860e" title="Get layer node number of specific layout. " alt="" coords="254,201,421,242"/>
-<area shape="rect" id="node6" href="$class_a_n_n___u_s_m_1_1_substrate.html#a44672627ec3b103ced54233a29b26486" title="Get spatial node of specific layout and layer. " alt="" coords="261,266,413,307"/>
-<area shape="rect" id="node7" href="$class_a_n_n___u_s_m_1_1_substrate.html#aad34de8fde9ecc3cbb1ebd71548cbc04" title="Get layout layer number. " alt="" coords="261,331,413,373"/>
+<area shape="rect" id="node3" href="$class_a_n_n___u_s_m_1_1_substrate.html#a8c3e61424eede374c5755197a777d354" title="Clear input vector of spatial node in specific layout and layer. " alt="" coords="253,70,421,111"/>
+<area shape="rect" id="node4" href="$class_a_n_n___u_s_m_1_1_substrate.html#af66462bbcfa00eda01f62bf72269860e" title="Get layer node number of specific layout. " alt="" coords="254,135,421,177"/>
+<area shape="rect" id="node5" href="$class_a_n_n___u_s_m_1_1_substrate.html#a44672627ec3b103ced54233a29b26486" title="Get spatial node of specific layout and layer. " alt="" coords="261,201,413,242"/>
+<area shape="rect" id="node6" href="$class_a_n_n___u_s_m_1_1_substrate.html#aad34de8fde9ecc3cbb1ebd71548cbc04" title="Get layout layer number. " alt="" coords="261,266,413,307"/>
 </map>

@@ -3,9 +3,8 @@
 
 #include <iostream>
 #include "UserFunctions.hpp"
-
 namespace ANN_USM{
-
+	
 	double OutputNodeFunction(double input){
 		return Sigmoid(input);
 	}

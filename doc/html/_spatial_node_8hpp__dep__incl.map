@@ -1,13 +1,11 @@
-<map id="headers/SpatialNode.hpp" name="headers/SpatialNode.hpp">
-<area shape="rect" id="node2" href="$_substrate_8hpp.html" title="headers/Substrate.hpp" alt="" coords="69,80,221,107"/>
-<area shape="rect" id="node10" href="$_spatial_connection_8hpp.html" title="headers/SpatialConnection.hpp" alt="" coords="247,80,449,107"/>
-<area shape="rect" id="node12" href="$_spatial_node_8cpp.html" title="src/SpatialNode.cpp" alt="" coords="474,80,613,107"/>
-<area shape="rect" id="node3" href="$_hyper_neat_8hpp.html" title="headers/HyperNeat.hpp" alt="" coords="155,155,313,181"/>
-<area shape="rect" id="node9" href="$_substrate_8cpp.html" title="src/Substrate.cpp" alt="" coords="5,155,131,181"/>
-<area shape="rect" id="node4" href="$main_8hpp.html" title="headers/main.hpp" alt="" coords="43,304,168,331"/>
-<area shape="rect" id="node6" href="$_user_functions_8hpp.html" title="headers/UserFunctions.hpp" alt="" coords="143,229,325,256"/>
-<area shape="rect" id="node8" href="$_hyper_neat_8cpp.html" title="src/HyperNeat.cpp" alt="" coords="350,229,481,256"/>
-<area shape="rect" id="node5" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="57,379,153,405"/>
-<area shape="rect" id="node7" href="$_user_functions_8cpp.html" title="src/UserFunctions.cpp" alt="" coords="192,304,345,331"/>
-<area shape="rect" id="node11" href="$_spatial_connection_8cpp.html" title="src/SpatialConnection.cpp" alt="" coords="339,155,513,181"/>
+<map id="/home/oscar/Documents/HyperNeat/headers/SpatialNode.hpp" name="/home/oscar/Documents/HyperNeat/headers/SpatialNode.hpp">
+<area shape="rect" id="node2" href="$_substrate_8hpp.html" title="/home/oscar/Documents\l/HyperNeat/headers/Substrate.hpp" alt="" coords="104,97,327,138"/>
+<area shape="rect" id="node8" href="$_spatial_connection_8hpp.html" title="/home/oscar/Documents\l/HyperNeat/headers/SpatialConnection.hpp" alt="" coords="352,97,627,138"/>
+<area shape="rect" id="node10" href="$_spatial_node_8cpp.html" title="/home/oscar/Documents\l/HyperNeat/src/SpatialNode.cpp" alt="" coords="651,97,860,138"/>
+<area shape="rect" id="node3" href="$_hyper_neat_8hpp.html" title="/home/oscar/Documents\l/HyperNeat/headers/HyperNeat.hpp" alt="" coords="225,187,455,229"/>
+<area shape="rect" id="node7" href="$_substrate_8cpp.html" title="/home/oscar/Documents\l/HyperNeat/src/Substrate.cpp" alt="" coords="5,187,200,229"/>
+<area shape="rect" id="node4" href="$main_8hpp.html" title="/home/oscar/Documents\l/HyperNeat/headers/main.hpp" alt="" coords="130,278,325,319"/>
+<area shape="rect" id="node6" href="$_hyper_neat_8cpp.html" title="/home/oscar/Documents\l/HyperNeat/src/HyperNeat.cpp" alt="" coords="351,278,553,319"/>
+<area shape="rect" id="node5" href="$main_8cpp.html" title="/home/oscar/Documents\l/HyperNeat/src/main.cpp" alt="" coords="144,369,312,410"/>
+<area shape="rect" id="node9" href="$_spatial_connection_8cpp.html" title="/home/oscar/Documents\l/HyperNeat/src/SpatialConnection.cpp" alt="" coords="479,187,725,229"/>
 </map>
