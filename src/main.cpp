@@ -75,7 +75,7 @@ int main(int argc, char *argv[]){
 
 	int trains = 2;
 	for(int i = 0; i < trains; i++)
-		Train(hyperneat, inputs, outputs);
+		UserTrain(hyperneat, inputs, outputs);
 		
 	vector<double*>().swap(inputs);
 	vector<double*>().swap(outputs);

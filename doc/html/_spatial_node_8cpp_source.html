@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>HyperNeat: /home/oscar/Documents/HyperNeat/src/SpatialNode.cpp Source File</title>
+<title>HyperNeat: src/SpatialNode.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -121,11 +121,13 @@
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">return</span> *output;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
 <div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="class_a_n_n___u_s_m_1_1_spatial_node.html#a5d7507e42443c893ba7e8c2861a0d344">   71</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_a_n_n___u_s_m_1_1_spatial_node.html#a5d7507e42443c893ba7e8c2861a0d344">SpatialNode::ClearInputs</a>(){</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    inputs.clear();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    n_inputs = 0;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; (int)inputs.size(); i++)</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">delete</span> inputs[i];</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    inputs.clear();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    n_inputs = 0;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="class_a_n_n___u_s_m_1_1_spatial_node_html_a56243b697d163058971480946ba4c7c9"><div class="ttname"><a href="class_a_n_n___u_s_m_1_1_spatial_node.html#a56243b697d163058971480946ba4c7c9">ANN_USM::SpatialNode::GetNodeType</a></div><div class="ttdeci">int GetNodeType()</div><div class="ttdoc">Get node type. </div><div class="ttdef"><b>Definition:</b> <a href="_spatial_node_8cpp_source.html#l00062">SpatialNode.cpp:62</a></div></div>
 <div class="ttc" id="class_a_n_n___u_s_m_1_1_spatial_node_html_af35108c8493e1d07417cca24647472d2"><div class="ttname"><a href="class_a_n_n___u_s_m_1_1_spatial_node.html#af35108c8493e1d07417cca24647472d2">ANN_USM::SpatialNode::SetOutputToOutputNode</a></div><div class="ttdeci">void SetOutputToOutputNode(double *output)</div><div class="ttdoc">Assign output to output type node. </div><div class="ttdef"><b>Definition:</b> <a href="_spatial_node_8cpp_source.html#l00029">SpatialNode.cpp:29</a></div></div>
 <div class="ttc" id="class_a_n_n___u_s_m_1_1_spatial_node_html_aa5f3c5395f1412e56f7becd988a8771c"><div class="ttname"><a href="class_a_n_n___u_s_m_1_1_spatial_node.html#aa5f3c5395f1412e56f7becd988a8771c">ANN_USM::SpatialNode::GetOuput</a></div><div class="ttdeci">double GetOuput()</div><div class="ttdoc">Get node output. </div><div class="ttdef"><b>Definition:</b> <a href="_spatial_node_8cpp_source.html#l00068">SpatialNode.cpp:68</a></div></div>
@@ -143,7 +145,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Mar 2 2014 23:05:17 for HyperNeat by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 4 2014 16:52:00 for HyperNeat by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -3,9 +3,21 @@
 
 #include <iostream>
 #include "UserFunctions.hpp"
+
 namespace ANN_USM{
 
-	void Train(HyperNeat * hyperneat, vector < double * > inputs, vector < double * > outputs){
+	double OutputNodeFunction(double input){
+		return Sigmoid(input);
+	}
+	double Sigmoid(double input){
+		return (double)(1/(1+exp(-SIGMOID_CONST*input)));
+	}
+	/*
+	double USER_CUSTOM(double input){
+		return (double)(USER_FUNCTION);
+	}
+	*/
+	void UserTrain(HyperNeat * hyperneat, vector < double * > inputs, vector < double * > outputs){
 		
 		vector < vector < double > > outputs_set;
 		int test = 1;//Necesary to set the test number		

@@ -50,8 +50,8 @@ void SpatialNode::OutputCalcule(){
 		aux += *inputs[i];
 		cout << *inputs[i] << " ";
 	}
-	*output = aux;
-	cout <<") | Output_puntero: " << output << endl;
+	*output = OutputNodeFunction(aux);
+	cout <<") | Output_puntero: " << *output << endl;
 }
 vector < double > SpatialNode::GetCoordenates(){
 	return coordenates;
