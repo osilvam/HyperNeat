@@ -32,11 +32,11 @@ void SpatialConnection::Evaluate(){
 	//cout << " Weight: " << weight << endl; 
 	//cout << " INPUT: " << input << " OUTPUT: " << output << endl;
 }
-vector < double > SpatialConnection::GetInputCoordenates(){
-	return input_node->GetCoordenates();
+int SpatialConnection::GetInputId(){
+	return input_node->GetId();
 }
-vector < double > SpatialConnection::GetOutputCoordenates(){
-	return output_node->GetCoordenates();
+int SpatialConnection::GetOutputId(){
+	return output_node->GetId();
 }
 
 #endif

@@ -3,9 +3,9 @@ VPATH = ./src ./headers ./objects
 CC = g++ -O3
 CFLAGS = -g -Wall -I./headers -I./objects -I./src
 
-all: main.o  HyperNeat.o Substrate.o SpatialNode.o SpatialConnection.o CPPNInputs.o UserFunctions.o
-	@echo "Linking main.o  HyperNeat.o Substrate.o SpatialNode.o SpatialConnection.o CPPNInputs.o UserFunctions.o to ./bin/HyperNeat"
-	@$(CC) $(CFLAGS) ./objects/main.o ./objects/HyperNeat.o ./objects/Substrate.o ./objects/SpatialNode.o ./objects/SpatialConnection.o ./objects/CPPNInputs.o ./objects/UserFunctions.o -o ./bin/HyperNeat
+all: main.o  HyperNeat.o Substrate.o SpatialNode.o CPPNInputs.o UserFunctions.o
+	@echo "Linking main.o  HyperNeat.o Substrate.o SpatialNode.o CPPNInputs.o UserFunctions.o to ./bin/HyperNeat"
+	@$(CC) $(CFLAGS) ./objects/main.o ./objects/HyperNeat.o ./objects/Substrate.o ./objects/SpatialNode.o ./objects/CPPNInputs.o ./objects/UserFunctions.o -o ./bin/HyperNeat
 
 main.o: main.cpp 
 	@echo "Compiling main.cpp to main.o"

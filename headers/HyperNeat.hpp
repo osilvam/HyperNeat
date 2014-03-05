@@ -2,7 +2,6 @@
 #define HYPERNEAT_H
 
 #include "Substrate.hpp"
-#include "SpatialConnection.hpp"
 //#include "ConnectiveCPPN.hpp"
 #include "CPPNInputs.hpp"
 #include <vector>
@@ -25,7 +24,6 @@ namespace ANN_USM{
 		vector < CPPNInputs > AditionalCPPNInputs;/**< Vector of aditional cppn inputs */
 		int connection_threshold;/**< Threshold that determine the creation for an connection */
 		vector < double > CppnInputs;/**< Vector of cppn input values */
-		vector < vector < SpatialConnection > > connections;/**< Vector of overall connections */
 		int n_connections;/**< Number of connections after evaluate connections with cppn-neat */
 		//ConnectiveCPPN * cppn;
 		Substrate * substrate;/**< Vector of overall HyperNeat substrates */
@@ -55,11 +53,6 @@ namespace ANN_USM{
 		 */
 		void EvaluateSubstrateConnections();
 		/**
-		 * \brief Evaluate all connections after specific sheet
-		 * \param sheet_num Sheet number
-		 */
-		void EvaluateConnections(int sheet_num);
-		/**
 		 * \brief Set CPPN-NEAT fitness of last interation
 		 * \param fitness Fitnnes value to set
 		 */
@@ -67,11 +60,12 @@ namespace ANN_USM{
 		/**
 		 * \brief Allows evolve cppn_neat
 		 */
-		void HyperNeatEvolve();
+		void HyperNeatEvolve();		
 		/**
-		 * \brief Clear all connections on HyperNeat Substrate
+		 * \brief Allows obtain all final functions of every output node
+		 * \return vector with all final output functions
 		 */
-		void ClearConnections();
+		vector < string > GetHyperNeatOutputFunctions();
 	};
 }
 #endif

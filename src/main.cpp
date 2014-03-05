@@ -61,6 +61,7 @@ int main(int argc, char *argv[]){
 
 	vector < double * > inputs;
 	vector < double * > outputs;
+	vector < string > FinalFunctions;
 
 	for(int i = 0; i < 3; i++){
 		double * input = new double(0.5 + 0.1*i);
@@ -73,9 +74,12 @@ int main(int argc, char *argv[]){
 
 	HyperNeat * hyperneat = new HyperNeat(inputs, outputs, jsonstring);
 
-	int trains = 2;
-	for(int i = 0; i < trains; i++)
-		UserTrain(hyperneat, inputs, outputs);
+	UserTrain(hyperneat, inputs, outputs);
+
+	FinalFunctions = hyperneat->GetHyperNeatOutputFunctions();
+	for(int i = 0; i < (int)FinalFunctions.size(); i++){
+		cout << FinalFunctions[i] << "\n" << endl;
+	}
 		
 	vector<double*>().swap(inputs);
 	vector<double*>().swap(outputs);

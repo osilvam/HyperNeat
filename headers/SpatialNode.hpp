@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <iostream>
+#include <sstream>
+#include <string>
 
 using namespace std;
 /**
@@ -21,9 +23,12 @@ namespace ANN_USM{
 		int node_type;/**< node type value. Input: 0, Hidden: 1, Output: 2 */
 		vector < double > coordenates;/**< coordenate node vector */
 		int n_inputs;/**< inputs number */
-		vector < double * > inputs;/**< vector of input pointer from other nodes */
+		vector < double > inputs_weight;/**< vector of weight associated with a input node connection */
+		vector < SpatialNode * > inputs_nodes;/**< vector of input node pointer */
 		double * input;/**< substrate input pointer. Only if the node is in input mode */
+		int input_id;/**< Id value of Substrate input */
 		double * output;/**< output node pointer */
+		int output_id;/**< Id value of Substrate output */
 	public:
 		/**
 		 * \brief Constructor with parameters
@@ -44,18 +49,21 @@ namespace ANN_USM{
 		/**
 		 * \brief Assign input to input type node
 		 * \param input Input pointer
+		 * \param input_id HyperNeat input id
 		 */
-		void SetInputToInputNode(double * input);
+		void SetInputToInputNode(double * input, int input_id);
 		/**
 		 * \brief Assign output to output type node
 		 * \param output Output pointer
+		 * \param output_id HyperNeat output id
 		 */
-		void SetOutputToOutputNode(double * output);
+		void SetOutputToOutputNode(double * output, int output_id);
 		/**
-		 * \brief Add input to node with spatial connection
-		 * \param input Input pointer
+		 * \brief Add input to node from other node
+		 * \param input_node Input node pointer
+		 * \param input_weight Weight associated to connection
 		 */
-		void AddInputToNode(double * input);
+		void AddInputToNode(SpatialNode * input_node, double input_weight);
 		/**
 		 * \brief Add output to node with spatial connection
 		 * \return Output pointer
@@ -94,6 +102,11 @@ namespace ANN_USM{
 		 * \brief Clear inputs node vector
 		 */
 		void ClearInputs();
+		/**
+		 * \brief Get output function from this node recursively backwards
+		 * \return Function in stringstream format
+		 */
+		string GetNodeFunction();
 	};
 }
 #endif

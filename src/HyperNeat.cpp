@@ -2,7 +2,6 @@
 #define HYPERNEAT_CPP
 
 #include "HyperNeat.hpp"
-
 #include <unistd.h>
 
 using namespace ANN_USM;
@@ -17,7 +16,6 @@ HyperNeat::~HyperNeat(){
 	free(substrate);
 	vector < CPPNInputs >().swap(AditionalCPPNInputs);
 	vector < double >().swap(CppnInputs);
-	vector < vector < SpatialConnection > >().swap(connections);
 }
 void HyperNeat::HJsonDeserialize(string hyperneat_info){
 	char str[(int)hyperneat_info.size()];
@@ -68,10 +66,8 @@ void HyperNeat::CreateSubstrateConnections(){
 		return;
 	}
 	n_connections = 0;
-	ClearConnections();
 	if(substrate->GetLayoutNumber() > 1){
 		for(int i = 0; i < substrate->GetLayoutNumber()-1; i++){
-			vector < SpatialConnection > aux;
 			substrate->ClearSpatialNodeInputs(i+1,0);
 			for(int j = 0; j < substrate->GetLayerNodesNumber(i,0); j++){
 				for(int k = 0; k < substrate->GetLayerNodesNumber(i+1,0); j++){
@@ -87,16 +83,14 @@ void HyperNeat::CreateSubstrateConnections(){
 					//double weight = cppn_neat->CalculeWeight(cppn_inputs);
 					double weight = 1;
 					if(weight > connection_threshold){
-						aux.push_back(SpatialConnection(substrate->GetSpatialNode(i,0,j),substrate->GetSpatialNode(i+1,0,k),weight));
+						(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), weight);
 						n_connections++;
 					}
 				}
 			}
-			connections.push_back(aux);
 		}
 	}else{
 		for(int i = 0; i < substrate->GetLayersNumber(0)-1; i++){
-			vector < SpatialConnection > aux;
 			substrate->ClearSpatialNodeInputs(0,i+1);
 			for(int j = 0; j < substrate->GetLayerNodesNumber(0,i); j++){
 				for(int k = 0; k < substrate->GetLayerNodesNumber(0,i+1); k++){
@@ -112,12 +106,11 @@ void HyperNeat::CreateSubstrateConnections(){
 					//double weight = cppn_neat->CalculeWeight(cppn_inputs);
 					double weight = 1;
 					if(weight > connection_threshold){
-						aux.push_back(SpatialConnection(substrate->GetSpatialNode(0,i,j),substrate->GetSpatialNode(0,i+1,k),weight));
+						(substrate->GetSpatialNode(0,i+1,k))->AddInputToNode(substrate->GetSpatialNode(0,i,j), weight);
 						n_connections++;
 					}
 				}
 			}
-			connections.push_back(aux);
 		}
 	}
 }
@@ -132,22 +125,12 @@ void HyperNeat::EvaluateSubstrateConnections(){
 	}
 	int i;
 	if(substrate->GetLayoutNumber() > 1){
-		for(i = 0; i < substrate->GetLayoutNumber()-1; i++){
+		for(i = 0; i < substrate->GetLayoutNumber(); i++)
 			substrate->EvaluateSpatialNode(i,0);
-			EvaluateConnections(i);
-		}
-		substrate->EvaluateSpatialNode(i,0);
 	}else{		
-		for(i = 0; i < substrate->GetLayersNumber(0)-1;i++){
+		for(i = 0; i < substrate->GetLayersNumber(0);i++)
 			substrate->EvaluateSpatialNode(0,i);
-			EvaluateConnections(i);			
-		}
-		substrate->EvaluateSpatialNode(0,i);
 	}
-}
-void HyperNeat::EvaluateConnections(int sheet_num){
-	for(int i = 0; i < (int)connections[sheet_num].size(); i++)
-		connections[sheet_num][i].Evaluate();
 }
 void HyperNeat::HyperNeatFitness(double fitness){
 	//cppn_neat->SetFitness(fitness);
@@ -155,8 +138,8 @@ void HyperNeat::HyperNeatFitness(double fitness){
 void HyperNeat::HyperNeatEvolve(){
 	//cppn_neat->Evolve();
 }
-void HyperNeat::ClearConnections(){
-	vector < vector < SpatialConnection > >().swap(connections);
+vector < string > HyperNeat::GetHyperNeatOutputFunctions(){
+	return substrate->GetSubstrateOutputFunctions();
 }
 
 #endif

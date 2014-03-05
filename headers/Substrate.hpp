@@ -111,6 +111,11 @@ namespace ANN_USM{
 		 * \return Id of specific spatial node
 		 */
 		double GetSpatialNodeId(int layout_num, int layer_num, int layer_node_num);
+		/**
+		 * \brief Allows obtain all final functions of every output node
+		 * \return vector with all final output functions
+		 */
+		vector < string > GetSubstrateOutputFunctions();
 		
 	};
 }

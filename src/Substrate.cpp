@@ -2,6 +2,7 @@
 #define SUBSTRATE_CPP
 
 #include "Substrate.hpp"
+#include "UserFunctions.hpp"
 using namespace ANN_USM;
 
 Substrate::Substrate(vector < double * > inputs, vector < double * > outputs){
@@ -109,10 +110,10 @@ void Substrate::CreateNodes(){
 			for(int j = 0; j < n_layer_nodes[i][0]; j++){
 				aux1.push_back(new SpatialNode(id, nodes_info[i][0][j][0], nodes_info[i][0][j][2], nodes_coordenate[i][0][j]));
 				if(nodes_info[i][0][j][0] == 0)
-					aux1[j]->SetInputToInputNode(inputs[nodes_info[i][0][j][1]]);
+					aux1[j]->SetInputToInputNode(inputs[nodes_info[i][0][j][1]], nodes_info[i][0][j][1]);
 				else
 					if(nodes_info[i][0][j][0] == 2)
-						aux1[j]->SetOutputToOutputNode(outputs[nodes_info[i][0][j][1]]);
+						aux1[j]->SetOutputToOutputNode(outputs[nodes_info[i][0][j][1]], nodes_info[i][0][j][1]);
 				id++;
 			}
 			nodes.push_back(aux1);
@@ -124,10 +125,10 @@ void Substrate::CreateNodes(){
 			for(int j = 0; j < n_layer_nodes[0][j]; j++){
 				aux1.push_back(new SpatialNode(id, nodes_info[0][i][j][0], nodes_info[0][i][j][2], nodes_coordenate[0][i][j]));
 				if(nodes_info[0][i][j][0] == 0)
-					aux1[j]->SetInputToInputNode(inputs[nodes_info[0][i][j][1]]);
+					aux1[j]->SetInputToInputNode(inputs[nodes_info[0][i][j][1]], nodes_info[0][i][j][1]);
 				else
 					if(nodes_info[0][i][j][0] == 2)
-						aux1[j]->SetOutputToOutputNode(outputs[nodes_info[0][i][j][1]]);
+						aux1[j]->SetOutputToOutputNode(outputs[nodes_info[0][i][j][1]], nodes_info[0][i][j][1]);
 				id++;
 			}
 			nodes.push_back(aux1);
@@ -190,6 +191,22 @@ double Substrate::GetSpatialNodeId(int layout_num, int layer_num, int layer_node
 		return nodes[layout_num][layer_node_num]->GetId();
 	else
 		return nodes[layer_num][layer_node_num]->GetId();
+}
+vector < string > Substrate::GetSubstrateOutputFunctions(){
+	vector < string > functions;
+	functions.push_back(GetNodeFunctionInfo());
+	if(n_layouts > 1){
+		for(int i = 0; i < n_layouts; i++)
+			for(int j = 0; j < n_layer_nodes[i][0]; j++)
+				if(nodes_info[i][0][j][0] == 2)
+					functions.push_back(nodes[i][j]->GetNodeFunction());
+	}else{
+		for(int i = 0; i < n_layers[0]; i++)
+			for(int j = 0; j < n_layer_nodes[0][j]; j++)
+				if(nodes_info[0][i][j][0] == 2)
+					functions.push_back(nodes[i][j]->GetNodeFunction());
+	}
+	return functions;
 }
 
 #endif

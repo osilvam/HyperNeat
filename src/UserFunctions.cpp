@@ -2,11 +2,24 @@
 #define USERFUNCTIONS_CPP
 
 #include <iostream>
+#include <sstream>
+#include <string>
 #include "UserFunctions.hpp"
+
 namespace ANN_USM{
 	
+	string GetNodeFunctionInfo(){
+		stringstream info;
+		if(!strcmp(NODE_FUNCTION,(char *)"SIGMOID")) 
+			info << "NODE_FUNCTION: " << NODE_FUNCTION << " - EXPRESION: " << SIGMOID_FUNC << " - SIGMOID_CONST: " << SIGMOID_CONST;
+		//else if(!strcmp(NODE_FUNCTION,(char *)"USER_CUSTOM"))
+		//	info << "USER_CUSTOM";
+		return info.str();
+	}
+
 	double OutputNodeFunction(double input){
-		return Sigmoid(input);
+		return Sigmoid(input);//Necessary to indicate which node function used
+		//return USER_CUSTOM(input);
 	}
 	double Sigmoid(double input){
 		return (double)(1/(1+exp(-SIGMOID_CONST*input)));

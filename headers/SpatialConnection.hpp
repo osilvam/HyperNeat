@@ -39,15 +39,15 @@ namespace ANN_USM{
 		 */
 		void Evaluate();
 		/**
-		 * \brief Get the input node cordenates
-		 * \return Vector of coordenates
+		 * \brief Get the input node id
+		 * \return node id value
 		 */
-		vector < double > GetInputCoordenates();
+		int GetInputId();
 		/**
-		 * \brief Get the output node coordenates
-		 * \return Vector of coordenates
+		 * \brief Get the output node id
+		 * \return node id value
 		 */
-		vector < double > GetOutputCoordenates();
+		int GetOutputId();
 
 	};
 }
