@@ -2,7 +2,7 @@
 #define HYPERNEAT_H
 
 #include "Substrate.hpp"
-//#include "ConnectiveCPPN.hpp"
+#include "CPPN-NEAT.hpp"
 #include "CPPNInputs.hpp"
 #include <vector>
 #include <string>
@@ -27,6 +27,8 @@ namespace ANN_USM{
 		int n_connections;/**< Number of connections after evaluate connections with cppn-neat */
 		//ConnectiveCPPN * cppn;
 		Substrate * substrate;/**< Vector of overall HyperNeat substrates */
+
+		Population * cppn_neat;
 	public:
 		/**
 		 * \brief Constructor with parameters
@@ -34,7 +36,7 @@ namespace ANN_USM{
 		 * \param outputs Output vector
 		 * \param hyperneat_info Json string
 		 */
-		HyperNeat(vector < double * > inputs, vector < double * > outputs, string hyperneat_info);
+		HyperNeat(vector<double *> inputs, vector < double * > outputs, string hyperneat_info);
 		/**
 		 * \brief Destructor
 		 */
@@ -47,7 +49,7 @@ namespace ANN_USM{
 		/**
 		 * \brief Create all substrate connections according to cppn-neat result
 		 */
-		void CreateSubstrateConnections();
+		void CreateSubstrateConnections(int organism_id);
 		/**
 		 * \brief Allows to obtain the final HyperNeat outputs
 		 */
@@ -56,7 +58,7 @@ namespace ANN_USM{
 		 * \brief Set CPPN-NEAT fitness of last interation
 		 * \param fitness Fitnnes value to set
 		 */
-		void HyperNeatFitness(double fitness);
+		void HyperNeatFitness(double fitness, int organism_id);
 		/**
 		 * \brief Allows evolve cppn_neat
 		 */
@@ -65,7 +67,9 @@ namespace ANN_USM{
 		 * \brief Allows obtain all final functions of every output node
 		 * \return vector with all final output functions
 		 */
-		vector < string > GetHyperNeatOutputFunctions();
+		vector<string> GetHyperNeatOutputFunctions();
+
+
 	};
 }
 #endif

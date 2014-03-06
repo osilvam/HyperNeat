@@ -3,51 +3,54 @@
 
 #include <vector>
 #include <string>
-#include <string.h>
-#include <stdlib.h>
+#include <cstring>
+#include <cstdlib>
+
 #include "SpatialNode.hpp"
+
 using namespace std;
-/**
- * \namespace ANN_USM
- * \brief Dedicated to artificial intelligence development in Santa María University.
- */
-namespace ANN_USM{
-	/**
-	 * \class Substrate
-	 * \brief The class Substrate is used to create HyperNeat Substrate
-	 */
+
+namespace ANN_USM
+{
 	class Substrate
 	{	
-		int n_layouts;/**< Layouts number */
-		vector < int > coordenate_type;/**< Coordenate type vector. Cartesian 2D: 0, cartesian 3D: 1, polar 2D: 2, polar 3D: 3. of each layout */
-		vector < int > n_layers;/**< Layers number of each layout */
-		vector < vector < int > > n_layer_nodes;/**< Nodes number for each layer of each layout */
-		vector < vector < vector < vector < int > > > > nodes_info;/**< Nodes type, input/output id and layer id for each node of each layer of each layout */
-		vector < vector < vector < vector < double > > > > nodes_coordenate;/**< Nodes coordenates for each node of each layer of each layout */
-		vector < double * > inputs;/**< Vector of substrate inputs */
-		vector < double * > outputs;/**< Vector of substrate outputs */
-		vector < vector < SpatialNode * > > nodes;/**< Vector of nodes in each layer of each layout in the substrate */
+		int n_layouts;
+
+		vector<double *> inputs;
+		vector<double *> outputs;
+
+		// Coordinate type vector of each layout
+		//   Cartesian 2D: 0
+		//   Cartesian 3D: 1
+		//   Polar 2D: 2
+		//   Polar 3D: 3
+		vector<int> coordinate_type; 
+
+		// Number of layers within each layout
+		vector<int> n_layers; 		
+
+		// Number of nodes within each layer (for all layout)
+		vector< vector<int> > n_layer_nodes; 
+
+		// Type, input / output id and layer id of each node (for all layer within every layout)
+		vector< vector< vector< vector<int> > > > nodes_info;
+
+		// Coordinates of each node (for all layer within every layout)
+		vector< vector< vector< vector<double> > > > nodes_coordinate;
+		
+		// Vector of nodes in each layer of each layout in the substrate
+		vector< vector<SpatialNode *> > nodes; 
 		
 	public:
-		/**
-		 * \brief Constructor with parameters
-		 * \param inputs Input vector
-		 * \param outputs Output vector
-		 */
+
 		Substrate(vector < double * > inputs, vector < double * > outputs);
-		/**
-		 * \brief Void Constructor
-		 */
 		Substrate();
-		/**
-		 * \brief Destructor
-		 */
 		~Substrate();
 		/**
 		 * \brief Extract all Substrate information of char pointer
 		 * \param substrate_info char pointer of json string
 		 */
-		void SJsonDeserialize(char * substrate_info);
+		char * SJsonDeserialize(char * substrate_info);
 		/**
 		 * \brief Inicialize overall nodes based of information extract with SJsonDeserialize function
 		 */
@@ -57,11 +60,11 @@ namespace ANN_USM{
 		 */
 		int GetLayoutNumber();
 		/**
-		 * \brief Get layout coordenate type
+		 * \brief Get layout coordinate type
 		 * \param layout_num Layout number
-		 * \return Substrate coordenate type
+		 * \return Substrate coordinate type
 		 */
-		int GetCoordenateType(int layout_num);
+		int GetCoordinateType(int layout_num);
 		/**
 		 * \brief Get layout layer number
 		 * \param layout_num Layout number

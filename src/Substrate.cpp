@@ -13,32 +13,32 @@ Substrate::Substrate(){
 
 }
 Substrate::~Substrate(){
-	vector < int >().swap(coordenate_type);
+	vector < int >().swap(coordinate_type);
 	vector < int >().swap(n_layers);
 	vector < vector < int > >().swap(n_layer_nodes);
 	vector < vector < vector < vector < int > > > >().swap(nodes_info);
-	vector < vector < vector < vector < double > > > >().swap(nodes_coordenate);
+	vector < vector < vector < vector < double > > > >().swap(nodes_coordinate);
 	vector < double * >().swap(inputs);
 	vector < double * >().swap(outputs);
 	vector < vector < SpatialNode * > >().swap(nodes);
 }
-void Substrate::SJsonDeserialize(char * substrate_info){
+char * Substrate::SJsonDeserialize(char * substrate_info){
 	//char *str;
 	//strcpy(str, substrate_info.c_str());
 	const char delimeters[] = "{\"\t\n:,[ ]}";
 	//char *pch = strtok(str, delimeters);
 	while(substrate_info != NULL){
-		if (!strcmp(substrate_info,(char *)"Layouts")){								
+		if (!strcmp(substrate_info,(char *)"Layouts")){							
 			substrate_info = strtok(NULL, delimeters);
 			for(int i = 0; i < n_layouts; i++){
 				while(substrate_info != NULL){
-					if (!strcmp(substrate_info,(char *)"nodes_coordenate")){
+					if (!strcmp(substrate_info,(char *)"nodes_coordinate")){					
 						vector < vector < vector < double > > > aux1;
 						for(int j = 0; j < n_layers[i]; j++){
 							vector < vector < double > > aux2;
 							for(int k = 0; k < n_layer_nodes[i][j]; k++){
 								vector < double > aux3;
-								for(int t = 0; t < 2+coordenate_type[i]%2; t++){								
+								for(int t = 0; t < 2+coordinate_type[i]%2; t++){								
 									substrate_info = strtok(NULL, delimeters);
 									aux3.push_back(atof(substrate_info));
 								}
@@ -46,11 +46,11 @@ void Substrate::SJsonDeserialize(char * substrate_info){
 							}
 							aux1.push_back(aux2);
 						}
-						nodes_coordenate.push_back(aux1);
+						nodes_coordinate.push_back(aux1);
 						substrate_info = strtok(NULL, delimeters);
 						break;
 					}else{
-						if (!strcmp(substrate_info,(char *)"nodes_info")){
+						if (!strcmp(substrate_info,(char *)"nodes_info")){						
 							vector < vector < vector < int > > > aux1;
 							for(int j = 0; j < n_layers[i]; j++){
 								vector < vector < int > > aux2;
@@ -67,7 +67,7 @@ void Substrate::SJsonDeserialize(char * substrate_info){
 							nodes_info.push_back(aux1);
 							substrate_info = strtok(NULL, delimeters);
 						}else{
-							if (!strcmp(substrate_info,(char *)"n_layer_nodes")){
+							if (!strcmp(substrate_info,(char *)"n_layer_nodes")){						
 								vector < int > aux;
 								for(int j = 0; j < n_layers[i]; j++){
 									substrate_info = strtok(NULL, delimeters);
@@ -76,14 +76,14 @@ void Substrate::SJsonDeserialize(char * substrate_info){
 								n_layer_nodes.push_back(aux);
 								substrate_info = strtok(NULL, delimeters);
 							}else{
-								if (!strcmp(substrate_info,(char *)"n_layers")){
+								if (!strcmp(substrate_info,(char *)"n_layers")){	
 									substrate_info = strtok(NULL, delimeters);
 									n_layers.push_back(atoi(substrate_info));
 									substrate_info = strtok(NULL, delimeters);
 								}else{
-									if (!strcmp(substrate_info,(char *)"coordenate_type")){
+									if (!strcmp(substrate_info,(char *)"coordinate_type")){						
 										substrate_info = strtok(NULL, delimeters);
-										coordenate_type.push_back(atoi(substrate_info));
+										coordinate_type.push_back(atoi(substrate_info));
 										substrate_info = strtok(NULL, delimeters);
 									}
 								}
@@ -92,8 +92,9 @@ void Substrate::SJsonDeserialize(char * substrate_info){
 					}
 				}
 			}
+			break;
 		}else{
-			if (!strcmp(substrate_info,(char *)"n_layouts")){
+			if (!strcmp(substrate_info,(char *)"n_layouts")){						
 				substrate_info = strtok(NULL, delimeters);
 				n_layouts = atoi(substrate_info);
 				substrate_info = strtok(NULL, delimeters);
@@ -101,6 +102,7 @@ void Substrate::SJsonDeserialize(char * substrate_info){
 		}		
 	}
 	CreateNodes();
+	return substrate_info;
 }
 void Substrate::CreateNodes(){
 	int id  = 0;
@@ -108,7 +110,7 @@ void Substrate::CreateNodes(){
 		for(int i = 0; i < n_layouts; i++){
 			vector < SpatialNode * > aux1; 
 			for(int j = 0; j < n_layer_nodes[i][0]; j++){
-				aux1.push_back(new SpatialNode(id, nodes_info[i][0][j][0], nodes_info[i][0][j][2], nodes_coordenate[i][0][j]));
+				aux1.push_back(new SpatialNode(id, nodes_info[i][0][j][0], nodes_info[i][0][j][2], nodes_coordinate[i][0][j]));
 				if(nodes_info[i][0][j][0] == 0)
 					aux1[j]->SetInputToInputNode(inputs[nodes_info[i][0][j][1]], nodes_info[i][0][j][1]);
 				else
@@ -122,8 +124,8 @@ void Substrate::CreateNodes(){
 	}else{
 		for(int i = 0; i < n_layers[0]; i++){
 			vector < SpatialNode * > aux1; 
-			for(int j = 0; j < n_layer_nodes[0][j]; j++){
-				aux1.push_back(new SpatialNode(id, nodes_info[0][i][j][0], nodes_info[0][i][j][2], nodes_coordenate[0][i][j]));
+			for(int j = 0; j < n_layer_nodes[0][i]; j++){
+				aux1.push_back(new SpatialNode(id, nodes_info[0][i][j][0], nodes_info[0][i][j][2], nodes_coordinate[0][i][j]));
 				if(nodes_info[0][i][j][0] == 0)
 					aux1[j]->SetInputToInputNode(inputs[nodes_info[0][i][j][1]], nodes_info[0][i][j][1]);
 				else
@@ -138,8 +140,8 @@ void Substrate::CreateNodes(){
 int Substrate::GetLayoutNumber(){
 	return n_layouts;
 }
-int Substrate::GetCoordenateType(int layout_num){
-	return coordenate_type[layout_num];
+int Substrate::GetCoordinateType(int layout_num){
+	return coordinate_type[layout_num];
 }
 int Substrate::GetLayersNumber(int layout_num){
 	return n_layers[layout_num];
@@ -202,7 +204,7 @@ vector < string > Substrate::GetSubstrateOutputFunctions(){
 					functions.push_back(nodes[i][j]->GetNodeFunction());
 	}else{
 		for(int i = 0; i < n_layers[0]; i++)
-			for(int j = 0; j < n_layer_nodes[0][j]; j++)
+			for(int j = 0; j < n_layer_nodes[0][i]; j++)
 				if(nodes_info[0][i][j][0] == 2)
 					functions.push_back(nodes[i][j]->GetNodeFunction());
 	}

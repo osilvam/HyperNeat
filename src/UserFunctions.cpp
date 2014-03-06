@@ -22,7 +22,7 @@ namespace ANN_USM{
 		//return USER_CUSTOM(input);
 	}
 	double Sigmoid(double input){
-		return (double)(1/(1+exp(-SIGMOID_CONST*input)));
+		return (double)((1 / (1 + exp(-SIGMOID_CONST*input)) - 0.5) * 2);
 	}
 	/*
 	double USER_CUSTOM(double input){
@@ -31,42 +31,63 @@ namespace ANN_USM{
 	*/
 	void UserTrain(HyperNeat * hyperneat, vector < double * > inputs, vector < double * > outputs){
 		
-		vector < vector < double > > outputs_set;
-		int test = 1;//Necesary to set the test number		
+		//vector < vector < double > > outputs_set;
+		double I0[4] = {0.0,0.0,1.0,1.0};
+		double I1[4] = {0.0,1.0,0.0,1.0};
 
-		for(int i = 0; i < test; i++){
+		double error_sum = 0;
 
-			vector < double > aux;
+		int test = 4;//Necesary to set the test number		
 
-			//The user can modify the HyperNeat inputs (vector < double * > inputs) for each test
+		for (int g = 0; g < GENERATIONS; g++)
+		{
+			for(int p = 0; p < POPULATION_MAX; p++)
+			{
+				vector < double > aux;
 
-			cout << "EMPEZO EL CREATECONNECTIONS ----------------------" << endl;
-			hyperneat->CreateSubstrateConnections();//Necesary to create connections
-			cout << "==================================================" << endl;
-			cout << "EMPEZO EL EVALUATE -------------------------------" << endl;
-			hyperneat->EvaluateSubstrateConnections();//Necesary to evaluate Substrate connections
-			cout << "==================================================" << endl;
-			
-			//PRINT INPUTS
-			for(int j = 0; j < (int)inputs.size(); j++)
-				cout << *inputs[j] << endl;
-			//PRINT OUTPUTS
-			for(int j = 0; j < (int)outputs.size(); j++)
-				cout << *outputs[j] << endl;
+				for(int i = 0; i < test; i++)
+				{
+					//The user can modify the HyperNeat inputs (vector < double * > inputs) for each test
+					*inputs[0] = I0[i];
+					*inputs[1] = I1[i];
 
-			for(int j = 0; j < (int)outputs.size(); j++)
-				aux.push_back(*outputs[j]);
+					cout << "g: " << g << " | p: " << p << " | i: " << i << endl;
+					cout << "EMPEZO EL CREATECONNECTIONS ----------------------" << endl;
+					hyperneat->CreateSubstrateConnections(p);//Necesary to create connections
+					cout << "==================================================" << endl;
+					cout << "EMPEZO EL EVALUATE -------------------------------" << endl;
+					hyperneat->EvaluateSubstrateConnections();//Necesary to evaluate Substrate connections
+					cout << "==================================================" << endl;
+					
+					//PRINT INPUTS
+					for(int j = 0; j < (int)inputs.size(); j++)
+						cout << *inputs[j] << endl;
+					//PRINT OUTPUTS
+					for(int j = 0; j < (int)outputs.size(); j++)
+						cout << *outputs[j] << endl;
 
-			outputs_set.push_back(aux);
+					for(int j = 0; j < (int)outputs.size(); j++)
+						aux.push_back(*outputs[j]);
+				}
+
+				cout << "AUX: " << aux[0] << " | " << aux[1] << " | " << aux[2] << " | " << aux[3] << endl;
+
+				error_sum += abs(aux[0]);
+				error_sum += 1 - aux[1];
+				error_sum += 1 - aux[2];
+				error_sum += abs(aux[3]);
+				
+				// ------------------------- FITNESS ------------------------- //
+				// In this session the user must add its own fitness function
+				// Furthermore at the end of the section should call the following function:
+				double fitness = pow(4 - error_sum, 2);
+
+				 hyperneat->HyperNeatFitness(fitness, p);
+				// =========================================================== //
+			}
+
+			hyperneat->HyperNeatEvolve();
 		}
-		
-		// ------------------------- FITNESS ------------------------- //
-		// In this session the user must add its own fitness function
-		// Furthermore at the end of the section should call the following function:
-		// hyperneat->HyperNeatFitness(fitness);
-		// =========================================================== //
-
-		//hyperneat->HyperNeatEvolve();
 
 	}
 }
