@@ -49,24 +49,24 @@ void SpatialNode::AddInputToNode(SpatialNode * input_node, double input_weight){
 	inputs_nodes.push_back(input_node);
 	inputs_weight.push_back(input_weight);
 	n_inputs++;
-	cout << "Input_ID: " << input_node->GetId() << " Output_ID: " << id;
-	cout << " Weight: " << input_weight << endl; 
+	//cout << "Input_ID: " << input_node->GetId() << " Output_ID: " << id;
+	//cout << " Weight: " << input_weight << endl; 
 }
 double * SpatialNode::AddOutputToNode(){
 	return this->output;
 }
 void SpatialNode::OutputCalcule(){
 	double aux = (node_type == 0) ? *input : 0.0;
-	cout << "ID: " << id;
-	if(node_type == 0) cout << " Input_puntero: " << *input;
-	cout <<" | Inputs_nodos ( ";
+	//cout << "ID: " << id;
+	//if(node_type == 0) cout << " Input_puntero: " << *input;
+	//cout <<" | Inputs_nodos ( ";
 	for(int i = 0; i < n_inputs; i++){
 		aux += (inputs_nodes[i]->GetOuput())*inputs_weight[i];
-		cout << (inputs_nodes[i]->GetOuput())*inputs_weight[i] << " ";
+		//cout << (inputs_nodes[i]->GetOuput())*inputs_weight[i] << " ";
 	}
 	*output = OutputNodeFunction(aux);
 	//*output = aux;
-	cout <<") | Output_puntero: " << *output << endl;
+	//cout <<") | Output_puntero: " << *output << endl;
 }
 vector < double > SpatialNode::GetCoordenates(){
 	return coordenates;

@@ -13,7 +13,8 @@ HyperNeat::HyperNeat(vector < double * > inputs, vector < double * > outputs, st
 	cppn_neat = new Population();
 	
 	HJsonDeserialize(hyperneat_info);
-	cout << "FINISHED" << endl;
+
+	clog << "\t-> Deserialize ok!" << endl;
 }
 HyperNeat::~HyperNeat()
 {
@@ -34,49 +35,37 @@ void HyperNeat::HJsonDeserialize(string hyperneat_info)
 	while(pch != NULL)
 	{
 		if (!strcmp(pch,(char *)"Genetic_Encoding")){
-			cout << "Genetic_Encoding" << endl;
 			pch = strtok(NULL, delimeters);
 			cppn_neat->CJsonDeserialize(pch);
 			pch = strtok(NULL, delimeters);
-			cout << "Genetic_Encoding fin" << endl;
 			break;
 		}else{ 
 			if (!strcmp(pch,(char *)"Substrate")){	
-				cout << "Substrate" << endl;
 				pch = strtok(NULL, delimeters);
 				pch = substrate->SJsonDeserialize(pch);
 				//pch = strtok(NULL, delimeters);
-				cout << pch << endl;
-				cout << "Substrate fin" << endl;
 			}else{
 				if(!strcmp(pch,(char *)"connection_threshold")){
-					cout << "connection_threshold" << endl;
 					pch = strtok(NULL, delimeters);
-					connection_threshold = atoi(pch);
+					connection_threshold = atof(pch);
 					pch = strtok(NULL, delimeters);
-					cout << "connection_threshold fin" << endl;
 				}else{
 					if(!strcmp(pch,(char *)"AditionalCPPNInputs")){
-						cout << "AditionalCPPNInputs" << endl;
 						for(int i = 0; i < n_AditionalCPPNInputs; i++){
 							pch = strtok(NULL, delimeters);		
 							if (!strcmp(pch,(char *)"BIAS")){	
-								cout << "BIAS" << endl;
-								char * aux = pch;		
+								char * aux = pch;
 								pch = strtok(NULL, delimeters);						
 								AditionalCPPNInputs.push_back(CPPNInputs(aux, atof(pch)));
 							}else																
 								AditionalCPPNInputs.push_back(CPPNInputs(pch, 0.0));
 						}						
 						pch = strtok(NULL, delimeters);					
-						cout << "AditionalCPPNInputs fin" << endl;
 					}else{
 						if(!strcmp(pch,(char *)"n_AditionalCPPNInputs")){
-							cout << "n_AditionalCPPNInputs" << endl;
 							pch = strtok(NULL, delimeters);
 							n_AditionalCPPNInputs = atoi(pch);
 							pch = strtok(NULL, delimeters);
-							cout << "n_AditionalCPPNInputs fin" << endl;
 						}
 					}					
 				}						
@@ -86,13 +75,14 @@ void HyperNeat::HJsonDeserialize(string hyperneat_info)
 }
 void HyperNeat::CreateSubstrateConnections(int organism_id)
 {
-	if(substrate->GetLayoutNumber() < 1)
+	if(substrate->GetLayoutNumber() == 0)
 	{
 		cout << "Does not exist any substrate initialized" << endl;
 		return;
 	}
 
 	n_connections = 0;
+
 	if(substrate->GetLayoutNumber() > 1)
 	{
 		for(int i = 0; i < substrate->GetLayoutNumber()-1; i++)
@@ -100,7 +90,7 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 			substrate->ClearSpatialNodeInputs(i+1,0);
 			for(int j = 0; j < substrate->GetLayerNodesNumber(i,0); j++)
 			{
-				for(int k = 0; k < substrate->GetLayerNodesNumber(i+1,0); j++)
+				for(int k = 0; k < substrate->GetLayerNodesNumber(i+1,0); k++)
 				{
 					vector < double > cppn_inputs;
 					vector < double > c1 = (substrate->GetSpatialNode(i,0,j))->GetCoordenates();
@@ -115,7 +105,7 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 					double weight = (cppn_neat->CalculeWeight(cppn_inputs, organism_id)).at(0);
 					//double weight = 1;
 
-					if(weight > connection_threshold)
+					if(abs(weight) > connection_threshold)
 					{
 						(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), weight);
 						n_connections++;
@@ -158,31 +148,40 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 		}
 	}
 }
-void HyperNeat::EvaluateSubstrateConnections(){
-	if(substrate->GetLayoutNumber() < 1){
+
+bool HyperNeat::EvaluateSubstrateConnections()
+{
+	if(substrate->GetLayoutNumber() == 0){
 		cout << "Does not exist any substrate initialized" << endl;
-		return;
+		return false;
 	}
-	if(n_connections < 1){		
+	if(n_connections == 0){		
 		cout << "Does not exist any connection initialized" << endl;
-		return;
+		return false;
 	}
-	int i;
-	if(substrate->GetLayoutNumber() > 1){
-		for(i = 0; i < substrate->GetLayoutNumber(); i++)
+
+	if(substrate->GetLayoutNumber() > 1)
+		for(int i = 0; i < substrate->GetLayoutNumber(); i++)
 			substrate->EvaluateSpatialNode(i,0);
-	}else{		
-		for(i = 0; i < substrate->GetLayersNumber(0);i++)
+	else
+		for(int i = 0; i < substrate->GetLayersNumber(0);i++)
 			substrate->EvaluateSpatialNode(0,i);
-	}
+
+	return true;
 }
-void HyperNeat::HyperNeatFitness(double fitness, int organism_id){
+
+void HyperNeat::HyperNeatFitness(double fitness, int organism_id)
+{
 	cppn_neat->SetFitness(fitness, organism_id);
 }
-void HyperNeat::HyperNeatEvolve(){
+
+void HyperNeat::HyperNeatEvolve()
+{
 	cppn_neat->epoch();
 }
-vector < string > HyperNeat::GetHyperNeatOutputFunctions(){
+
+vector < string > HyperNeat::GetHyperNeatOutputFunctions()
+{
 	return substrate->GetSubstrateOutputFunctions();
 }
 

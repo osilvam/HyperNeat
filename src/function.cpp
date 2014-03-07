@@ -25,11 +25,6 @@ Function::Function(string function_name) : Pi(M_PI), E(exp(1))
 	else if(function_name == "ABS")			this->function = &Function::Abs;
 	else if(function_name == "SIN") 				this->function = &Function::Sin;	
 	else if(function_name == "COS")			this->function = &Function::Cos;
-	else if(function_name == "SPECIAL_SIGMOID") 
-	{		
-		this->function = &Function::SpecialSigmoid;
-		param.push_back(4.9);
-	}
 	else
 	{
 		cerr << "error at Function::Function(): function '" << function_name << "' is not defined!" << endl;
@@ -57,7 +52,6 @@ string Function::get_name(int function)
 		case 3: function_str = "ABS"; 		break;
 		case 4: function_str = "SIN"; 		break;
 		case 5: function_str = "COS"; 		break;
-		case 6: function_str = "SPECIAL_SIGMOID"; 		break;
 		default: function_str = "IDENTITY"; break;
 	}
 
@@ -97,10 +91,5 @@ double Function::Abs(double input)
 
 double Function::Sigmoid(double input)
 {
-	return 1/(1 + exp(-param.at(0) * input));
-}
-
-double Function::SpecialSigmoid(double input)
-{
-	return (1/(1 + exp(-param.at(0) * input)) - 0.5) * 2;
+	return ((1/(1 + exp(-param.at(0) * input))) - 0.5 ) * 2.;
 }

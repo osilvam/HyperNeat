@@ -156,7 +156,7 @@ SpatialNode * Substrate::GetSpatialNode(int layout_num, int layer_num, int layer
 		return nodes[layer_num][layer_node_num];
 }
 void Substrate::EvaluateSpatialNode(int layout_num, int layer_num){
-	cout << "OutputCalcule - ids ( " << endl;
+	//cout << "OutputCalcule - ids ( " << endl;
 	if(n_layouts > 1)
 		for(int j = 0; j < n_layer_nodes[layout_num][0]; j++){
 			nodes[layout_num][j]->OutputCalcule();
@@ -165,22 +165,22 @@ void Substrate::EvaluateSpatialNode(int layout_num, int layer_num){
 		for(int j = 0; j < n_layer_nodes[0][layer_num]; j++){
 			nodes[layer_num][j]->OutputCalcule();
 		}
-	cout << " ) " << endl;
+	//cout << " ) " << endl;
 }
 void Substrate::ClearSpatialNodeInputs(int layout_num, int layer_num){
-	cout << "ClearInputs - ids ( ";
+	//cout << "ClearInputs - ids ( ";
 
 	if(n_layouts > 1)
 		for(int j = 0; j < n_layer_nodes[layout_num][0]; j++){
-			cout << nodes[layout_num][j]->GetId() << " ";
+			//cout << nodes[layout_num][j]->GetId() << " ";
 			nodes[layout_num][j]->ClearInputs();
 		}
 	else
 		for(int j = 0; j < n_layer_nodes[0][layer_num]; j++){
-			cout << nodes[layer_num][j]->GetId() << " ";
+			//cout << nodes[layer_num][j]->GetId() << " ";
 			nodes[layer_num][j]->ClearInputs();
 		}
-	cout << ") " << endl;
+	//cout << ") " << endl;
 }
 double Substrate::GetSpatialNodeOutput(int layout_num, int layer_num, int layer_node_num){
 	if(n_layouts > 1)

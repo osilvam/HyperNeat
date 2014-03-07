@@ -43,7 +43,6 @@ namespace ANN_USM
 			double Gaussian(double);
 			double Abs(double);
 			double Sigmoid(double);
-			double SpecialSigmoid(double);
 	};
 }
 

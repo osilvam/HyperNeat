@@ -22,14 +22,15 @@ namespace ANN_USM{
 	{
 		int n_AditionalCPPNInputs;/**< Number of aditional cppn inputs */	
 		vector < CPPNInputs > AditionalCPPNInputs;/**< Vector of aditional cppn inputs */
-		int connection_threshold;/**< Threshold that determine the creation for an connection */
+		double connection_threshold;/**< Threshold that determine the creation for an connection */
 		vector < double > CppnInputs;/**< Vector of cppn input values */
 		int n_connections;/**< Number of connections after evaluate connections with cppn-neat */
 		//ConnectiveCPPN * cppn;
 		Substrate * substrate;/**< Vector of overall HyperNeat substrates */
 
-		Population * cppn_neat;
+		
 	public:
+		Population * cppn_neat;
 		/**
 		 * \brief Constructor with parameters
 		 * \param inputs Input vector
@@ -53,7 +54,7 @@ namespace ANN_USM{
 		/**
 		 * \brief Allows to obtain the final HyperNeat outputs
 		 */
-		void EvaluateSubstrateConnections();
+		bool EvaluateSubstrateConnections();
 		/**
 		 * \brief Set CPPN-NEAT fitness of last interation
 		 * \param fitness Fitnnes value to set

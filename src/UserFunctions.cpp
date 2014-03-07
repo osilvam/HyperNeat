@@ -22,7 +22,7 @@ namespace ANN_USM{
 		//return USER_CUSTOM(input);
 	}
 	double Sigmoid(double input){
-		return (double)((1 / (1 + exp(-SIGMOID_CONST*input)) - 0.5) * 2);
+		return (double)(1 / (1 + exp(-SIGMOID_CONST*input)));
 	}
 	/*
 	double USER_CUSTOM(double input){
@@ -35,15 +35,21 @@ namespace ANN_USM{
 		double I0[4] = {0.0,0.0,1.0,1.0};
 		double I1[4] = {0.0,1.0,0.0,1.0};
 
-		double error_sum = 0;
+		double error_sum;
 
 		int test = 4;//Necesary to set the test number		
 
+		clog << "\t-> Training [ ";
+
 		for (int g = 0; g < GENERATIONS; g++)
 		{
+			clog << "#";
+
 			for(int p = 0; p < POPULATION_MAX; p++)
 			{
 				vector < double > aux;
+				error_sum = 0;
+				bool flag = false;
 
 				for(int i = 0; i < test; i++)
 				{
@@ -51,26 +57,25 @@ namespace ANN_USM{
 					*inputs[0] = I0[i];
 					*inputs[1] = I1[i];
 
-					cout << "g: " << g << " | p: " << p << " | i: " << i << endl;
-					cout << "EMPEZO EL CREATECONNECTIONS ----------------------" << endl;
+					//cout << "EMPEZO EL CREATECONNECTIONS ----------------------" << endl;
 					hyperneat->CreateSubstrateConnections(p);//Necesary to create connections
-					cout << "==================================================" << endl;
-					cout << "EMPEZO EL EVALUATE -------------------------------" << endl;
-					hyperneat->EvaluateSubstrateConnections();//Necesary to evaluate Substrate connections
-					cout << "==================================================" << endl;
+					//cout << "==================================================" << endl;
+					//cout << "EMPEZO EL EVALUATE -------------------------------" << endl;
+					flag = hyperneat->EvaluateSubstrateConnections();//Necesary to evaluate Substrate connections
+					//cout << "==================================================" << endl;
 					
 					//PRINT INPUTS
-					for(int j = 0; j < (int)inputs.size(); j++)
-						cout << *inputs[j] << endl;
+					//for(int j = 0; j < (int)inputs.size(); j++)
+					//	cout << *inputs[j] << endl;
 					//PRINT OUTPUTS
-					for(int j = 0; j < (int)outputs.size(); j++)
-						cout << *outputs[j] << endl;
+					//for(int j = 0; j < (int)outputs.size(); j++)
+					//	cout << *outputs[j] << endl;
 
 					for(int j = 0; j < (int)outputs.size(); j++)
 						aux.push_back(*outputs[j]);
 				}
 
-				cout << "AUX: " << aux[0] << " | " << aux[1] << " | " << aux[2] << " | " << aux[3] << endl;
+				if(!flag) continue;
 
 				error_sum += abs(aux[0]);
 				error_sum += 1 - aux[1];
@@ -82,13 +87,24 @@ namespace ANN_USM{
 				// Furthermore at the end of the section should call the following function:
 				double fitness = pow(4 - error_sum, 2);
 
-				 hyperneat->HyperNeatFitness(fitness, p);
+				cout << endl << "===========================================" << endl;
+				cout << "Aux: " << aux[0] << " | " << aux[1] << " | " << aux[2] << " | " << aux[3] << endl;
+				cout << "Error_sum: " << error_sum << endl;
+				cout << "Fitness: " << fitness << endl;
+
+				hyperneat->HyperNeatFitness(fitness, p);
 				// =========================================================== //
 			}
 
 			hyperneat->HyperNeatEvolve();
 		}
 
+		clog << " ] ok!" << endl;
+
+		// PRINTING THE BEST RESULT
+
+		clog << endl << "BEST RESULT ------------------------------------" << endl << endl;
+		clog << "\t-> " << hyperneat->cppn_neat->champion.fitness << endl << endl;
 	}
 }
 

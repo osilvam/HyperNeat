@@ -48,4 +48,4 @@ genetic_encoding.o: genetic_encoding.cpp
 	@$(CC) $(CFLAGS) -c ./src/genetic_encoding.cpp -o ./objects/genetic_encoding.o
 
 clean:
-	@rm -f ./objects/*.o ./bin/*
+	@rm -f ./objects/*.o
