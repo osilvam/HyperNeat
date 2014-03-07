@@ -39,11 +39,18 @@ namespace ANN_USM{
 
 		int test = 4;//Necesary to set the test number		
 
-		clog << "\t-> Training [ ";
+		clog << "\t-> Training    ";
 
+		int porsentage = 0;
 		for (int g = 0; g < GENERATIONS; g++)
 		{
-			clog << "#";
+			porsentage = ((double)g / (GENERATIONS - 1)) * 100;
+
+			clog << "\b";
+			for (int i = porsentage; i > 0 ; i/=10)
+				clog << "\b";
+
+			clog << porsentage << "\%";
 
 			for(int p = 0; p < POPULATION_MAX; p++)
 			{
@@ -99,7 +106,7 @@ namespace ANN_USM{
 			hyperneat->HyperNeatEvolve();
 		}
 
-		clog << " ] ok!" << endl;
+		clog << " ok!" << endl;
 
 		// PRINTING THE BEST RESULT
 
