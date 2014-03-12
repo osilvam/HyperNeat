@@ -1,22 +1,22 @@
 
 #include "main.hpp"
-#include <iostream>
-#include <fstream>
 
-// Testing Program
-// 3x3 board
 int main(int argc, char *argv[])
 {	
 	srand (time(0));
 
-	//type, input/output id, sheet id
 	if(argc < 2) return -1;
 
+	// ============================= READING JSON FILE ============================= //
 	ifstream file;
 	file.open(argv[1]);
-
 	string jsonstring((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+	// ============================================================================= //
 
+
+
+
+	// ======================== INPUT INITIALIZATION EXAMPLE ======================= //
 	vector<double *> inputs;
 	vector<double *> outputs;
 
@@ -30,23 +30,31 @@ int main(int argc, char *argv[])
 	}
 
 	outputs.push_back(new double(0.0));
+	// ============================================================================= //
 
+
+
+
+	// ============================= PROGRAM EXECUTION ============================= //
 	clog << endl << "PROGRAM STARTED -------------------------------" << endl << endl;
 
+	// HYPERNEAT OBJECT CREATED
 	HyperNeat * hyperneat = new HyperNeat(inputs, outputs, jsonstring);
 
+	// USER TRAIN FUNCTION
 	UserTrain(hyperneat, inputs, outputs);
 
-	//FinalFunctions = hyperneat->GetHyperNeatOutputFunctions();
-
-	//for(int i = 0; i < (int)FinalFunctions.size(); i++){
-	//	cout << FinalFunctions[i] << endl;
-	//}
-		
-	vector<double*>().swap(inputs);
-	vector<double*>().swap(outputs);
+	cout << endl << "=========================================================" << endl;
 
 	clog << "PROGRAM FINISHED ------------------------------" << endl << endl;
+	// ============================================================================= //
+
+	//OBTEIN FUNCTIONS
+	hyperneat->GetHyperNeatOutputFunctions("octave");
+
+	
+	vector<double*>().swap(inputs);
+	vector<double*>().swap(outputs);
 
 	return 0;
 }

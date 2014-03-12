@@ -88,22 +88,28 @@ void SpatialNode::ClearInputs(){
 	inputs_weight.clear();
 	n_inputs = 0;
 }
-string SpatialNode::GetNodeFunction(){
+string SpatialNode::GetNodeFunction(string plataform){
 	stringstream function;
 	if(node_type == 2) function << "OUTPUT_" << output_id << " = ";
-	function << NODE_FUNCTION << "( ";
-	if(node_type == 0) function << "INPUT_" << input_id;
-	else{
-		if(n_inputs > 0)
-			for(int i = 0; i < n_inputs; i++){
-				function << inputs_nodes[i]->GetNodeFunction() << "* " << inputs_weight[i];
-				if( i + 1 < n_inputs ) function << " + ";
-			}
-		else
-			function << "0";
+
+	if(!strcmp(plataform.c_str(),(char *)"octave")){
+
+		function << NODE_FUNCTION << "( ";
+
+		if(node_type == 0) function << "INPUT_" << input_id;		
+		else{
+			if(n_inputs > 0)
+				for(int i = 0; i < n_inputs; i++){
+					function << inputs_nodes[i]->GetNodeFunction(plataform) << "* " << inputs_weight[i];
+					if( i + 1 < n_inputs ) function << " + ";
+				}
+			else
+				function << "0";
+		}
+			
+		function << " ) ";
 	}
-		
-	function << " ) ";
+
 	return function.str();
 }
 #endif

@@ -8,6 +8,8 @@
 #include <string>
 #include <string.h>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 using namespace std;
 /**
  * \namespace ANN_USM
@@ -25,12 +27,11 @@ namespace ANN_USM{
 		double connection_threshold;/**< Threshold that determine the creation for an connection */
 		vector < double > CppnInputs;/**< Vector of cppn input values */
 		int n_connections;/**< Number of connections after evaluate connections with cppn-neat */
-		//ConnectiveCPPN * cppn;
-		Substrate * substrate;/**< Vector of overall HyperNeat substrates */
 
 		
 	public:
-		Population * cppn_neat;
+		Substrate * substrate;/**< HyperNeat substrate */
+		Population * cppn_neat;/**< HyperNeat Cppn-Neat */
 		/**
 		 * \brief Constructor with parameters
 		 * \param inputs Input vector
@@ -66,9 +67,8 @@ namespace ANN_USM{
 		void HyperNeatEvolve();		
 		/**
 		 * \brief Allows obtain all final functions of every output node
-		 * \return vector with all final output functions
 		 */
-		vector<string> GetHyperNeatOutputFunctions();
+		void GetHyperNeatOutputFunctions(string plataform);
 
 
 	};

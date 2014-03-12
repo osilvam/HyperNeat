@@ -29,15 +29,19 @@ using namespace ANN_USM;
 #define GENERATIONS 30
 
 // --------- SIGMOID FUNCTION DEFINE --------- //
-#define SIGMOID_FUNC "(1/(1+exp(-SIGMOID_CONST*X))"
 #define SIGMOID_CONST 4.9 
+// ---------------- FOR OCTAVE --------------- //
+#define OCTAVE_SIGMOID_STATEMENT "function [y] = SIGMOID(x)"
+#define OCTAVE_SIGMOID_CONST_LETTER "K"
+#define OCTAVE_SIGMOID_CONST SIGMOID_CONST 
+#define OCTAVE_SIGMOID_FUNC "y = 1/(1+exp(-K*x))"
 // =========================================== //
 
 #define NODE_FUNCTION "SIGMOID"
 
 namespace ANN_USM{
 
-	string GetNodeFunctionInfo();
+	void GetNodeFunction(string plataform);
 	double OutputNodeFunction(double input);
 	double Sigmoid(double input);
 	//double USER_CUSTOM(double input);

@@ -4,6 +4,7 @@ CC = g++ -O3
 CFLAGS = -g -Wall -I./headers -I./objects -I./src
 
 all: main.o  HyperNeat.o Substrate.o SpatialNode.o CPPNInputs.o UserFunctions.o CPPN-NEAT.o function.o genetic_encoding.o
+	@mkdir -p bin/files
 	@echo "Linking main.o  HyperNeat.o genetic_encoding.o Substrate.o SpatialNode.o function.o CPPNInputs.o UserFunctions.o CPPN-NEAT.o to ./bin/HyperNeat"
 	@$(CC) $(CFLAGS) ./objects/main.o ./objects/genetic_encoding.o ./objects/function.o ./objects/HyperNeat.o ./objects/Substrate.o ./objects/SpatialNode.o ./objects/CPPN-NEAT.o ./objects/CPPNInputs.o ./objects/UserFunctions.o -o ./bin/HyperNeat
 
@@ -22,10 +23,6 @@ Substrate.o: Substrate.cpp
 SpatialNode.o: SpatialNode.cpp
 	@echo "Compiling SpatialNode.cpp to SpatialNode.o"
 	@$(CC) $(CFLAGS) -c ./src/SpatialNode.cpp  -o ./objects/SpatialNode.o
-
-SpatialConnection.o: SpatialConnection.cpp 
-	@echo "Compiling SpatialConnection.cpp to SpatialConnection.o"
-	@$(CC) $(CFLAGS) -c ./src/SpatialConnection.cpp -o ./objects/SpatialConnection.o
 
 CPPNInputs.o: CPPNInputs.cpp 
 	@echo "Compiling CPPNInputs.cpp to CPPNInputs.o"
@@ -49,3 +46,5 @@ genetic_encoding.o: genetic_encoding.cpp
 
 clean:
 	@rm -f ./objects/*.o
+	@rm -f ./bin/HyperNeat
+	@rm -f ./bin/files/*.m

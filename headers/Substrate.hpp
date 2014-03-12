@@ -16,9 +16,6 @@ namespace ANN_USM
 	{	
 		int n_layouts;
 
-		vector<double *> inputs;
-		vector<double *> outputs;
-
 		// Coordinate type vector of each layout
 		//   Cartesian 2D: 0
 		//   Cartesian 3D: 1
@@ -42,6 +39,9 @@ namespace ANN_USM
 		vector< vector<SpatialNode *> > nodes; 
 		
 	public:
+
+		vector<double *> inputs;
+		vector<double *> outputs;
 
 		Substrate(vector < double * > inputs, vector < double * > outputs);
 		Substrate();
@@ -118,7 +118,7 @@ namespace ANN_USM
 		 * \brief Allows obtain all final functions of every output node
 		 * \return vector with all final output functions
 		 */
-		vector < string > GetSubstrateOutputFunctions();
+		vector < string > GetSubstrateOutputFunctions(string plataform);
 		
 	};
 }

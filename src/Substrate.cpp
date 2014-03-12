@@ -194,19 +194,18 @@ double Substrate::GetSpatialNodeId(int layout_num, int layer_num, int layer_node
 	else
 		return nodes[layer_num][layer_node_num]->GetId();
 }
-vector < string > Substrate::GetSubstrateOutputFunctions(){
+vector < string > Substrate::GetSubstrateOutputFunctions(string plataform){
 	vector < string > functions;
-	functions.push_back(GetNodeFunctionInfo());
 	if(n_layouts > 1){
 		for(int i = 0; i < n_layouts; i++)
 			for(int j = 0; j < n_layer_nodes[i][0]; j++)
 				if(nodes_info[i][0][j][0] == 2)
-					functions.push_back(nodes[i][j]->GetNodeFunction());
+					functions.push_back(nodes[i][j]->GetNodeFunction(plataform));
 	}else{
 		for(int i = 0; i < n_layers[0]; i++)
 			for(int j = 0; j < n_layer_nodes[0][i]; j++)
 				if(nodes_info[0][i][j][0] == 2)
-					functions.push_back(nodes[i][j]->GetNodeFunction());
+					functions.push_back(nodes[i][j]->GetNodeFunction(plataform));
 	}
 	return functions;
 }

@@ -1,0 +1,53 @@
+{	
+	"n_AditionalCPPNInputs": 3,
+	"AditionalCPPNInputs": [ "BIAS": 0.9, "RADIUS1", "EUCLIDIANDISTANCE" ],
+	"connection_threshold": 0.5,
+	"Substrate":
+	{
+		"n_layouts": 1,
+		"Layouts":
+		[
+			{
+				"coordinate_type": 0,
+				"n_layers": 3,
+				"n_layer_nodes": [3, 3, 3 ],
+				"nodes_info": 
+				[
+					[
+						[ 0, 0, 0 ],
+						[ 0, 1, 0 ],
+						[ 0, 2, 0 ]
+					],
+					[
+						[ 1, -1, 1 ],
+						[ 1, -1, 1 ],
+						[ 1, -1, 1 ]
+					],
+					[
+						[ 2, 0, 2 ],
+						[ 2, 1, 2 ],
+						[ 2, 2, 2 ]
+					]
+				],
+				"nodes_coordinate":
+				[
+					[
+						[ -1.0, 1.0 ],
+						[ -1.0, 0.0 ],
+						[ -1.0, -1.0 ]
+					],
+					[
+						[ 0.0, 1.0 ],
+						[ 0.0, 0.0 ],
+						[ 0.0, -1.0 ]
+					],
+					[
+						[ 1.0, 1.0 ],
+						[ 1.0, 0.0 ],
+						[ 1.0, -1.0 ]
+					]
+				]
+			}
+		]		
+	}	
+}

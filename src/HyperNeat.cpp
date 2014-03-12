@@ -2,8 +2,7 @@
 #define HYPERNEAT_CPP
 
 #include "HyperNeat.hpp"
-#include <unistd.h>
-
+#include "UserFunctions.hpp"
 using namespace ANN_USM;
 
 HyperNeat::HyperNeat(vector < double * > inputs, vector < double * > outputs, string hyperneat_info)
@@ -19,12 +18,11 @@ HyperNeat::HyperNeat(vector < double * > inputs, vector < double * > outputs, st
 HyperNeat::~HyperNeat()
 {
 	free(substrate);
-
+	free(cppn_neat);
 	vector<CPPNInputs>().swap(AditionalCPPNInputs);
 	vector<double>().swap(CppnInputs);
 }
 
-// HyperNEAT Json Deserialize
 void HyperNeat::HJsonDeserialize(string hyperneat_info)
 {
 	char str[(int)hyperneat_info.size()];
@@ -103,7 +101,6 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 						cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
 
 					double weight = (cppn_neat->CalculeWeight(cppn_inputs, organism_id)).at(0);
-					//double weight = 1;
 
 					if(abs(weight) > connection_threshold)
 					{
@@ -134,7 +131,6 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 					for(int c = 0; c < n_AditionalCPPNInputs; c++)
 						cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
 
-					//AGREGAR CALCULO WEIGHT
 					double weight = (cppn_neat->CalculeWeight(cppn_inputs, organism_id)).at(0);
 					
 
@@ -180,9 +176,37 @@ void HyperNeat::HyperNeatEvolve()
 	cppn_neat->epoch();
 }
 
-vector < string > HyperNeat::GetHyperNeatOutputFunctions()
+void HyperNeat::GetHyperNeatOutputFunctions(string plataform)
 {
-	return substrate->GetSubstrateOutputFunctions();
+	double input_default = 0.0;
+
+	CreateSubstrateConnections(-1);
+	EvaluateSubstrateConnections();
+
+	vector < string > OUTPUTS;
+
+	if(!strcmp(plataform.c_str(),(char *)"octave")){		
+		
+		GetNodeFunction(plataform);
+
+		OUTPUTS = substrate->GetSubstrateOutputFunctions(plataform);
+
+		for(int j = 0; j < (int)substrate->outputs.size(); j++){
+
+			stringstream file_name;
+			file_name << "files/OUTPUT_" << j << ".m";
+			ofstream myfile (file_name.str().c_str());
+
+			if (myfile.is_open()){
+				for(int i = 0; i < (int)substrate->inputs.size(); i++)
+			    	myfile << "INPUT_" << i << " = " << input_default << ";" << endl;
+			    myfile << OUTPUTS[j] << endl;
+			    myfile.close();
+		  	}else 
+		  		cerr << "Unable to open file: " << file_name.str() << endl;
+		}
+	}
+	
 }
 
 #endif

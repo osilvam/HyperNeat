@@ -106,7 +106,7 @@ namespace ANN_USM{
 		 * \brief Get output function from this node recursively backwards
 		 * \return Function in stringstream format
 		 */
-		string GetNodeFunction();
+		string GetNodeFunction(string plataform);
 	};
 }
 #endif
