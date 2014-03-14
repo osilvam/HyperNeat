@@ -56,4 +56,4 @@ genetic_encoding.o: genetic_encoding.cpp
 clean:
 	@rm -f ./objects/*.o
 	@rm -f ./bin/HyperNeat
-	@rm -f ./bin/files/*.m
+	@rm -f ./bin/files/*

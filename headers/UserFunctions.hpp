@@ -38,6 +38,7 @@ using namespace ANN_USM;
 // =========================================== //
 
 #define NODE_FUNCTION "SIGMOID"
+#define HYPERNEAT_TEST "XOR"
 
 namespace ANN_USM{
 

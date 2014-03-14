@@ -178,33 +178,42 @@ void HyperNeat::HyperNeatEvolve()
 
 void HyperNeat::GetHyperNeatOutputFunctions(string plataform)
 {
-	double input_default = 0.0;
-
 	CreateSubstrateConnections(-1);
 	EvaluateSubstrateConnections();
 
 	vector < string > OUTPUTS;
 
+	GetNodeFunction(plataform);
+
+	OUTPUTS = substrate->GetSubstrateOutputFunctions(plataform);
+
 	if(!strcmp(plataform.c_str(),(char *)"octave")){		
-		
-		GetNodeFunction(plataform);
+	
+		stringstream file_name;
+		file_name << "files/" << HYPERNEAT_TEST << ".m";
+		ofstream myfile (file_name.str().c_str());
 
-		OUTPUTS = substrate->GetSubstrateOutputFunctions(plataform);
+		if (myfile.is_open()){
 
-		for(int j = 0; j < (int)substrate->outputs.size(); j++){
+			myfile << "function [ ";
+			for(int i = 0; i < (int)substrate->outputs.size(); i++){
+				myfile << "OUTPUT_" << i ;
+				if(i < (int)substrate->outputs.size()-1) myfile << ", ";
+			}
+			myfile << " ] = " << HYPERNEAT_TEST << "( ";
+			for(int i = 0; i < (int)substrate->inputs.size(); i++){
+				myfile << "INPUT_" << i ;
+				if(i < (int)substrate->inputs.size()-1) myfile << ", ";
+			}
+			myfile << " )" << endl;
+			for(int i = 0; i < (int)substrate->outputs.size(); i++)
+				myfile << OUTPUTS[i] << ";" << endl;
+		    myfile.close();
+	  	}else 
+	  		cerr << "Unable to open file: " << file_name.str() << endl;
 
-			stringstream file_name;
-			file_name << "files/OUTPUT_" << j << ".m";
-			ofstream myfile (file_name.str().c_str());
 
-			if (myfile.is_open()){
-				for(int i = 0; i < (int)substrate->inputs.size(); i++)
-			    	myfile << "INPUT_" << i << " = " << input_default << ";" << endl;
-			    myfile << OUTPUTS[j] << endl;
-			    myfile.close();
-		  	}else 
-		  		cerr << "Unable to open file: " << file_name.str() << endl;
-		}
+
 	}
 	
 }
