@@ -14,6 +14,7 @@ namespace ANN_USM
 {
 	class Substrate
 	{	
+		// Number of layouts in the substrate
 		int n_layouts;
 
 		// Coordinate type vector of each layout
@@ -21,27 +22,27 @@ namespace ANN_USM
 		//   Cartesian 3D: 1
 		//   Polar 2D: 2
 		//   Polar 3D: 3
-		vector<int> coordinate_type; 
+		vector < int > coordinate_type; 
 
 		// Number of layers within each layout
-		vector<int> n_layers; 		
+		vector < int > n_layers; 		
 
 		// Number of nodes within each layer (for all layout)
-		vector< vector<int> > n_layer_nodes; 
+		vector < vector < int > > n_layer_nodes; 
 
 		// Type, input / output id and layer id of each node (for all layer within every layout)
-		vector< vector< vector< vector<int> > > > nodes_info;
+		vector < vector < vector < vector < int > > > > nodes_info;
 
 		// Coordinates of each node (for all layer within every layout)
-		vector< vector< vector< vector<double> > > > nodes_coordinate;
+		vector < vector < vector < vector < double > > > > nodes_coordinate;
 		
 		// Vector of nodes in each layer of each layout in the substrate
-		vector< vector<SpatialNode *> > nodes; 
+		vector < vector < SpatialNode * > > nodes; 
 		
 	public:
 
-		vector<double *> inputs;
-		vector<double *> outputs;
+		vector< double * > inputs;/**< Vector of inputs pointer of Substrate */
+		vector< double * > outputs;/**< Vector of outputs pointer of Substrate */
 
 		Substrate(vector < double * > inputs, vector < double * > outputs);
 		Substrate();

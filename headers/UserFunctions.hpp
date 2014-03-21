@@ -35,6 +35,10 @@ using namespace ANN_USM;
 #define OCTAVE_SIGMOID_CONST_LETTER "K"
 #define OCTAVE_SIGMOID_CONST SIGMOID_CONST 
 #define OCTAVE_SIGMOID_FUNC "y = 1/(1+exp(-K*x))"
+// ------------- FOR MATHEMATICAS ------------ //
+#define MATHEMATICAS_SIGMOID_STATEMENT "SIGMOID[X_] := 1/(1+exp(-K*X_))"
+#define MATHEMATICAS_SIGMOID_CONST_LETTER "K"
+#define MATHEMATICAS_SIGMOID_CONST SIGMOID_CONST 
 // =========================================== //
 
 #define NODE_FUNCTION "SIGMOID"

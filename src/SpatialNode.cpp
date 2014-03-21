@@ -42,7 +42,7 @@ void SpatialNode::AddInputToNode(SpatialNode * input_node, double input_weight){
 		cout << "can not connect to a node of type input" << endl;
 		return;
 	}
-	if (input_node->GetSheetNodeId() > sheet_id){			
+	if (input_node->GetSheetNodeId() >= sheet_id){			
 		cout << "can not make a recurrent connection" << endl;
 		return;
 	}
@@ -90,13 +90,31 @@ void SpatialNode::ClearInputs(){
 }
 string SpatialNode::GetNodeFunction(string plataform){
 	stringstream function;
-	if(node_type == 2) function << "OUTPUT_" << output_id << " = ";
 
 	if(!strcmp(plataform.c_str(),(char *)"octave")){
+
+		if(node_type == 2) function << "OUTPUT_" << output_id << " = ";
 
 		function << NODE_FUNCTION << "( ";
 
 		if(node_type == 0) function << "INPUT_" << input_id;		
+		else{
+			if(n_inputs > 0)
+				for(int i = 0; i < n_inputs; i++){
+					function << inputs_nodes[i]->GetNodeFunction(plataform) << "* " << inputs_weight[i];
+					if( i + 1 < n_inputs ) function << " + ";
+				}
+			else
+				function << "0";
+		}
+			
+		function << " ) ";
+	}
+	else if(!strcmp(plataform.c_str(),(char *)"mathematica"))
+	{
+		function << NODE_FUNCTION << "( ";
+
+		if(node_type == 0) function << "INPUT_" << input_id << "_";		
 		else{
 			if(n_inputs > 0)
 				for(int i = 0; i < n_inputs; i++){

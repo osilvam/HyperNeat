@@ -81,68 +81,144 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 
 	n_connections = 0;
 
-	if(substrate->GetLayoutNumber() > 1)
+	if(cppn_neat->champion.output_nodes.size() > 1 )
 	{
-		for(int i = 0; i < substrate->GetLayoutNumber()-1; i++)
+		vector < vector < double > > coord;
+		vector < vector < double > > cppn_output;
+		bool flag;
+
+		if(substrate->GetLayoutNumber() > 1)
 		{
-			substrate->ClearSpatialNodeInputs(i+1,0);
-			for(int j = 0; j < substrate->GetLayerNodesNumber(i,0); j++)
+			if((int)cppn_neat->champion.output_nodes.size() != substrate->GetLayoutNumber()-1)
 			{
-				for(int k = 0; k < substrate->GetLayerNodesNumber(i+1,0); k++)
-				{
-					vector < double > cppn_inputs;
-					vector < double > c1 = (substrate->GetSpatialNode(i,0,j))->GetCoordenates();
-					vector < double > c2 = (substrate->GetSpatialNode(i+1,0,k))->GetCoordenates();
-					cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
-					cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
-					vector < double > input_aux (cppn_inputs);
-
-					for(int c = 0; c < n_AditionalCPPNInputs; c++)
-						cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
-
-					double weight = (cppn_neat->CalculeWeight(cppn_inputs, organism_id)).at(0);
-
-					if(abs(weight) > connection_threshold)
-					{
-						(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), weight);
-						n_connections++;
-					}
-				}
+				cout << "The layout number does not correspond to the cppn output number" << endl;
+				return;
 			}
+
+			for(int i = 0; i < substrate->GetLayoutNumber()-1; i++)
+			{				
+				substrate->ClearSpatialNodeInputs(i+1,0);
+
+				for(int j = 0; j < substrate->GetLayerNodesNumber(i,0); j++)
+					for(int k = 0; k < substrate->GetLayerNodesNumber(i+1,0); k++)
+					{
+						flag = true;
+						vector < double > cppn_inputs;
+						int c = 0;
+						vector < double > c1 = (substrate->GetSpatialNode(i,0,j))->GetCoordenates();
+						vector < double > c2 = (substrate->GetSpatialNode(i+1,0,k))->GetCoordenates();
+						cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
+						cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
+						vector < double > input_aux (cppn_inputs);
+
+						for(int c = 0; c < n_AditionalCPPNInputs; c++)
+							cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
+
+						for(c = 0; c < (int)coord.size(); c++)
+							if(coord.at(c) == cppn_inputs)
+							{
+								if(abs(cppn_output.at(c).at(i)) > connection_threshold)
+								{
+									(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), cppn_output.at(c).at(i));
+									n_connections++;
+								}
+								flag = false;
+								cout << "REPETIDO ( " << coord.at(c).at(0) << " , " << coord.at(c).at(1) << " ) ( " << coord.at(c).at(2) << " , " << coord.at(c).at(3) << " )" << endl;
+								continue;
+							}
+
+						if(flag)
+						{
+							coord.push_back(cppn_inputs);
+							cppn_output.push_back(cppn_neat->CalculeWeight(cppn_inputs, organism_id));
+
+							if(abs(cppn_output.back().at(i)) > connection_threshold)
+							{
+								(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), cppn_output.back().at(i));
+								n_connections++;
+							}
+							cout << "NUEVO ( " << coord.back().at(0) << " , " << coord.back().at(1) << " ) ( " << coord.back().at(2) << " , " << coord.back().at(3) << " )" << endl;
+						}
+					}
+			}
+			cout << n_connections << endl;			
+			
 		}
+		else
+		{			
+				cout << "The layout number must be greater than zero to use multiple cppn-neat outputs" << endl;
+				return;
+		}
+
 	}
 	else
 	{
-		for(int i = 0; i < substrate->GetLayersNumber(0) - 1; i++)
+		if(substrate->GetLayoutNumber() > 1)
 		{
-			substrate->ClearSpatialNodeInputs(0,i+1);
-
-			for(int j = 0; j < substrate->GetLayerNodesNumber(0,i); j++)
+			for(int i = 0; i < substrate->GetLayoutNumber()-1; i++)
 			{
-				for(int k = 0; k < substrate->GetLayerNodesNumber(0,i+1); k++)
+				substrate->ClearSpatialNodeInputs(i+1,0);
+
+				for(int j = 0; j < substrate->GetLayerNodesNumber(i,0); j++)
 				{
-					vector < double > cppn_inputs;
-					vector < double > c1 = (substrate->GetSpatialNode(0,i,j))->GetCoordenates();
-					vector < double > c2 = (substrate->GetSpatialNode(0,i+1,k))->GetCoordenates();
-					cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
-					cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
-					vector < double > input_aux (cppn_inputs);
-
-					for(int c = 0; c < n_AditionalCPPNInputs; c++)
-						cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
-
-					double weight = (cppn_neat->CalculeWeight(cppn_inputs, organism_id)).at(0);
-					
-
-					if(abs(weight) > connection_threshold)
+					for(int k = 0; k < substrate->GetLayerNodesNumber(i+1,0); k++)
 					{
-						(substrate->GetSpatialNode(0,i+1,k))->AddInputToNode(substrate->GetSpatialNode(0,i,j), weight);
-						n_connections++;
+						vector < double > cppn_inputs;
+						vector < double > c1 = (substrate->GetSpatialNode(i,0,j))->GetCoordenates();
+						vector < double > c2 = (substrate->GetSpatialNode(i+1,0,k))->GetCoordenates();
+						cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
+						cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
+						vector < double > input_aux (cppn_inputs);
+
+						for(int c = 0; c < n_AditionalCPPNInputs; c++)
+							cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
+
+						double weight = (cppn_neat->CalculeWeight(cppn_inputs, organism_id)).at(0);
+
+						if(abs(weight) > connection_threshold)
+						{
+							(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), weight);
+							n_connections++;
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			for(int i = 0; i < substrate->GetLayersNumber(0) - 1; i++)
+			{
+				substrate->ClearSpatialNodeInputs(0,i+1);
+
+				for(int j = 0; j < substrate->GetLayerNodesNumber(0,i); j++)
+				{
+					for(int k = 0; k < substrate->GetLayerNodesNumber(0,i+1); k++)
+					{
+						vector < double > cppn_inputs;
+						vector < double > c1 = (substrate->GetSpatialNode(0,i,j))->GetCoordenates();
+						vector < double > c2 = (substrate->GetSpatialNode(0,i+1,k))->GetCoordenates();
+						cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
+						cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
+						vector < double > input_aux (cppn_inputs);
+
+						for(int c = 0; c < n_AditionalCPPNInputs; c++)
+							cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
+
+						double weight = (cppn_neat->CalculeWeight(cppn_inputs, organism_id)).at(0);
+						
+
+						if(abs(weight) > connection_threshold)
+						{
+							(substrate->GetSpatialNode(0,i+1,k))->AddInputToNode(substrate->GetSpatialNode(0,i,j), weight);
+							n_connections++;
+						}
 					}
 				}
 			}
 		}
 	}
+
+	
 }
 
 bool HyperNeat::EvaluateSubstrateConnections()
@@ -187,8 +263,8 @@ void HyperNeat::GetHyperNeatOutputFunctions(string plataform)
 
 	OUTPUTS = substrate->GetSubstrateOutputFunctions(plataform);
 
-	if(!strcmp(plataform.c_str(),(char *)"octave")){		
-	
+	if(!strcmp(plataform.c_str(),(char *)"octave"))
+	{	
 		stringstream file_name;
 		file_name << "files/" << HYPERNEAT_TEST << ".m";
 		ofstream myfile (file_name.str().c_str());
@@ -211,9 +287,29 @@ void HyperNeat::GetHyperNeatOutputFunctions(string plataform)
 		    myfile.close();
 	  	}else 
 	  		cerr << "Unable to open file: " << file_name.str() << endl;
+	}
+	else if(!strcmp(plataform.c_str(),(char *)"mathematica"))
+	{
+		stringstream file_name;
+		file_name << "files/" << HYPERNEAT_TEST << ".m";
+		ofstream myfile (file_name.str().c_str());
 
+		if (myfile.is_open()){
 
-
+			for(int i = 0; i < (int)substrate->outputs.size(); i++)
+			{
+				myfile << HYPERNEAT_TEST << "_" << i << "[ ";
+				for(int j = 0; j < (int)substrate->inputs.size(); j++){
+					myfile << "INPUT_" << j << "_";
+					if(j < (int)substrate->inputs.size()-1) myfile << ", ";
+				}
+				myfile << " ] := ";
+				myfile << OUTPUTS[i] << ";" << endl;
+			}			
+			myfile.close();
+			
+	  	}else 
+	  		cerr << "Unable to open file: " << file_name.str() << endl;
 	}
 	
 }

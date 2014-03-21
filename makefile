@@ -5,6 +5,7 @@ CFLAGS = -g -Wall -I./headers -I./objects -I./src
 
 all: main.o  HyperNeat.o Substrate.o SpatialNode.o CPPNInputs.o UserFunctions.o CPPN-NEAT.o function.o genetic_encoding.o	
 	@mkdir -p bin/files
+	@rm -f ./bin/files/*
 	@echo "Linking main.o  HyperNeat.o genetic_encoding.o Substrate.o SpatialNode.o function.o CPPNInputs.o UserFunctions.o CPPN-NEAT.o to ./bin/HyperNeat"
 	@$(CC) $(CFLAGS) ./objects/main.o ./objects/genetic_encoding.o ./objects/function.o ./objects/HyperNeat.o ./objects/Substrate.o ./objects/SpatialNode.o ./objects/CPPN-NEAT.o ./objects/CPPNInputs.o ./objects/UserFunctions.o -o ./bin/HyperNeat
 

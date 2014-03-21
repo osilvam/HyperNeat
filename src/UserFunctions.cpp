@@ -32,6 +32,27 @@ namespace ANN_USM{
 			//else if(!strcmp(NODE_FUNCTION,(char *)"USER_CUSTOM"))
 			//	info << "USER_CUSTOM";			
 		}
+		else if(!strcmp(plataform.c_str(),(char *)"mathematica"))
+		{
+			stringstream file_name;
+			file_name << "files/" << NODE_FUNCTION << ".m";
+			ofstream myfile (file_name.str().c_str());
+
+			if(!strcmp(NODE_FUNCTION,(char *)"SIGMOID")){
+
+				if (myfile.is_open()){
+
+				    myfile << MATHEMATICAS_SIGMOID_CONST_LETTER << " = " << MATHEMATICAS_SIGMOID_CONST << ";" << endl;
+			    	myfile << MATHEMATICAS_SIGMOID_STATEMENT << ";" << endl;
+				    myfile.close();
+
+			  	}else 
+			  		cerr << "Unable to open file: " << file_name.str() << endl;
+
+			}
+			//else if(!strcmp(NODE_FUNCTION,(char *)"USER_CUSTOM"))
+			//	info << "USER_CUSTOM";
+		}
 	}
 
 	double OutputNodeFunction(double input){
@@ -76,6 +97,7 @@ namespace ANN_USM{
 			{
 				vector < double > aux;
 				error_sum = 0;
+				hyperneat->CreateSubstrateConnections(p);//Necesary to create connections
 
 				// ========================== TEST EVALUATION ========================== //
 				for(int i = 0; i < test; i++)
@@ -84,7 +106,6 @@ namespace ANN_USM{
 					*inputs[0] = I0[i];
 					*inputs[1] = I1[i];
 
-					hyperneat->CreateSubstrateConnections(p);//Necesary to create connections
 					flag = hyperneat->EvaluateSubstrateConnections();//Necesary to evaluate Substrate connections
 					
 					for(int j = 0; j < (int)outputs.size(); j++)
@@ -109,7 +130,7 @@ namespace ANN_USM{
 								
 				double fitness = pow(4 - error_sum, 2);
 
-				cout << endl << "===========================================" << endl;
+				cout << endl << "=========================================== " << p << " " << g <<endl;
 				cout << "Aux: " << aux[0] << " | " << aux[1] << " | " << aux[2] << " | " << aux[3] << endl;
 				cout << "Error_sum: " << error_sum << endl;
 				cout << "Fitness: " << fitness << endl;
