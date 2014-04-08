@@ -8,7 +8,7 @@ using namespace ANN_USM;
 
 // 	USER DEFINITIONS
 
-#define POPULATION_MAX 200
+#define POPULATION_MAX 2
 #define DISTANCE_CONST_1 1.0
 #define DISTANCE_CONST_2 0.4
 #define DISTANCE_CONST_3 1.0
@@ -26,7 +26,7 @@ using namespace ANN_USM;
 #define LARGE_POPULATION_DISCRIMINATOR (POPULATION_MAX/10.0)
 
 #define FUNCTION_NUM 6
-#define GENERATIONS 30
+#define GENERATIONS 2
 
 // --------- SIGMOID FUNCTION DEFINE --------- //
 #define SIGMOID_CONST 4.9 
@@ -34,15 +34,15 @@ using namespace ANN_USM;
 #define OCTAVE_SIGMOID_STATEMENT "function [y] = SIGMOID(x)"
 #define OCTAVE_SIGMOID_CONST_LETTER "K"
 #define OCTAVE_SIGMOID_CONST SIGMOID_CONST 
-#define OCTAVE_SIGMOID_FUNC "y = 1/(1+exp(-K*x))"
-// ------------- FOR MATHEMATICAS ------------ //
-#define MATHEMATICAS_SIGMOID_STATEMENT "SIGMOID[X_] := 1/(1+exp(-K*X_))"
-#define MATHEMATICAS_SIGMOID_CONST_LETTER "K"
-#define MATHEMATICAS_SIGMOID_CONST SIGMOID_CONST 
+#define OCTAVE_SIGMOID_FUNC "y = (1/(1+exp(-K*x)) - 0.5)*2"
 // =========================================== //
 
-#define NODE_FUNCTION "SIGMOID"
-#define HYPERNEAT_TEST "XOR"
+#define SIGMOID(X) (double)((1 / (1 + exp(-SIGMOID_CONST*X)))-0.5)*2.0
+#define SIGMOID_STRING "#define SIGMOID(X) (double)((1 / (1 + exp(-SIGMOID_CONST*X)))-0.5)*2.0"
+
+#define NODE_FUNCTION(X) SIGMOID(X)
+#define NODE_FUNCTION_TEXT "SIGMOID"
+#define HYPERNEAT_TEST "QUADRATOT"
 
 namespace ANN_USM{
 

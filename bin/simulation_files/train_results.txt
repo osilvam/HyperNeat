@@ -1,0 +1,24 @@
+
+===========================================   G0 P0
+Joint distance change number frecuency: 8.91667
+Traveled distance : 1.12294
+Penalized distance : 0.000800148
+Fitness: 1
+
+===========================================   G0 P1
+Joint distance change number frecuency: 1.25
+Traveled distance : 0.246318
+Penalized distance : 0.374886
+Fitness: 1.10232
+
+===========================================   G1 P0
+Joint distance change number frecuency: 1.25
+Traveled distance : 1.89724
+Penalized distance : 2.88753
+Fitness: 323.548
+
+===========================================   G1 P1
+Joint distance change number frecuency: 8.33333
+Traveled distance : 0.713878
+Penalized distance : 0.000911539
+Fitness: 1

@@ -1,0 +1,29 @@
+JOINT HANDLES INITIALIZATION
+joint0 handle: 38
+joint1 handle: 41
+joint2 handle: 47
+joint3 handle: 53
+joint4 handle: 39
+joint5 handle: 44
+joint6 handle: 50
+joint7 handle: 56
+joint8 handle: 37
+
+TIP HANDLES INITIALIZATION
+tip0 handle: 60
+tip1 handle: 61
+tip2 handle: 62
+tip3 handle: 63
+center_dummy handle: 59
+
+HYPERNEAT INPUTS & OUTPUTS INITIALIZATION
+joint0 handle: 38 angle: -1.4104
+joint1 handle: 41 angle: -1.43643
+joint2 handle: 47 angle: -1.39839
+joint3 handle: 53 angle: -1.45461
+joint4 handle: 39 angle: -1.92349
+joint5 handle: 44 angle: -2.02007
+joint6 handle: 50 angle: -1.95863
+joint7 handle: 56 angle: -1.95503
+joint8 handle: 37 angle: -0.37377
+

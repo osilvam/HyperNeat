@@ -1,18 +1,28 @@
 EXECUTABLE = HyperNeat
 VPATH = ./src ./headers ./objects
 CC = g++ -O3
-CFLAGS = -g -Wall -I./headers -I./objects -I./src
+CFLAGS = -g -Wall -I./headers -I./objects -I./src -I./remoteApi -I./include -DNON_MATLAB_PARSING -DMAX_EXT_API_CONNECTIONS=255
+LDFLAGS = -lpthread
+OUTPUTF = ./bin/test
+JSONF = ./bin/quadratot.json
 
-all: main.o  HyperNeat.o Substrate.o SpatialNode.o CPPNInputs.o UserFunctions.o CPPN-NEAT.o function.o genetic_encoding.o	
-	@mkdir -p bin/files
-	@rm -f ./bin/files/*
-	@echo "Linking main.o  HyperNeat.o genetic_encoding.o Substrate.o SpatialNode.o function.o CPPNInputs.o UserFunctions.o CPPN-NEAT.o to ./bin/HyperNeat"
-	@$(CC) $(CFLAGS) ./objects/main.o ./objects/genetic_encoding.o ./objects/function.o ./objects/HyperNeat.o ./objects/Substrate.o ./objects/SpatialNode.o ./objects/CPPN-NEAT.o ./objects/CPPNInputs.o ./objects/UserFunctions.o -o ./bin/HyperNeat
 
-main.o: main.cpp 
+all: Quadratot.o HyperNeat.o Substrate.o SpatialNode.o CPPNInputs.o UserFunctions.o CPPN-NEAT.o function.o genetic_encoding.o extApiPlatform.o extApi.o
+	@mkdir -p bin/functions_files
+	@mkdir -p bin/error_files
+	@mkdir -p bin/simulation_files
+	@mkdir -p bin/simulation_files/distance_result
+	@rm -f ./bin/functions_files/*
+	@rm -f ./bin/error_files/*
+	@rm -f ./bin/simulation_files/distance_result/*
+	@rm -f ./bin/simulation_files/*.txt
+	@echo "Linking Quadratot.o  HyperNeat.o genetic_encoding.o Substrate.o SpatialNode.o function.o CPPNInputs.o UserFunctions.o CPPN-NEAT.o to ./bin/Quadratot_Train"
+	@$(CC) $(CFLAGS) ./objects/Quadratot.o ./objects/genetic_encoding.o ./objects/function.o ./objects/HyperNeat.o ./objects/Substrate.o ./objects/SpatialNode.o ./objects/CPPN-NEAT.o ./objects/CPPNInputs.o ./objects/UserFunctions.o ./objects/extApiPlatform.o ./objects/extApi.o -o ./bin/Quadratot_Train $(LDFLAGS)
+
+Quadratot.o: Quadratot.cpp 
 	@mkdir -p objects
-	@echo "Compiling main.cpp to main.o"
-	@$(CC) $(CFLAGS) -c ./src/main.cpp -o ./objects/main.o
+	@echo "Compiling Quadratot.cpp to Quadratot.o"
+	@$(CC) $(CFLAGS) -c ./src/Quadratot.cpp -o ./objects/Quadratot.o
 
 HyperNeat.o: HyperNeat.cpp
 	@mkdir -p objects
@@ -54,7 +64,22 @@ genetic_encoding.o: genetic_encoding.cpp
 	@echo "Compiling genetic_encoding.cpp to genetic_encoding.o"
 	@$(CC) $(CFLAGS) -c ./src/genetic_encoding.cpp -o ./objects/genetic_encoding.o
 
+extApi.o: 
+	@mkdir -p objects
+	@gcc $(CFLAGS) -c ./remoteApi/extApi.c -o ./objects/extApi.o
+
+extApiPlatform.o: 
+	@mkdir -p objects
+	@gcc $(CFLAGS) -c ./remoteApi/extApiPlatform.c -o ./objects/extApiPlatform.o
+
+run:
+	@rm -f $(OUTPUTF)
+	@./bin/Quadratot_Train $(JSONF) > $(OUTPUTF)
+
 clean:
 	@rm -f ./objects/*.o
-	@rm -f ./bin/HyperNeat
-	@rm -f ./bin/files/*
+	@rm -f ./bin/Quadratot_Train
+	@rm -f ./bin/test
+	@rm -f ./bin/functions_files/*
+	@rm -f ./bin/error_files/*
+	@rm -f -R ./bin/simulation_files/*

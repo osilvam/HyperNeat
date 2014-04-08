@@ -59,7 +59,8 @@ void Population::CJsonDeserialize(char pch[])
 vector<double> Population::CalculeWeight(vector<double> cppn_inputs, int organism_id)
 {
 	if(organism_id == -1) return champion.eval(cppn_inputs);
-	else return organisms.at(organism_id).eval(cppn_inputs);
+	
+	return organisms.at(organism_id).eval(cppn_inputs);
 }
 
 Genetic_Encoding Population::put_randoms_weight(Genetic_Encoding organism)

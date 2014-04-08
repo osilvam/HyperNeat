@@ -71,15 +71,13 @@ void HyperNeat::HJsonDeserialize(string hyperneat_info)
 		}
 	}
 }
-void HyperNeat::CreateSubstrateConnections(int organism_id)
+bool HyperNeat::CreateSubstrateConnections(int organism_id)
 {
 	if(substrate->GetLayoutNumber() == 0)
 	{
 		cout << "Does not exist any substrate initialized" << endl;
-		return;
+		return false;
 	}
-
-	n_connections = 0;
 
 	if(cppn_neat->champion.output_nodes.size() > 1 )
 	{
@@ -92,8 +90,10 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 			if((int)cppn_neat->champion.output_nodes.size() != substrate->GetLayoutNumber()-1)
 			{
 				cout << "The layout number does not correspond to the cppn output number" << endl;
-				return;
+				return false;
 			}
+
+			n_connections = vector < int > (substrate->GetLayoutNumber()-1,0);
 
 			for(int i = 0; i < substrate->GetLayoutNumber()-1; i++)
 			{				
@@ -120,10 +120,9 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 								if(abs(cppn_output.at(c).at(i)) > connection_threshold)
 								{
 									(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), cppn_output.at(c).at(i));
-									n_connections++;
+									n_connections.at(i)++;
 								}
 								flag = false;
-								cout << "REPETIDO ( " << coord.at(c).at(0) << " , " << coord.at(c).at(1) << " ) ( " << coord.at(c).at(2) << " , " << coord.at(c).at(3) << " )" << endl;
 								continue;
 							}
 
@@ -135,19 +134,17 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 							if(abs(cppn_output.back().at(i)) > connection_threshold)
 							{
 								(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), cppn_output.back().at(i));
-								n_connections++;
+								n_connections.at(i)++;
 							}
-							cout << "NUEVO ( " << coord.back().at(0) << " , " << coord.back().at(1) << " ) ( " << coord.back().at(2) << " , " << coord.back().at(3) << " )" << endl;
 						}
 					}
-			}
-			cout << n_connections << endl;			
+			}		
 			
 		}
 		else
 		{			
 				cout << "The layout number must be greater than zero to use multiple cppn-neat outputs" << endl;
-				return;
+				return false;
 		}
 
 	}
@@ -155,6 +152,8 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 	{
 		if(substrate->GetLayoutNumber() > 1)
 		{
+			n_connections = vector < int > (substrate->GetLayoutNumber()-1,0);
+
 			for(int i = 0; i < substrate->GetLayoutNumber()-1; i++)
 			{
 				substrate->ClearSpatialNodeInputs(i+1,0);
@@ -172,13 +171,13 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 
 						for(int c = 0; c < n_AditionalCPPNInputs; c++)
 							cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
-
+						cout << "Antes CW" << endl;
 						double weight = (cppn_neat->CalculeWeight(cppn_inputs, organism_id)).at(0);
-
+						cout << "Despues CW" << endl;
 						if(abs(weight) > connection_threshold)
 						{
 							(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), weight);
-							n_connections++;
+							n_connections.at(i)++;
 						}
 					}
 				}
@@ -186,6 +185,8 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 		}
 		else
 		{
+			n_connections = vector < int > (substrate->GetLayersNumber(0)-1,0);
+
 			for(int i = 0; i < substrate->GetLayersNumber(0) - 1; i++)
 			{
 				substrate->ClearSpatialNodeInputs(0,i+1);
@@ -210,14 +211,18 @@ void HyperNeat::CreateSubstrateConnections(int organism_id)
 						if(abs(weight) > connection_threshold)
 						{
 							(substrate->GetSpatialNode(0,i+1,k))->AddInputToNode(substrate->GetSpatialNode(0,i,j), weight);
-							n_connections++;
+							n_connections.at(i)++;
 						}
 					}
 				}
 			}
 		}
 	}
-
+	for(int i = 0; i < (int)n_connections.size(); i++)
+	{
+		if(n_connections.at(i) < 1) return false;
+	}
+	return true;
 	
 }
 
@@ -227,10 +232,11 @@ bool HyperNeat::EvaluateSubstrateConnections()
 		cout << "Does not exist any substrate initialized" << endl;
 		return false;
 	}
-	if(n_connections == 0){		
-		cout << "Does not exist any connection initialized" << endl;
-		return false;
-	}
+	for(int i = 0; i < (int)n_connections.size(); i++)
+		if(n_connections.at(i) == 0){		
+			cout << "Does not exist any connection initialized between the sheet " << i << " and " << i+1 << endl;
+			return false;
+		}
 
 	if(substrate->GetLayoutNumber() > 1)
 		for(int i = 0; i < substrate->GetLayoutNumber(); i++)
@@ -259,15 +265,15 @@ void HyperNeat::GetHyperNeatOutputFunctions(string plataform)
 
 	vector < string > OUTPUTS;
 
-	GetNodeFunction(plataform);
-
 	OUTPUTS = substrate->GetSubstrateOutputFunctions(plataform);
 
 	if(!strcmp(plataform.c_str(),(char *)"octave"))
 	{	
 		stringstream file_name;
-		file_name << "files/" << HYPERNEAT_TEST << ".m";
+		file_name << "functions_files/" << HYPERNEAT_TEST << ".m";
 		ofstream myfile (file_name.str().c_str());
+
+		GetNodeFunction(plataform);
 
 		if (myfile.is_open()){
 
@@ -288,28 +294,36 @@ void HyperNeat::GetHyperNeatOutputFunctions(string plataform)
 	  	}else 
 	  		cerr << "Unable to open file: " << file_name.str() << endl;
 	}
-	else if(!strcmp(plataform.c_str(),(char *)"mathematica"))
+	else if(!strcmp(plataform.c_str(),(char *)"c++"))
 	{
-		stringstream file_name;
-		file_name << "files/" << HYPERNEAT_TEST << ".m";
-		ofstream myfile (file_name.str().c_str());
+		ofstream myfile ("functions_files/HYPERNEAT_FUNCTIONS.hpp");
 
 		if (myfile.is_open()){
 
+			myfile << "#ifndef HYPERNEAT_FUNCTIONS_H" << endl;
+			myfile << "#define HYPERNEAT_FUNCTIONS_H" << endl << endl;
+			myfile << "#include < math.h >" << endl;
+			myfile << SIGMOID_STRING << endl;
+
 			for(int i = 0; i < (int)substrate->outputs.size(); i++)
 			{
-				myfile << HYPERNEAT_TEST << "_" << i << "[ ";
-				for(int j = 0; j < (int)substrate->inputs.size(); j++){
-					myfile << "INPUT_" << j << "_";
-					if(j < (int)substrate->inputs.size()-1) myfile << ", ";
+				myfile << "#define " << HYPERNEAT_TEST << "_" << i << "(";
+
+				for(int j = 0; j < (int)substrate->inputs.size(); j++)
+				{
+				 	myfile << "INPUT_" << j;
+				 	if(j < (int)substrate->inputs.size()-1) myfile << ", ";
 				}
-				myfile << " ] := ";
-				myfile << OUTPUTS[i] << ";" << endl;
-			}			
-			myfile.close();
+
+				myfile << ") " << OUTPUTS[i] << endl;
+
+			}
+
+			myfile << endl << "#endif" << endl;
+		    myfile.close();
 			
 	  	}else 
-	  		cerr << "Unable to open file: " << file_name.str() << endl;
+	  		cerr << "Unable to open file: HYPERNEAT_FUNCTIONS" << endl;
 	}
 	
 }

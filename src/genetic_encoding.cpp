@@ -322,7 +322,6 @@ void Genetic_Encoding::CJsonDeserialize(char pch[])
 
 	//pch = strtok (buffer,delimiters);
 	
-	cout << pch << endl;
 
 	do
 	{

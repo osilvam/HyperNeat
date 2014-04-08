@@ -95,7 +95,7 @@ string SpatialNode::GetNodeFunction(string plataform){
 
 		if(node_type == 2) function << "OUTPUT_" << output_id << " = ";
 
-		function << NODE_FUNCTION << "( ";
+		function << NODE_FUNCTION_TEXT << "( ";
 
 		if(node_type == 0) function << "INPUT_" << input_id;		
 		else{
@@ -110,11 +110,11 @@ string SpatialNode::GetNodeFunction(string plataform){
 			
 		function << " ) ";
 	}
-	else if(!strcmp(plataform.c_str(),(char *)"mathematica"))
-	{
-		function << NODE_FUNCTION << "( ";
+	else if(!strcmp(plataform.c_str(),(char *)"c++"))
+	{		
+		function << NODE_FUNCTION_TEXT << "( ";
 
-		if(node_type == 0) function << "INPUT_" << input_id << "_";		
+		if(node_type == 0) function << "INPUT_" << input_id;		
 		else{
 			if(n_inputs > 0)
 				for(int i = 0; i < n_inputs; i++){

@@ -26,7 +26,7 @@ namespace ANN_USM{
 		vector < CPPNInputs > AditionalCPPNInputs;/**< Vector of aditional cppn inputs */
 		double connection_threshold;/**< Threshold that determine the creation for an connection */
 		vector < double > CppnInputs;/**< Vector of cppn input values */
-		int n_connections;/**< Number of connections after evaluate connections with cppn-neat */
+		vector < int > n_connections;/**< Number of connections after evaluate connections with cppn-neat */
 
 		
 	public:
@@ -51,7 +51,7 @@ namespace ANN_USM{
 		/**
 		 * \brief Create all substrate connections according to cppn-neat result
 		 */
-		void CreateSubstrateConnections(int organism_id);
+		bool CreateSubstrateConnections(int organism_id);
 		/**
 		 * \brief Allows to obtain the final HyperNeat outputs
 		 */
