@@ -17,7 +17,6 @@ namespace ANN_USM{
 	 */
 	class CPPNInputs
 	{
-		//POR AHORA SOLO PARA 2D!!!!!!!
 		double bias;/**< bias value. If the input corresponds to bias input, this variable store a bias input value. */
 		char * type;/**< type poiter. Corresponds to char array with the input type name. */
 		/**
@@ -58,7 +57,7 @@ namespace ANN_USM{
 		 * \param type Char array with the input type name.
 		 * \param bias If the input corresponds to bias input, this variable store a bias input value.
 		 */
-		CPPNInputs(char * type, double bias);
+		CPPNInputs(char type[], double bias = 0.0);
 		/**
 		 * \brief Destructor
 		 */

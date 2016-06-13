@@ -2,330 +2,278 @@
 #define HYPERNEAT_CPP
 
 #include "HyperNeat.hpp"
-#include "UserFunctions.hpp"
 using namespace ANN_USM;
 
-HyperNeat::HyperNeat(vector < double * > inputs, vector < double * > outputs, string hyperneat_info)
+HyperNeat::HyperNeat(vector < double * > inputs, vector < double * > outputs, char * config_file)
 {
+	// ============================= READING JSON FILE ============================= //
+	ifstream file;
+	file.open(config_file);
+	string hyperneat_info((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+	// ============================================================================= //	
+
 	substrate = new Substrate(inputs,outputs);
-
-	cppn_neat = new Population();
 	
-	HJsonDeserialize(hyperneat_info);
-
-	clog << "\t-> Deserialize ok!" << endl;
+	hyperNeatJsonDeserialize(hyperneat_info);	
 }
+
 HyperNeat::~HyperNeat()
 {
 	free(substrate);
-	free(cppn_neat);
 	vector<CPPNInputs>().swap(AditionalCPPNInputs);
-	vector<double>().swap(CppnInputs);
 }
 
-void HyperNeat::HJsonDeserialize(string hyperneat_info)
+void HyperNeat::hyperNeatJsonDeserialize(string hyperneat_info)
 {
+	int dataNumber = 0;
+
 	char str[(int)hyperneat_info.size()];
 	strcpy(str, hyperneat_info.c_str());
 	const char delimeters[] = "{\"\t\n:,[ ]}";
 	char *pch = strtok(str, delimeters);
-
-	while(pch != NULL)
+	
+	if(!strcmp(pch,(char *)"n_AditionalCPPNInputs"))
 	{
-		if (!strcmp(pch,(char *)"Genetic_Encoding")){
-			pch = strtok(NULL, delimeters);
-			cppn_neat->CJsonDeserialize(pch);
-			pch = strtok(NULL, delimeters);
-			break;
-		}else{ 
-			if (!strcmp(pch,(char *)"Substrate")){	
-				pch = strtok(NULL, delimeters);
-				pch = substrate->SJsonDeserialize(pch);
-				//pch = strtok(NULL, delimeters);
-			}else{
-				if(!strcmp(pch,(char *)"connection_threshold")){
-					pch = strtok(NULL, delimeters);
-					connection_threshold = atof(pch);
-					pch = strtok(NULL, delimeters);
-				}else{
-					if(!strcmp(pch,(char *)"AditionalCPPNInputs")){
-						for(int i = 0; i < n_AditionalCPPNInputs; i++){
-							pch = strtok(NULL, delimeters);		
-							if (!strcmp(pch,(char *)"BIAS")){	
-								char * aux = pch;
-								pch = strtok(NULL, delimeters);						
-								AditionalCPPNInputs.push_back(CPPNInputs(aux, atof(pch)));
-							}else																
-								AditionalCPPNInputs.push_back(CPPNInputs(pch, 0.0));
-						}						
-						pch = strtok(NULL, delimeters);					
-					}else{
-						if(!strcmp(pch,(char *)"n_AditionalCPPNInputs")){
-							pch = strtok(NULL, delimeters);
-							n_AditionalCPPNInputs = atoi(pch);
-							pch = strtok(NULL, delimeters);
-						}
-					}					
-				}						
-			}
+		dataNumber++;
+
+		pch = strtok(NULL, delimeters);
+		int n_AditionalCPPNInputs = atoi(pch);
+		pch = strtok(NULL, delimeters);
+
+		if(!strcmp(pch,(char *)"AditionalCPPNInputs"))
+		{
+			dataNumber++;
+
+			for(int i = 0; i < n_AditionalCPPNInputs; i++)
+			{
+				pch = strtok(NULL, delimeters);		
+				if (!strcmp(pch,(char *)"BIAS"))
+				{	
+					char * aux = pch;
+					pch = strtok(NULL, delimeters);						
+					AditionalCPPNInputs.push_back(CPPNInputs(aux, atof(pch)));
+				}else																
+					AditionalCPPNInputs.push_back(CPPNInputs(pch));
+			}						
+			pch = strtok(NULL, delimeters);					
 		}
 	}
-}
-bool HyperNeat::CreateSubstrateConnections(int organism_id)
-{
-	if(substrate->GetLayoutNumber() == 0)
+	
+	if(!strcmp(pch,(char *)"connection_threshold"))
 	{
-		cout << "Does not exist any substrate initialized" << endl;
+		dataNumber++;
+
+		pch = strtok(NULL, delimeters);
+		connection_threshold = atof(pch);
+		pch = strtok(NULL, delimeters);
+	}
+	if (!strcmp(pch,(char *)"Substrate"))
+	{	
+		dataNumber++;
+
+		pch = strtok(NULL, delimeters);
+		pch = substrate->SJsonDeserialize(pch);
+	}
+
+	if(dataNumber != HYPERNEAT_DATANUMBER)
+	{
+		cerr << "HYPERNEAT ERROR:\tThe hyperneat config file is not correct" << endl;
+		exit(0);
+	}
+
+	clog << "HYPERNEAT:\tSuccessful serialization" << endl;
+}
+
+bool HyperNeat::createSubstrateConnections(Genetic_Encoding * organism)
+{
+	okConnections = false;
+
+	if(substrate->GetLayersNumber() == 0)
+	{
+		cerr << "HYPERNEAT ERROR:\tDoes not exist any substrate initialized" << endl;
 		return false;
 	}
 
-	if(cppn_neat->champion.output_nodes.size() > 1 )
+	if(substrate->GetLayersNumber() - 1 != organism->getNEATOutputSize())
 	{
-		vector < vector < double > > coord;
-		vector < vector < double > > cppn_output;
-		bool flag;
+		cerr << "HYPERNEAT ERROR:\tThe layout number does not correspond to the cppn output number" << endl;
+		return false;
+	}
 
-		if(substrate->GetLayoutNumber() > 1)
-		{
-			if((int)cppn_neat->champion.output_nodes.size() != substrate->GetLayoutNumber()-1)
+	for(int i = 0; i < substrate->GetLayersNumber()-1; i++)
+	{				
+		substrate->ClearSpatialNodeInputs(i+1);
+
+		for(int j = 0; j < substrate->GetLayerNodesNumber(i); j++)
+			for(int k = 0; k < substrate->GetLayerNodesNumber(i+1); k++)
 			{
-				cout << "The layout number does not correspond to the cppn output number" << endl;
-				return false;
+				vector < double > cppn_inputs;
+				vector < double > cppn_output;
+				vector < double > c1 = (substrate->GetSpatialNode(i,j))->GetCoordenates();
+				vector < double > c2 = (substrate->GetSpatialNode(i+1,k))->GetCoordenates();
+				cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
+				cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
+
+				for(int c = 0; c < (int)AditionalCPPNInputs.size(); c++)
+					cppn_inputs.push_back(AditionalCPPNInputs.at(c).Eval(cppn_inputs));
+				
+				cppn_output = organism->eval(cppn_inputs);
+
+				if(abs(cppn_output.at(i)) > connection_threshold)
+					(substrate->GetSpatialNode(i+1,k))->AddInputToNode(substrate->GetSpatialNode(i,j), cppn_output.at(i));				
+			}
+	}		
+	
+	for(int i = 0; i < substrate->GetLayersNumber(); i++)
+		for(int j = 0; j < substrate->GetLayerNodesNumber(i); j++)
+			if((substrate->GetSpatialNode(i,j))->GetNodeType() == 2 && (substrate->GetSpatialNode(i,j))->ActiveNode())
+			{
+				okConnections = true;
+				//clog << "HYPERNEAT:\tConnections successfully created" << endl;
+				return true; 
 			}
 
-			n_connections = vector < int > (substrate->GetLayoutNumber()-1,0);
-
-			for(int i = 0; i < substrate->GetLayoutNumber()-1; i++)
-			{				
-				substrate->ClearSpatialNodeInputs(i+1,0);
-
-				for(int j = 0; j < substrate->GetLayerNodesNumber(i,0); j++)
-					for(int k = 0; k < substrate->GetLayerNodesNumber(i+1,0); k++)
-					{
-						flag = true;
-						vector < double > cppn_inputs;
-						int c = 0;
-						vector < double > c1 = (substrate->GetSpatialNode(i,0,j))->GetCoordenates();
-						vector < double > c2 = (substrate->GetSpatialNode(i+1,0,k))->GetCoordenates();
-						cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
-						cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
-						vector < double > input_aux (cppn_inputs);
-
-						for(int c = 0; c < n_AditionalCPPNInputs; c++)
-							cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
-
-						for(c = 0; c < (int)coord.size(); c++)
-							if(coord.at(c) == cppn_inputs)
-							{
-								if(abs(cppn_output.at(c).at(i)) > connection_threshold)
-								{
-									(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), cppn_output.at(c).at(i));
-									n_connections.at(i)++;
-								}
-								flag = false;
-								continue;
-							}
-
-						if(flag)
-						{
-							coord.push_back(cppn_inputs);
-							cppn_output.push_back(cppn_neat->CalculeWeight(cppn_inputs, organism_id));
-
-							if(abs(cppn_output.back().at(i)) > connection_threshold)
-							{
-								(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), cppn_output.back().at(i));
-								n_connections.at(i)++;
-							}
-						}
-					}
-			}		
-			
-		}
-		else
-		{			
-				cout << "The layout number must be greater than zero to use multiple cppn-neat outputs" << endl;
-				return false;
-		}
-
-	}
-	else
-	{
-		if(substrate->GetLayoutNumber() > 1)
-		{
-			n_connections = vector < int > (substrate->GetLayoutNumber()-1,0);
-
-			for(int i = 0; i < substrate->GetLayoutNumber()-1; i++)
-			{
-				substrate->ClearSpatialNodeInputs(i+1,0);
-
-				for(int j = 0; j < substrate->GetLayerNodesNumber(i,0); j++)
-				{
-					for(int k = 0; k < substrate->GetLayerNodesNumber(i+1,0); k++)
-					{
-						vector < double > cppn_inputs;
-						vector < double > c1 = (substrate->GetSpatialNode(i,0,j))->GetCoordenates();
-						vector < double > c2 = (substrate->GetSpatialNode(i+1,0,k))->GetCoordenates();
-						cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
-						cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
-						vector < double > input_aux (cppn_inputs);
-
-						for(int c = 0; c < n_AditionalCPPNInputs; c++)
-							cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
-						cout << "Antes CW" << endl;
-						double weight = (cppn_neat->CalculeWeight(cppn_inputs, organism_id)).at(0);
-						cout << "Despues CW" << endl;
-						if(abs(weight) > connection_threshold)
-						{
-							(substrate->GetSpatialNode(i+1,0,k))->AddInputToNode(substrate->GetSpatialNode(i,0,j), weight);
-							n_connections.at(i)++;
-						}
-					}
-				}
-			}
-		}
-		else
-		{
-			n_connections = vector < int > (substrate->GetLayersNumber(0)-1,0);
-
-			for(int i = 0; i < substrate->GetLayersNumber(0) - 1; i++)
-			{
-				substrate->ClearSpatialNodeInputs(0,i+1);
-
-				for(int j = 0; j < substrate->GetLayerNodesNumber(0,i); j++)
-				{
-					for(int k = 0; k < substrate->GetLayerNodesNumber(0,i+1); k++)
-					{
-						vector < double > cppn_inputs;
-						vector < double > c1 = (substrate->GetSpatialNode(0,i,j))->GetCoordenates();
-						vector < double > c2 = (substrate->GetSpatialNode(0,i+1,k))->GetCoordenates();
-						cppn_inputs.insert(cppn_inputs.end(), c1.begin(), c1.end());
-						cppn_inputs.insert(cppn_inputs.end(), c2.begin(), c2.end());
-						vector < double > input_aux (cppn_inputs);
-
-						for(int c = 0; c < n_AditionalCPPNInputs; c++)
-							cppn_inputs.push_back(AditionalCPPNInputs[c].Eval(input_aux));
-
-						double weight = (cppn_neat->CalculeWeight(cppn_inputs, organism_id)).at(0);
-						
-
-						if(abs(weight) > connection_threshold)
-						{
-							(substrate->GetSpatialNode(0,i+1,k))->AddInputToNode(substrate->GetSpatialNode(0,i,j), weight);
-							n_connections.at(i)++;
-						}
-					}
-				}
-			}
-		}
-	}
-	for(int i = 0; i < (int)n_connections.size(); i++)
-	{
-		if(n_connections.at(i) < 1) return false;
-	}
-	return true;
+	cerr << "HYPERNEAT ERROR:\tDoes not exist any active output node" << endl;
+	return false;
 	
 }
 
-bool HyperNeat::EvaluateSubstrateConnections()
+bool HyperNeat::createSubstrateConnections(char * path)
 {
-	if(substrate->GetLayoutNumber() == 0){
-		cout << "Does not exist any substrate initialized" << endl;
+	Genetic_Encoding * organism = new Genetic_Encoding();
+	organism->load(path);
+
+	return createSubstrateConnections(organism);	
+}
+
+bool HyperNeat::evaluateSubstrateConnections()
+{
+	if(substrate->GetLayersNumber() == 0){
+		cerr << "HYPERNEAT ERROR:\tDoes not exist any substrate initialized" << endl;
 		return false;
 	}
-	for(int i = 0; i < (int)n_connections.size(); i++)
-		if(n_connections.at(i) == 0){		
-			cout << "Does not exist any connection initialized between the sheet " << i << " and " << i+1 << endl;
-			return false;
-		}
 
-	if(substrate->GetLayoutNumber() > 1)
-		for(int i = 0; i < substrate->GetLayoutNumber(); i++)
-			substrate->EvaluateSpatialNode(i,0);
-	else
-		for(int i = 0; i < substrate->GetLayersNumber(0);i++)
-			substrate->EvaluateSpatialNode(0,i);
+	if(!okConnections) 
+	{
+		cerr << "HYPERNEAT ERROR:\tDoes not exist any active output node" << endl;
+		return false;
+	}
+
+	for(int i = 0; i < substrate->GetLayersNumber(); i++)
+		substrate->EvaluateSpatialNode(i);
 
 	return true;
 }
 
-void HyperNeat::HyperNeatFitness(double fitness, int organism_id)
+void HyperNeat::getHyperNeatOutputFunctions(Genetic_Encoding * organism)
 {
-	cppn_neat->SetFitness(fitness, organism_id);
-}
+	if(!createSubstrateConnections(organism))
+	{
+		cerr << "HYPERNEAT ERROR:\tThe output function can not be returned" << endl;
+		return;
+	}
 
-void HyperNeat::HyperNeatEvolve()
-{
-	cppn_neat->epoch();
-}
+	if(system("mkdir -p ./functions_files") == -1)
+	{
+		cerr << "HYPERNEAT ERROR:\tFailed to create folder 'functions_files'" << endl;
+		return;
+	}
 
-void HyperNeat::GetHyperNeatOutputFunctions(string plataform)
-{
-	CreateSubstrateConnections(-1);
-	EvaluateSubstrateConnections();
+	if(system("rm -f ./functions_files/*") == -1)
+	{
+		cerr << "HYPERNEAT ERROR:\tFailed to remove files inside of 'functions_files' folder" << endl;
+		return;
+	}
 
 	vector < string > OUTPUTS;
 
-	OUTPUTS = substrate->GetSubstrateOutputFunctions(plataform);
+	OUTPUTS = substrate->GetSubstrateOutputFunctions();	
+		
+	stringstream file_name;
+	file_name << "functions_files/HYPERNEAT_OUTPUTS.m";
+	ofstream myfile (file_name.str().c_str());
 
-	if(!strcmp(plataform.c_str(),(char *)"octave"))
-	{	
-		stringstream file_name;
-		file_name << "functions_files/" << HYPERNEAT_TEST << ".m";
-		ofstream myfile (file_name.str().c_str());
+	getNodeFunction();
 
-		GetNodeFunction(plataform);
+	if (myfile.is_open()){
 
-		if (myfile.is_open()){
+		myfile << "function [ ";
+		for(int i = 0; i < (int)substrate->outputs.size(); i++){
+			myfile << "OUTPUT_" << i ;
+			if(i < (int)substrate->outputs.size()-1) myfile << ", ";
+		}
+		myfile << " ] = HYPERNEAT_OUTPUTS( ";
+		for(int i = 0; i < (int)substrate->inputs.size(); i++){
+			myfile << "INPUT_" << i ;
+			if(i < (int)substrate->inputs.size()-1) myfile << ", ";
+		}
+		myfile << " )" << endl;
+		for(int i = 0; i < (int)substrate->outputs.size(); i++)
+			myfile << OUTPUTS.at(i) << ";" << endl;
+	    myfile.close();
+  	}else
+  	{
+  		cerr << "HYPERNEAT ERROR:\tUnable to open file: " << file_name.str() << endl;	
+  		return;
+  	}
 
-			myfile << "function [ ";
-			for(int i = 0; i < (int)substrate->outputs.size(); i++){
-				myfile << "OUTPUT_" << i ;
-				if(i < (int)substrate->outputs.size()-1) myfile << ", ";
-			}
-			myfile << " ] = " << HYPERNEAT_TEST << "( ";
-			for(int i = 0; i < (int)substrate->inputs.size(); i++){
-				myfile << "INPUT_" << i ;
-				if(i < (int)substrate->inputs.size()-1) myfile << ", ";
-			}
-			myfile << " )" << endl;
-			for(int i = 0; i < (int)substrate->outputs.size(); i++)
-				myfile << OUTPUTS[i] << ";" << endl;
-		    myfile.close();
-	  	}else 
-	  		cerr << "Unable to open file: " << file_name.str() << endl;
-	}
-	else if(!strcmp(plataform.c_str(),(char *)"c++"))
+  	clog << "HYPERNEAT:\tHyperNeat output function was created successfully" << endl;
+}
+
+void HyperNeat::getHyperNeatOutputFunctions(char * path)
+{
+	Genetic_Encoding * organism = new Genetic_Encoding();
+	organism->load(path);
+
+	getHyperNeatOutputFunctions(organism);
+}
+
+void HyperNeat::getNodeFunction()
+{
+	ofstream myfile("functions_files/SIGMOID.m");
+
+	if (myfile.is_open())
 	{
-		ofstream myfile ("functions_files/HYPERNEAT_FUNCTIONS.hpp");
+    	myfile << OCTAVE_SIGMOID_STATEMENT << endl;
+	    myfile << OCTAVE_SIGMOID_CONST_LETTER << " = " << OCTAVE_SIGMOID_CONST << ";" << endl;
+	    myfile << OCTAVE_SIGMOID_FUNC << ";" << endl;
+	    myfile.close();
 
-		if (myfile.is_open()){
+  	}else 
+  		cerr << "HYPERNEAT ERROR:\tUnable to open file: functions_files/SIGMOID.m" << endl;	
+}
 
-			myfile << "#ifndef HYPERNEAT_FUNCTIONS_H" << endl;
-			myfile << "#define HYPERNEAT_FUNCTIONS_H" << endl << endl;
-			myfile << "#include < math.h >" << endl;
-			myfile << SIGMOID_STRING << endl;
-
-			for(int i = 0; i < (int)substrate->outputs.size(); i++)
-			{
-				myfile << "#define " << HYPERNEAT_TEST << "_" << i << "(";
-
-				for(int j = 0; j < (int)substrate->inputs.size(); j++)
-				{
-				 	myfile << "INPUT_" << j;
-				 	if(j < (int)substrate->inputs.size()-1) myfile << ", ";
-				}
-
-				myfile << ") " << OUTPUTS[i] << endl;
-
-			}
-
-			myfile << endl << "#endif" << endl;
-		    myfile.close();
-			
-	  	}else 
-	  		cerr << "Unable to open file: HYPERNEAT_FUNCTIONS" << endl;
+void HyperNeat::printConnectionFile(Genetic_Encoding * organism)
+{
+	if(!createSubstrateConnections(organism))
+	{
+		cerr << "HYPERNEAT ERROR:\tThe connection file can not be printed" << endl;
+		return;
 	}
-	
+
+	ofstream myfile ("HyperNeat_Connections.txt");
+
+	if(myfile.is_open())
+	{
+		myfile << substrate->getSubstrateConnectionString() << endl;
+	}
+	else
+	{
+		cerr << "HYPERNEAT ERROR:\tUnable to create the file: HyperNeat_Connections.txt" << endl;
+		return;
+	}
+
+	myfile.close();
+
+	clog << "HYPERNEAT:\tHyperNeat connection file was printed successfully" << endl;
+}
+
+void HyperNeat::printConnectionFile(char * path)
+{
+	Genetic_Encoding * organism = new Genetic_Encoding();
+	organism->load(path);
+
+	printConnectionFile(organism);
 }
 
 #endif

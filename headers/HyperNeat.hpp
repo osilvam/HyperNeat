@@ -1,8 +1,8 @@
 #ifndef HYPERNEAT_H
 #define HYPERNEAT_H
 
+#include <NEAT>
 #include "Substrate.hpp"
-#include "CPPN-NEAT.hpp"
 #include "CPPNInputs.hpp"
 #include <vector>
 #include <string>
@@ -10,6 +10,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
+#define HYPERNEAT_DATANUMBER 4
+
 using namespace std;
 /**
  * \namespace ANN_USM
@@ -18,59 +21,90 @@ using namespace std;
 namespace ANN_USM{
 	/**
 	 * \class HyperNeat
-	 * \brief The class HyperNeat is used to implement a neuroevolution method called HyperNeat
+	 * \brief The HyperNeat class is used to implement a neuroevolution method called HyperNeat.
 	 */
 	class HyperNeat
 	{
-		int n_AditionalCPPNInputs;/**< Number of aditional cppn inputs */	
-		vector < CPPNInputs > AditionalCPPNInputs;/**< Vector of aditional cppn inputs */
-		double connection_threshold;/**< Threshold that determine the creation for an connection */
-		vector < double > CppnInputs;/**< Vector of cppn input values */
-		vector < int > n_connections;/**< Number of connections after evaluate connections with cppn-neat */
+		// Vector of aditional cppn inputs
+		vector < CPPNInputs > AditionalCPPNInputs;
 
-		
+		//Threshold that determine the creation for an connection
+		double connection_threshold;
+
+		//Indicated if the connections were created successfully
+		bool okConnections;
+
 	public:
-		Substrate * substrate;/**< HyperNeat substrate */
-		Population * cppn_neat;/**< HyperNeat Cppn-Neat */
+
+		Substrate * substrate;/**< hyperNeat substrate */
+
 		/**
-		 * \brief Constructor with parameters
-		 * \param inputs Input vector
-		 * \param outputs Output vector
-		 * \param hyperneat_info Json string
+		 * \brief Constructor with parameters.
+		 * \param inputs Input vector.
+		 * \param outputs Output vector.
+		 * \param hyperneat_info_file Json file.
 		 */
-		HyperNeat(vector<double *> inputs, vector < double * > outputs, string hyperneat_info);
+		HyperNeat(vector < double * > inputs, vector < double * > outputs, char * config_file);
+
 		/**
-		 * \brief Destructor
+		 * \brief Destructor.
 		 */
 		~HyperNeat();
-		/**
-		 * \brief Extract all HyperNeat information of json string
-		 * \param hyperneat_info json string
-		 */
-		void HJsonDeserialize(string hyperneat_info);
-		/**
-		 * \brief Create all substrate connections according to cppn-neat result
-		 */
-		bool CreateSubstrateConnections(int organism_id);
-		/**
-		 * \brief Allows to obtain the final HyperNeat outputs
-		 */
-		bool EvaluateSubstrateConnections();
-		/**
-		 * \brief Set CPPN-NEAT fitness of last interation
-		 * \param fitness Fitnnes value to set
-		 */
-		void HyperNeatFitness(double fitness, int organism_id);
-		/**
-		 * \brief Allows evolve cppn_neat
-		 */
-		void HyperNeatEvolve();		
-		/**
-		 * \brief Allows obtain all final functions of every output node
-		 */
-		void GetHyperNeatOutputFunctions(string plataform);
 
+		/**
+		 * \brief Extract all HyperNeat information of json string.
+		 * \param hyperneat_info json string.
+		 */
+		void hyperNeatJsonDeserialize(string hyperneat_info);
 
+		/**
+		 * \brief Create all substrate connections according to CPPN-NEAT result.
+		 * \param organism Organism of CPPN-NEAT that will create connections in the substrate.
+		 * \return The return value is true if the creation of connections was successful and false if it was not.
+		 */
+		bool createSubstrateConnections(Genetic_Encoding * organism);
+
+		/**
+		 * \brief Create all substrate connections according to CPPN-NEAT result.
+		 * \param Path to the organism of CPPN-NEAT that will create connections in the substrate.
+		 * \return The return value is true if the creation of connections was successful and false if it was not.
+		 */
+		bool createSubstrateConnections(char * path);
+
+		/**
+		 * \brief Allows to obtain the final HyperNeat outputs.
+		 * \return The return value is true if the evaluation of connections was successful and false if it was not.
+		 */
+		bool evaluateSubstrateConnections();
+		
+		/**
+		 * \brief Allows obtain all final functions of every output node. This functions is formated for its use in Octave or Matlab environment.
+		 * \param organism Organism of CPPN-NEAT that will create connections in the substrate.
+		 */
+		void getHyperNeatOutputFunctions(Genetic_Encoding * organism);
+
+		/**
+		 * \brief Allows obtain all final functions of every output node. This functions is formated for its use in Octave or Matlab environment.
+		 * \param Path to the organism of CPPN-NEAT that will create connections in the substrate.
+		 */
+		void getHyperNeatOutputFunctions(char * path);
+
+		/**
+		 * \brief Allows obtain the output node function used in all SpatialNodes. This functions is formated for its use in Octave or Matlab environment.
+		 */
+		void getNodeFunction();
+
+		/**
+		 * \brief This functions allows obtain the file with th information of all conections of all substrate nodes.
+		 * \param organism Organism of CPPN-NEAT that will create connections in the substrate.
+		 */
+		void printConnectionFile(Genetic_Encoding * organism);
+
+		/**
+		 * \brief This functions allows obtain the file with th information of all conections of all substrate nodes.
+		 * \param Path to the organism of CPPN-NEAT that will create connections in the substrate.
+		 */
+		void printConnectionFile(char * path);
 	};
 }
 #endif
