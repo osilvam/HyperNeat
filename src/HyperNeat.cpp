@@ -6,7 +6,14 @@ using namespace ANN_USM;
 
 double HyperNeat::scaleWeight(double weight)
 {
-	return (double)(max_connection_weight/(1.0 - connection_threshold))*(weight - connection_threshold);
+	if (weight > 0.0)
+	{
+		return (double)(max_connection_weight/(1.0 - connection_threshold))*(weight - connection_threshold);	
+	}else
+	{
+		return (double)((max_connection_weight/(1.0 - connection_threshold))*(weight + 1) - max_connection_weight);
+	}
+	
 }
 
 HyperNeat::HyperNeat(vector < double * > inputs, vector < double * > outputs, char * config_file)
@@ -133,7 +140,7 @@ bool HyperNeat::createSubstrateConnections(Genetic_Encoding * organism)
 				cppn_output = organism->eval(cppn_inputs);
 
 				if(abs(cppn_output.at(i)) > connection_threshold)
-					(substrate->GetSpatialNode(i+1,k))->AddInputToNode(substrate->GetSpatialNode(i,j), scaleWeight(abs(cppn_output.at(i))));				
+					(substrate->GetSpatialNode(i+1,k))->AddInputToNode(substrate->GetSpatialNode(i,j), scaleWeight(cppn_output.at(i)));
 			}
 	}		
 	
