@@ -256,7 +256,7 @@ void HyperNeat::getNodeFunction()
   		cerr << "HYPERNEAT ERROR:\tUnable to open file: functions_files/SIGMOID.m" << endl;	
 }
 
-void HyperNeat::printConnectionFile(Genetic_Encoding * organism)
+void HyperNeat::printConnectionFile(Genetic_Encoding * organism, const char fileName[])
 {
 	if(!createSubstrateConnections(organism))
 	{
@@ -264,7 +264,7 @@ void HyperNeat::printConnectionFile(Genetic_Encoding * organism)
 		return;
 	}
 
-	ofstream myfile ("HyperNeat_Connections.txt");
+	ofstream myfile (fileName);
 
 	if(myfile.is_open())
 	{
@@ -272,7 +272,7 @@ void HyperNeat::printConnectionFile(Genetic_Encoding * organism)
 	}
 	else
 	{
-		cerr << "HYPERNEAT ERROR:\tUnable to create the file: HyperNeat_Connections.txt" << endl;
+		cerr << "HYPERNEAT ERROR:\tUnable to create the file: " << fileName << endl;
 		return;
 	}
 
@@ -281,12 +281,12 @@ void HyperNeat::printConnectionFile(Genetic_Encoding * organism)
 	clog << "HYPERNEAT:\tHyperNeat connection file was printed successfully" << endl;
 }
 
-void HyperNeat::printConnectionFile(char * path)
+void HyperNeat::printConnectionFile(char * path, const char fileName[])
 {
 	Genetic_Encoding * organism = new Genetic_Encoding();
 	organism->load(path);
 
-	printConnectionFile(organism);
+	printConnectionFile(organism, fileName);
 }
 
 #endif
