@@ -95,7 +95,7 @@ char * Substrate::SJsonDeserialize(char * substrate_info)
 						coordenates.push_back(atof(substrate_info));
 					}			
 
-					aux1.push_back(new SpatialNode(node_type,i,coordenates, node_function));
+					aux1.push_back(new SpatialNode(node_type, i, j,coordenates, node_function));
 
 					if(node_type == 0)
 						aux1.at(j)->SetInputToInputNode(inputs.at(IO_id), IO_id);
@@ -189,6 +189,7 @@ vector < string > Substrate::GetSubstrateOutputFunctions()
 	
 	return functions;
 }
+
 vector < int > Substrate::GetInputOrder()
 {
 	vector < int > input_order;
